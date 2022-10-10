@@ -4,23 +4,21 @@ import { Category, getRandomMessage } from "./message.js";
 /**
  * Creates an embed with the specified text.
  *
- * @param emoji
  * @param category
  * @param description
  * @param color
  */
 function createEmbedWithRandomCategorizedTitle(
-	emoji: string,
 	category: Category,
 	description: string,
 	color: ColorResolvable
 ): EmbedBuilder {
 	return new EmbedBuilder()
-		.setTitle(`:${emoji}: ${getRandomMessage(category)}`)
+		.setTitle(getRandomMessage(category))
 		.setDescription(description)
 		.setColor(color)
 		.setTimestamp(new Date());
-}
+} 
 
 /**
  * Creates an embed with the specified error cause and hint.
@@ -35,7 +33,6 @@ export function createErrorEmbed(
 	hint: string | null
 ): EmbedBuilder {
 	return createEmbedWithRandomCategorizedTitle(
-		"x",
 		"error",
 		description,
 		Colors.Red
@@ -55,7 +52,6 @@ export function createWarningEmbed(
 ): EmbedBuilder {
 	return createEmbedWithRandomCategorizedTitle(
 		"warning",
-		"warning",
 		warning,
 		Colors.Gold
 	);
@@ -70,7 +66,6 @@ export function createSuccessEmbed(
 	success: string
 ): EmbedBuilder {
 	return createEmbedWithRandomCategorizedTitle(
-		"white_check_mark",
 		"success",
 		success,
 		Colors.Green
@@ -88,7 +83,6 @@ export function createInfoEmbed(
 	info: string
 ): EmbedBuilder {
 	return createEmbedWithRandomCategorizedTitle(
-		"information_source",
 		"placeholder",
 		info,
 		Colors.Blurple
