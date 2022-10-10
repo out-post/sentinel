@@ -9,7 +9,7 @@ for (const file of files) {
 	for (let i = 0; i < 2; i++) {
 		lines.shift();
 	}
-	changelogs.set(file.split(".")[0], lines.join("\n"));
+	changelogs.set(file.split(".").slice(0, 3).join("."), lines.join("\n"));
 }
 
 /**
@@ -18,7 +18,7 @@ for (const file of files) {
  * @param version
  */
 export function getChangelog(version: string): string {
-	version = version.replace(/\./g, "-");
+	version = version.split(" ")[0];  // Just for the <version> (latest) case
 	if (!changelogs.has(version)) {
 		throw new Error(`Changelog for version ${version} does not exist.`);
 	}
@@ -39,5 +39,5 @@ export function blockquoteChangelog(changelog: string): string {
  */
 export function getAllVersionStrings(): string[] {
 	return [...changelogs.keys()]
-		.map((version, index) => `${version.replace(/\./g, "-")}${index === 0 ? " (latest)" : ""}`);
+		.map(version => `${version}${version === process.env.npm_package_version ? " (latest)" : ""}`);
 }

@@ -14,7 +14,6 @@ export const bot = new Client({
 
 async function run() {
 	await importx(dirname(import.meta.url) + "/{events,commands}/**/*.{ts,js}");
-	console.log(process.env.DISCORD_BOT_TOKEN!);
 	bot.login(process.env.DISCORD_BOT_TOKEN!, true)
 		.then(() => console.log("Logged in!"))
 		.catch(console.error);

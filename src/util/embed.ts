@@ -86,5 +86,5 @@ export function createInfoEmbed(
 		"placeholder",
 		info,
 		Colors.Blurple
-	).setTitle(`:information_source: ${title}`);
+	).setTitle(title);
 }

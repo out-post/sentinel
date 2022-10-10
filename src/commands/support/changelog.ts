@@ -20,7 +20,7 @@ export class Changelog {
 			version: string | undefined,
 		interaction: CommandInteraction
 	) {
-		await interaction.deferReply({ ephemeral: true});
+		await interaction.deferReply({ ephemeral: true });
 		let embedArray = [];
 		if (version === undefined) {
 			version = <string>process.env.npm_package_version;
@@ -37,7 +37,7 @@ export class Changelog {
 		}
 		embedArray.push(
 			createInfoEmbed(
-				`Viewing changelog for version ${version}`,
+				`Changelog`,
 				`**Version:** ${version}\n\n${blockquoteChangelog(getChangelog(version))}`
 			)
 		);
