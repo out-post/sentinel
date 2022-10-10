@@ -33,3 +33,11 @@ export function getChangelog(version: string): string {
 export function blockquoteChangelog(changelog: string): string {
 	return ">>> " + changelog;
 }
+
+/**
+ * Gets all versions with a changelog.
+ */
+export function getAllVersionStrings(): string[] {
+	return [...changelogs.keys()]
+		.map((version, index) => `${version.replace(/\./g, "-")}${index === 0 ? " (latest)" : ""}`);
+}
