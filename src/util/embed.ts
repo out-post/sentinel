@@ -1,5 +1,4 @@
-import { EmbedBuilder } from "discord.js";
-import { convertHexToRGB, palette } from "./colors.js";
+import { ColorResolvable, Colors, EmbedBuilder } from "discord.js";
 import { Category, getRandomMessage } from "./message.js";
 
 /**
@@ -9,18 +8,17 @@ import { Category, getRandomMessage } from "./message.js";
  * @param category
  * @param description
  * @param color
- * @param footnote
  */
 function createEmbedWithRandomCategorizedTitle(
 	emoji: string,
 	category: Category,
 	description: string,
-	color: string
+	color: ColorResolvable
 ): EmbedBuilder {
 	return new EmbedBuilder()
 		.setTitle(`:${emoji}: ${getRandomMessage(category)}`)
 		.setDescription(description)
-		.setColor(convertHexToRGB(color))
+		.setColor(color)
 		.setTimestamp(new Date());
 }
 
@@ -40,7 +38,7 @@ export function createErrorEmbed(
 		"x",
 		"error",
 		description,
-		palette.errorEmbedColor
+		Colors.Red
 	).addFields([
 		{ name: "Cause", value: cause, inline: true },
 		{ name: "Hint", value: hint ?? "No hints provided", inline: true }
@@ -59,7 +57,7 @@ export function createWarningEmbed(
 		"warning",
 		"warning",
 		warning,
-		palette.warningEmbedColor
+		Colors.Gold
 	);
 }
 
@@ -75,7 +73,7 @@ export function createSuccessEmbed(
 		"white_check_mark",
 		"success",
 		success,
-		palette.successEmbedColor
+		Colors.Green
 	);
 }
 
@@ -93,6 +91,6 @@ export function createInfoEmbed(
 		"information_source",
 		"placeholder",
 		info,
-		palette.infoEmbedColor
+		Colors.Blurple
 	).setTitle(`:information_source: ${title}`);
 }
