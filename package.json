@@ -7,8 +7,7 @@
 	"main": "build/main.js",
 	"scripts": {
 		"build": "tsc",
-		"bcl": "npx @discordx/changelog --root=src",
-		"dev": "ts-node-esm src/main.ts",
+		"exec": "ts-node-esm src/main.ts",
 		"run": "node build/main.js",
 		"watch": "nodemon --exec ts-node-esm src/main.ts"
 	},
