@@ -26,18 +26,10 @@ export function getChangelog(version: string): string {
 }
 
 /**
- * Processes a changelog string into a blockquote.
- *
- * @param changelog
- */
-export function blockquoteChangelog(changelog: string): string {
-	return ">>> " + changelog;
-}
-
-/**
  * Gets all versions with a changelog.
  */
 export function getAllVersionStrings(): string[] {
-	return [...changelogs.keys()]
-		.map(version => `${version}${version === process.env.npm_package_version ? " (latest)" : ""}`);
+	let versions = [...changelogs.keys()]
+	versions[versions.length - 1] += " (latest)";
+	return versions;
 }

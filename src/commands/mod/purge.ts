@@ -13,7 +13,7 @@ import {
 import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
 import { createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
-import { noParametersProvided } from "../../util/prechecks.js";
+import { noParametersProvided } from "../../util/prechecks.js";2
 
 @Discord()
 export class Purge {
@@ -58,7 +58,7 @@ export class Purge {
 		})
 			reason: string,
 		interaction: CommandInteraction
-	) {
+	): Promise<void> {
 		await interaction.deferReply();
 		this.resultMessage = await interaction.fetchReply();
 		this.commandInteraction = interaction;

@@ -32,4 +32,4 @@ Purge messages from a channel. Messages are purged based on the options specifie
 
 ## BUGS
 
-`kick` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which might fail.
+`purge` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which might fail.

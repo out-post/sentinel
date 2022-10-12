@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { blockquoteChangelog, getAllVersionStrings, getChangelog } from "../../util/changelog.js";
+import { getAllVersionStrings, getChangelog } from "../../util/changelog.js";
 import { createErrorEmbed, createInfoEmbed, createWarningEmbed } from "../../util/embed.js";
 
 @Discord()
@@ -19,7 +19,7 @@ export class Changelog {
 		})
 			version: string | undefined,
 		interaction: CommandInteraction
-	) {
+	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
 		let embedArray = [];
 		if (version === undefined) {
@@ -37,8 +37,8 @@ export class Changelog {
 		}
 		embedArray.push(
 			createInfoEmbed(
-				`Changelog`,
-				`**Version:** ${version}\n\n${blockquoteChangelog(getChangelog(version))}`
+				"Changelog",
+				`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
 			)
 		);
 		await interaction.editReply({ embeds: embedArray });

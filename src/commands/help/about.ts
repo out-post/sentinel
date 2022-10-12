@@ -1,6 +1,6 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { blockquoteChangelog, getChangelog } from "../../util/changelog.js";
+import { getChangelog } from "../../util/changelog.js";
 import { createInfoEmbed } from "../../util/embed.js";
 
 @Discord()
@@ -9,7 +9,7 @@ export class About {
 		name: "about",
 		description: "Displays general information about the bot"
 	})
-	async about(interaction: CommandInteraction) {
+	async about(interaction: CommandInteraction): Promise<void> {
 		const latestVersion = <string>process.env.npm_package_version;
 		await interaction.reply({
 			embeds: [
@@ -24,7 +24,7 @@ export class About {
 
 					**License:** [MIT](https://opensource.org/licenses/MIT)
 
-					**Changelog:**\n${blockquoteChangelog(getChangelog(latestVersion))}
+					**Changelog:**\n>>> ${getChangelog(latestVersion)}
 				`)
 			]
 		});

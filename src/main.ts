@@ -1,7 +1,7 @@
 import { dirname, importx } from "@discordx/importer";
 import { Client } from "discordx";
-import "reflect-metadata";
 import { config as dotenvConfig } from "dotenv";
+import "reflect-metadata";
 
 dotenvConfig();
 

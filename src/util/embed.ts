@@ -18,7 +18,7 @@ function createEmbedWithRandomCategorizedTitle(
 		.setDescription(description)
 		.setColor(color)
 		.setTimestamp(new Date());
-} 
+}
 
 /**
  * Creates an embed with the specified error cause and hint.
