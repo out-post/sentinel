@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionStrings, getChangelog } from "../../util/changelog.js";
+import {getAllVersionStrings, getChangelog, getLatestVersionNumber} from "../../util/changelog.js";
 import { createErrorEmbed, createInfoEmbed, createWarningEmbed } from "../../util/embed.js";
 
 @Discord()
@@ -13,7 +13,7 @@ export class Changelog {
 		@SlashChoice(...getAllVersionStrings())
 		@SlashOption({
 			name: "version",
-			description: "The version to display the changelog for",
+			description: "The version to display the changelog for. If not specified, the latest version will be used.",
 			type: ApplicationCommandOptionType.String,
 			required: false
 		})
@@ -22,25 +22,22 @@ export class Changelog {
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
 		let embedArray = [];
-		if (version === undefined) {
-			version = <string>process.env.npm_package_version;
-			embedArray.push(
-				createWarningEmbed("No arguments for `version` was provided, defaulting to the latest version.")
-			);
-		} else if (!getAllVersionStrings().includes(version)) {
-			embedArray.push(createErrorEmbed(
-				`Invalid version for TSentinel: ${version}`,
-				"You might have mistyped the version, or the version might not exist.",
-				"Choose one version from the autocomplete list."
-			));
-			return;
+		version = version ?? <string>process.env.npm_package_version;
+		if (!getAllVersionStrings().includes(version) && version !== getLatestVersionNumber()) {
+			await interaction.editReply({ embeds: [
+				createErrorEmbed(
+					`Invalid version for TSentinel: ${version}`,
+					"You might have mistyped the version, or the version might not exist.",
+					"Choose one version from the autocomplete list."
+				)
+			]});
+		} else {
+			await interaction.editReply({ embeds: [
+				createInfoEmbed(
+					"Changelog",
+					`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
+				)
+			]});
 		}
-		embedArray.push(
-			createInfoEmbed(
-				"Changelog",
-				`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
-			)
-		);
-		await interaction.editReply({ embeds: embedArray });
 	}
 }

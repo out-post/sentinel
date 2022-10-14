@@ -33,3 +33,10 @@ export function getAllVersionStrings(): string[] {
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }
+
+/**
+ * Gets the latest version.
+ */
+export function getLatestVersionNumber(): string {
+	return [...changelogs.keys()].pop()!.replace(" (latest)", "");
+}
