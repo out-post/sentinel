@@ -1,6 +1,6 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { getChangelog } from "../../util/changelog.js";
+import { getChangelog } from "../../util/changelogs.js";
 import { createInfoEmbed } from "../../util/embed.js";
 
 @Discord()

@@ -22,6 +22,6 @@ export function compareRoles(
  *
  * @param params The parameters to check
  */
-export function noParametersProvided(params: any): boolean {
-	return params.every((param: any) => param === undefined);
+export function noParametersProvided(params: unknown[]): boolean {
+	return params.every((param: unknown) => param === undefined);
 }

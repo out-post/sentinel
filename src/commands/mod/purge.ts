@@ -13,14 +13,14 @@ import {
 import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
 import { createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
-import { noParametersProvided } from "../../util/prechecks.js";2
+import { noParametersProvided } from "../../util/prechecks.js";
 
 @Discord()
 export class Purge {
 	resultMessage: Message | undefined;
 	commandInteraction: CommandInteraction | undefined;
 	reason: string | undefined;
-
+	
 	@Slash({
 		name: "purge",
 		description: "Purges messages from a channel",
@@ -63,7 +63,7 @@ export class Purge {
 		this.resultMessage = await interaction.fetchReply();
 		this.commandInteraction = interaction;
 		this.reason = reason;
-
+		
 		if (noParametersProvided([amount, target, keyword])) {
 			await interaction.editReply({
 				components: [
@@ -72,7 +72,7 @@ export class Purge {
 							.setCustomId("force-purge")
 							.setLabel("Yes, proceed.")
 							.setStyle(ButtonStyle.Danger),
-
+						
 						new ButtonBuilder()
 							.setCustomId("cancel-purge")
 							.setLabel("Oh, heavens no.")
@@ -100,7 +100,7 @@ export class Purge {
 			);
 		}
 	}
-
+	
 	async purgeDelete(
 		channel: TextChannel,
 		amount: number | undefined,
@@ -108,37 +108,37 @@ export class Purge {
 		keyword: string | undefined
 	): Promise<number> {
 		const messages = await channel.messages.fetch();
-
+		
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
+		
 		const purgelist = messages.filter(message => (
 			(!target || message.author.id === target.id)
 			&& (!keyword || message.content.includes(keyword))
 			&& this.resultMessage?.id !== message.id
 			&& message.createdAt > twoWeeksAgo
 		));
-
+		
 		let purgeAmount: number;
 		if (amount === undefined) {
 			purgeAmount = purgelist.size;
 		} else {
 			purgeAmount = Math.min(amount, purgelist.size);
 		}
-
+		
 		const slicedPurgelist = purgelist.first(purgeAmount);
 		const partitionedPurgelist = [];
 		for (let i = 0; i < slicedPurgelist.length; i += 100) {
 			partitionedPurgelist.push(slicedPurgelist.slice(i, i + 100));
 		}
-
+		
 		for (const partition of partitionedPurgelist) {
-			await channel.bulkDelete(partition);
+			await channel.bulkDelete(partition); // skipcq: JS-0032
 		}
-
+		
 		return purgeAmount;
 	}
-
+	
 	@ButtonComponent({ id: "force-purge" })
 	async forcePurge(interaction: ButtonInteraction): Promise<void> {
 		await interaction.deferUpdate();
@@ -147,7 +147,7 @@ export class Purge {
 			undefined,
 			undefined,
 			undefined,
-			this.commandInteraction!,
+			this.commandInteraction!, // skipcq: JS-0349
 			this.reason
 		);
 		await this.commandInteraction?.editReply({
@@ -155,12 +155,12 @@ export class Purge {
 			embeds: await this.commandInteraction?.fetchReply().then(reply => reply.embeds)
 		});
 	}
-
+	
 	@ButtonComponent({ id: "cancel-purge" })
-	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
+	async cancelPurge(): Promise<void> {
 		await this.commandInteraction?.deleteReply();
 	}
-
+	
 	private async purgeAction(
 		channel: TextChannel,
 		amount: number | undefined,
@@ -170,7 +170,7 @@ export class Purge {
 		reason: string | undefined
 	) {
 		const purgedCount = await this.purgeDelete(channel, amount, target, keyword);
-
+		
 		let purgeMessage;
 		if (purgedCount === 0) {
 			purgeMessage = "No messages";
@@ -180,7 +180,7 @@ export class Purge {
 			purgeMessage = `${pluralize("message", purgedCount, true)}`;
 		}
 		purgeMessage += ` ${pluralize("was", purgedCount)} purged.`;
-
+		
 		await interaction.editReply({
 			embeds: [
 				createSuccessEmbed(purgeMessage)

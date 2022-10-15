@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import {getAllVersionStrings, getChangelog, getLatestVersionNumber} from "../../util/changelog.js";
-import { createErrorEmbed, createInfoEmbed, createWarningEmbed } from "../../util/embed.js";
+import { getAllVersionStrings, getChangelog, getLatestVersionNumber } from "../../util/changelogs.js";
+import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
 
 @Discord()
 export class Changelog {
@@ -21,23 +21,26 @@ export class Changelog {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
-		let embedArray = [];
 		version = version ?? <string>process.env.npm_package_version;
 		if (!getAllVersionStrings().includes(version) && version !== getLatestVersionNumber()) {
-			await interaction.editReply({ embeds: [
-				createErrorEmbed(
-					`Invalid version for TSentinel: ${version}`,
-					"You might have mistyped the version, or the version might not exist.",
-					"Choose one version from the autocomplete list."
-				)
-			]});
+			await interaction.editReply({
+				embeds: [
+					createErrorEmbed(
+						`Invalid version for TSentinel: ${version}`,
+						"You might have mistyped the version, or the version might not exist.",
+						"Choose one version from the autocomplete list."
+					)
+				]
+			});
 		} else {
-			await interaction.editReply({ embeds: [
-				createInfoEmbed(
-					"Changelog",
-					`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
-				)
-			]});
+			await interaction.editReply({
+				embeds: [
+					createInfoEmbed(
+						"Changelog",
+						`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
+					)
+				]
+			});
 		}
 	}
 }

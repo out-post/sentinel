@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "fs";
 
 const files: string[] = readdirSync("res/changelogs");
 
-export let changelogs: Map<string, string> = new Map();
+export const changelogs: Map<string, string> = new Map();
 for (const file of files) {
 	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
 	const lines = changelog.split("\n");
@@ -29,7 +29,7 @@ export function getChangelog(version: string): string {
  * Gets all versions with a changelog.
  */
 export function getAllVersionStrings(): string[] {
-	let versions = [...changelogs.keys()]
+	const versions = [...changelogs.keys()];
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }

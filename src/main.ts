@@ -13,10 +13,8 @@ export const bot = new Client({
 });
 
 async function run() {
-	await importx(dirname(import.meta.url) + "/{events,commands}/**/*.{ts,js}");
-	bot.login(process.env.DISCORD_BOT_TOKEN!, true)
-		.then(() => console.log("Logged in!"))
-		.catch(console.error);
+	await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
+	bot.login(process.env.DISCORD_BOT_TOKEN!, true);
 }
 
 run();
