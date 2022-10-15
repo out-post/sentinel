@@ -1,8 +1,7 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionStrings, getChangelog } from "../../util/changelog.js";
-import { createErrorEmbed, createInfoEmbed, createWarningEmbed } from "../../util/embed.js";
-import { getAllManpageStrings, getManpage } from "../../util/man.js";
+import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
+import { getAllManpageStrings, getManpage } from "../../util/manpages.js";
 
 @Discord()
 export class Man {

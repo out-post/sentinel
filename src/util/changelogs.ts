@@ -29,7 +29,7 @@ export function getChangelog(version: string): string {
  * Gets all versions with a changelog.
  */
 export function getAllVersionStrings(): string[] {
-	let versions = [...changelogs.keys()]
+	let versions = [...changelogs.keys()];
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }

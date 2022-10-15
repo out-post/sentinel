@@ -37,22 +37,22 @@ export class Ban {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
-
+		
 		const commander = <GuildMember>interaction.member;
 		reason = reason || "Unspecified";
-
+		
 		let embedArray = [];
 		if (compareRoles(commander, target) === Compare.LARGER) {
 			await target.ban(cleanup === undefined
 				? { reason: reason }
 				: { deleteMessageDays: 7, reason: reason }
 			);
-
+			
 			embedArray.push(
 				createSuccessEmbed(`Successfully banned ${getName(target.user)}.`)
 					.addFields([{ name: "Reason", value: reason, inline: false }])
 			);
-
+			
 			await target.send({
 				embeds: [
 					createInfoEmbed("Banned!", `You have been banned from ${interaction.guild?.name}.`)
@@ -76,7 +76,7 @@ export class Ban {
 				"Make sure **your** highest role is **larger than the target's** highest role. After all, you can't ban upwards, can you?"
 			));
 		}
-
+		
 		await interaction.followUp({ embeds: embedArray });
 	}
 }

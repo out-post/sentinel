@@ -30,10 +30,10 @@ export class Kick {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
-
+		
 		const commander = <GuildMember>interaction.member;
 		reason = reason || "No reason provided";
-
+		
 		let embedArray = [];
 		if (compareRoles(commander, target) === Compare.LARGER) {
 			await target.send({
@@ -44,9 +44,9 @@ export class Kick {
 						.setTimestamp(interaction.createdTimestamp)
 				]
 			});
-
+			
 			await target.kick(reason);
-
+			
 			embedArray.push(
 				createSuccessEmbed(`Successfully kicked ${getName(target.user)}.`)
 					.addFields([{ name: "Reason", value: reason, inline: false }])
@@ -59,7 +59,7 @@ export class Kick {
 				" How would kicking upwards even work logistically?"
 			));
 		}
-
+		
 		await interaction.followUp({ embeds: embedArray });
 	}
 }
