@@ -50,7 +50,7 @@ Hi again!
 
 <img alt="vscode" height="52px" src="https://img.icons8.com/color/2x/visual-studio-code-2019.png" />
 
-*Some debug thing-bobber, who knows?*
+Our primary IDE.
 
 <img alt="deepsource" height="52px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/DeepSource_Icon.svg/400px-DeepSource_Icon.svg.png?20220709211059" />
 
