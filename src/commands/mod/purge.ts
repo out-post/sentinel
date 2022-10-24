@@ -31,8 +31,8 @@ export class Purge {
 			name: "amount",
 			description: "The maximum amount of messages to purge",
 			type: ApplicationCommandOptionType.Integer,
-			minValue: 0,
-			maxValue: Math.pow(10, 5),
+			minValue: 1,
+			maxValue: 100,
 			required: false
 		})
 			amount: number | undefined,
@@ -60,6 +60,7 @@ export class Purge {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
+		
 		this.resultMessage = await interaction.fetchReply();
 		this.commandInteraction = interaction;
 		this.reason = reason;
@@ -83,7 +84,7 @@ export class Purge {
 					createWarningEmbed(
 						"No parameters were provided! \
 						This means all messages match the purge filter and will be deleted!\n\
-						Did you really want to purge the entire channel?"
+						Did you really want to purge the channel's recent messages?"
 					).setFooter({
 						text: "Once you choose one of the below options, this embed will disappear."
 					})
@@ -126,15 +127,7 @@ export class Purge {
 			purgeAmount = Math.min(amount, purgelist.size);
 		}
 		
-		const slicedPurgelist = purgelist.first(purgeAmount);
-		const partitionedPurgelist = [];
-		for (let i = 0; i < slicedPurgelist.length; i += 100) {
-			partitionedPurgelist.push(slicedPurgelist.slice(i, i + 100));
-		}
-		
-		for (const partition of partitionedPurgelist) {
-			await channel.bulkDelete(partition); // skipcq: JS-0032
-		}
+		channel.bulkDelete(purgelist.first(purgeAmount));
 		
 		return purgeAmount;
 	}

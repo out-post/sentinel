@@ -12,7 +12,7 @@ Purge messages from a channel. Messages are purged based on the options specifie
 
 ## OPTIONS
 
-`--amount amount`: The maximum amount of messages to delete. Please note that this does not dictate how many messages the bot **will delete**, but it will tell the bot _how many to delete until_. If `amount > 100`, messages will be `bulkDelete`d in chunks of 100.
+`--amount amount`: The maximum amount of messages to delete. Please note that this does not dictate how many messages the bot **will delete**, but it will tell the bot _how many to delete until_. This option must be lower than 100.
 
 `--target target`: The target whose messages are to be deleted.
 
@@ -24,7 +24,7 @@ Purge messages from a channel. Messages are purged based on the options specifie
 
 `/purge target=@user`: Purges all messages from a user
 
-`/purge keyword="abc" amount=1000`: Purges up to 1000 messages that contain the word "abc"
+`/purge keyword="abc" amount=100`: Purges up to 100 messages that contain the word "abc"
 
 ## HISTORY
 

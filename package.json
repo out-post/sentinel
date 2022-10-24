@@ -1,6 +1,6 @@
 {
 	"name": "tsentinel",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"private": true,
 	"license": "GPLv2",
 	"type": "module",
@@ -8,8 +8,8 @@
 	"scripts": {
 		"build": "tsc",
 		"exec": "ts-node-esm src/main.ts",
-		"run": "node build/main.js",
-		"watch": "nodemon --exec ts-node-esm src/main.ts"
+		"watch": "nodemon --exec ts-node-esm src/main.ts",
+		"test-import": "ts-node-esm src/test-import.ts"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
