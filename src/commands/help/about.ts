@@ -24,7 +24,7 @@ export class About {
 
 					**Repository:** [GitHub](https://github.com/developer-ramen/tsentinel.git)
 
-					**License:** [MIT](https://opensource.org/licenses/MIT)
+					**License:** [Sentinel-License](https://github.com/developer-ramen/tsentinel/blob/main/LICENSE)
 
 					**Changelog:**\n>>> ${getChangelog(latestVersion)}
 				`

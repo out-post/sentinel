@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 
 const files: string[] = readdirSync("res/messages");
-export type Category = "ban" | "error" | "warning" | "success" | "info" | "placeholder";
+export type Category = "ban" | "error" | "warning" | "success" | "info";
 export const messages: { [key: string]: string[] } = {};
 
 for (const file of files) {

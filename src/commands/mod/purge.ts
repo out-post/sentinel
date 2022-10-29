@@ -104,7 +104,7 @@ export class Purge {
 	}
 
 	isEdgeCase(config: PurgeConfiguration): EdgeCaseState {
-		let edgeCaseMessage: string | undefined = undefined;
+		let edgeCaseMessage: string | undefined;
 		const { amount, target, keyword, invert } = config;
 		if (noParametersProvided([amount, target, keyword])) {
 			edgeCaseMessage = invert
@@ -138,7 +138,7 @@ export class Purge {
 
 	async purgeDelete(config: PurgeConfiguration): Promise<number> {
 		const { channel, amount, target, keyword, invert } = config;
-		let twoWeeksAgo = new Date();
+		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 		// prettier-ignore
 		const messages = (await channel.messages.fetch({ limit: 100 })).filter((message) =>
@@ -157,7 +157,7 @@ export class Purge {
 			? messages.filter((message) => !messagesMatchingFilter.has(message.id))
 			: messagesMatchingFilter;
 
-		let purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
+		const purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
 
 		await channel.bulkDelete(purgelist.first(purgeAmount));
 		return purgeAmount;
@@ -220,9 +220,9 @@ export class Purge {
 				createInfoEmbed("Okay, *here goes nothing*.", "You have chosen to proceed with the purge operation.")
 			);
 			aftermath.components = [selectOnceButton(responseButtons(), 0, "Proceeded.", ButtonStyle.Success)];
-			await forcePurgeButtonInteraction!.editReply(aftermath);
+			await forcePurgeButtonInteraction!.editReply(aftermath); // skipcq: JS-0349
 		} else {
-			await safePurgeCommandInteraction!.editReply(aftermath);
+			await safePurgeCommandInteraction!.editReply(aftermath); // skipcq: JS-0349
 		}
 	}
 
@@ -247,7 +247,8 @@ export class Purge {
 				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
 				this.edgeCasePurgeStates.delete(channel);
 			}
-		} catch (e) {} // In case the Sentinel instance is reset and the purge state is lost.
+		} catch (e) {} // skipcq: JS-0009
+		// In case the Sentinel instance is reset and the purge state is lost.
 	}
 
 	@ButtonComponent({ id: "cancelPurge" })
@@ -277,6 +278,7 @@ export class Purge {
 					],
 				});
 			}
-		} catch (e) {} // Line 250
+		} catch (e) {} // skipcq: JS-0009
+		// Check comment on line 250
 	}
 }

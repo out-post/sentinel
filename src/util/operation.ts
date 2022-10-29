@@ -33,6 +33,7 @@ export async function tryDeferring(
 ): Promise<void> {
 	try {
 		await interaction.deferReply(options);
-	} catch (e) {
+	} catch (e) {  // skipcq: JS-0009
 	}
+	// To be used when you are not sure if the interaction has already been deferred
 }

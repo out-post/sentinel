@@ -9,12 +9,12 @@ import { Category, getRandomMessage } from "./message.js";
  * @param color
  */
 function createEmbedWithRandomCategorizedTitle(
-	category: Category,
+	category: Category | null,
 	description: string,
 	color: ColorResolvable
 ): EmbedBuilder {
 	return new EmbedBuilder()
-		.setTitle(getRandomMessage(category))
+		.setTitle(category === null ? "placeholder" : getRandomMessage(category))
 		.setDescription(description)
 		.setColor(color)
 		.setTimestamp(new Date());
@@ -59,5 +59,5 @@ export function createSuccessEmbed(success: string): EmbedBuilder {
  * @param info
  */
 export function createInfoEmbed(title: string, info: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle("placeholder", info, Colors.Blurple).setTitle(title);
+	return createEmbedWithRandomCategorizedTitle(null, info, Colors.Blurple).setTitle(title);
 }

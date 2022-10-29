@@ -12,52 +12,30 @@
 
 An experimental utilitarian and administration assistant for Discord server owners written in TypeScript.
 
-```
-npm i
-npm run exec
-```
+## 🛡 Preamble
 
-## Languages, Tools & Frameworks:
+This bot aims to be an all-in-one solution for server owners, providing a variety of utilities and administration tools
+to make server management easier.
+These features, whether implemented or on the roadmap, are listed below:
 
-<img alt="nodejs" width="52px" src="https://img.icons8.com/fluency/2x/node-js.png" />
+-   Moderation tool suite: Commands, infraction system, censorship, and more.
+-   Raid prevention and verification.
+-   Other features: Key guild data & visualizations, fun commands, and more!
 
-Of course this thing has a Node environment!
+More advanced features are expected to diverge into Sentinel Guardian.
 
-<img alt="typescript" width="52px" src="https://i.imgur.com/vSgFULR.png" />
+_This bot is still in active development and testing. It is not recommended to use this in a production environment._
 
-The codebase's language, since **~~JavaScript sucks~~** it's easier to debug.
+## 🔧 Languages, Tools & Frameworks:
 
-<img alt="mongodb" width="52px" src="https://imgur.com/xN5cFRr.png" />
+-   [Node.js](https://nodejs.org/en/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [Discord.js](https://discord.js.org/#/)
+-   [DiscordX](https://discordx.js.org/)
 
-The database of choice.
+## About...
 
-<img alt="discordjs" height="26px" src="https://discord.js.org/static/logo.svg" />
-
-The Discord API. This bot uses v14.
-
-<img alt="discordx" height="22px" src="https://discordx.js.org/discordx.svg" />
-
-The Discord API extension, lovingly made for TypeScript lads! Go check them out: [discordx.js.org](https://discordx.js.org/)
-
-<img alt="webstorm" height="52px" src="https://img.icons8.com/color/2x/webstorm.png" />
-
-**_NOT SPONSORED BY JETBRAINS IN ANYWAY WHATSOEVER_**, I just like not having a headache when coding.
-
-<img alt="git" height="52px" src="https://img.icons8.com/color/2x/git.png" />
-
-Hello!
-
-<img alt="github" height="52px" src="https://img.icons8.com/ios-filled/2x/github.png" />
-
-Hi again!
-
-<img alt="vscode" height="52px" src="https://img.icons8.com/color/2x/visual-studio-code-2019.png" />
-
-Our primary IDE.
-
-<img alt="deepsource" height="52px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/DeepSource_Icon.svg/400px-DeepSource_Icon.svg.png?20220709211059" />
-
-Thanks for the 25+ code issues you found that I have basically embedded onto the code structure!
+### Branding
 
 ---
 
