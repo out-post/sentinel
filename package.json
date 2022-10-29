@@ -13,7 +13,7 @@
 		"pre-commit": "npx prettier --write . && npx eslint --fix && npm ci"
 	},
 	"dependencies": {
-		"@discordjs/collection": "^1.1.0",
+		"@discordjs/collection": "^1.2.0",
 		"@discordjs/voice": "^0.11.0",
 		"@discordx/importer": "^1.1.10",
 		"@types/node": "^18.11.7",
