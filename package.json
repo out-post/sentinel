@@ -21,7 +21,7 @@
 		"discordx": "^11.1.12",
 		"pluralize": "^8.0.0",
 		"reflect-metadata": "^0.1.13",
-		"util": "^0.12.4"
+		"util": "^0.12.5"
 	},
 	"devDependencies": {
 		"@types/node": "^18.7.14",
