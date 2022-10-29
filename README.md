@@ -1,4 +1,5 @@
 ‌‌
+
 <div>
   <p align="center">
       <img src="https://i.imgur.com/zUKsSHE.png" width="600"/>
@@ -10,12 +11,14 @@
 # 📖 Introduction
 
 An experimental utilitarian and administration assistant for Discord server owners written in TypeScript.
+
 ```
 npm i
 npm run exec
 ```
 
 ## Languages, Tools & Frameworks:
+
 <img alt="nodejs" width="52px" src="https://img.icons8.com/fluency/2x/node-js.png" />
 
 Of course this thing has a Node environment!

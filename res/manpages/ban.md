@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`ban target [--cleanup] [--reason reason]` 
+`ban target [--cleanup] [--reason reason]`
 
 ## DESCRIPTION
 

@@ -5,11 +5,10 @@ import "reflect-metadata";
 
 dotenvConfig();
 
-const ALL_INTENTS_NUMBER = 32767;
 export const bot = new Client({
 	botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
-	intents: ALL_INTENTS_NUMBER,
-	silent: false
+	intents: 32767,
+	silent: false,
 });
 
 async function run() {

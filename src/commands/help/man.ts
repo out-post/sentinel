@@ -7,7 +7,7 @@ import { getAllManpageStrings, getManpage } from "../../util/manpages.js";
 export class Man {
 	@Slash({
 		name: "man",
-		description: "Displays the manpage for the specified command"
+		description: "Displays the manpage for the specified command",
 	})
 	async man(
 		@SlashChoice(...getAllManpageStrings())
@@ -15,9 +15,9 @@ export class Man {
 			name: "command",
 			description: "The command to get the manpage for",
 			type: ApplicationCommandOptionType.String,
-			required: true
+			required: true,
 		})
-			command: string,
+		command: string,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
@@ -29,10 +29,7 @@ export class Man {
 				"Choose one command from the autocomplete list."
 			);
 		} else {
-			response = createInfoEmbed(
-				"Command",
-				`**Command:** ${command}\n\n>>> ${getManpage(command)}`
-			);
+			response = createInfoEmbed("Command", `**Command:** ${command}\n\n>>> ${getManpage(command)}`);
 		}
 		await interaction.editReply({ embeds: [response] });
 	}

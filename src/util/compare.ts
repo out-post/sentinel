@@ -8,16 +8,16 @@ export enum Compare {
 	 * Represents a state where the first value is smaller than the second value.
 	 */
 	SMALLER = -1,
-	
+
 	/**
 	 * Represents a state where the first value is equal to the second value.
 	 */
 	EQUAL = 0,
-	
+
 	/**
 	 * Represents a state where the first value is larger than the second value.
 	 */
-	LARGER = 1
+	LARGER = 1,
 }
 
 /**

@@ -27,18 +27,10 @@ function createEmbedWithRandomCategorizedTitle(
  * @param cause
  * @param hint
  */
-export function createErrorEmbed(
-	description: string,
-	cause: string,
-	hint: string | null
-): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"error",
-		description,
-		Colors.Red
-	).addFields([
+export function createErrorEmbed(description: string, cause: string, hint: string | null): EmbedBuilder {
+	return createEmbedWithRandomCategorizedTitle("error", description, Colors.Red).addFields([
 		{ name: "Cause", value: cause, inline: true },
-		{ name: "Hint", value: hint ?? "No hints provided", inline: true }
+		{ name: "Hint", value: hint ?? "No hints provided", inline: true },
 	]);
 }
 
@@ -47,14 +39,8 @@ export function createErrorEmbed(
  *
  * @param warning
  */
-export function createWarningEmbed(
-	warning: string
-): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"warning",
-		warning,
-		Colors.Gold
-	);
+export function createWarningEmbed(warning: string): EmbedBuilder {
+	return createEmbedWithRandomCategorizedTitle("warning", warning, Colors.Gold);
 }
 
 /**
@@ -62,14 +48,8 @@ export function createWarningEmbed(
  *
  * @param success
  */
-export function createSuccessEmbed(
-	success: string
-): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"success",
-		success,
-		Colors.Green
-	);
+export function createSuccessEmbed(success: string): EmbedBuilder {
+	return createEmbedWithRandomCategorizedTitle("success", success, Colors.Green);
 }
 
 /**
@@ -78,13 +58,6 @@ export function createSuccessEmbed(
  * @param title
  * @param info
  */
-export function createInfoEmbed(
-	title: string,
-	info: string
-): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"placeholder",
-		info,
-		Colors.Blurple
-	).setTitle(title);
+export function createInfoEmbed(title: string, info: string): EmbedBuilder {
+	return createEmbedWithRandomCategorizedTitle("placeholder", info, Colors.Blurple).setTitle(title);
 }

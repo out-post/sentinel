@@ -1,3 +1,4 @@
+import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
@@ -6,25 +7,41 @@ import {
 	ButtonStyle,
 	CommandInteraction,
 	GuildMember,
-	Message,
 	PermissionsBitField,
-	TextChannel
+	TextChannel,
+	WebhookEditMessageOptions,
 } from "discord.js";
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
+import { EdgeCaseState, PurgeConfiguration } from "./types.js";
+import { noParametersProvided } from "../../util/precheck.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import pluralize from "pluralize";
-import { createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
-import { noParametersProvided } from "../../util/prechecks.js";
+import { selectOnceButton, tryDeferring } from "../../util/operation.js";
+
+// prettier-ignore
+function responseButtons(): ActionRowBuilder<ButtonBuilder> {
+	return new ActionRowBuilder<ButtonBuilder>().addComponents([
+		new ButtonBuilder()
+			.setCustomId("forcePurge")
+			.setLabel("Yes, still proceed.")
+			.setStyle(ButtonStyle.Danger),
+		
+		new ButtonBuilder()
+			.setCustomId("cancelPurge")
+			.setLabel("Oh, heavens no.")
+			.setStyle(ButtonStyle.Primary)
+	]);
+}
 
 @Discord()
 export class Purge {
-	resultMessage: Message | undefined;
-	commandInteraction: CommandInteraction | undefined;
-	reason: string | undefined;
-	
+	//prettier-ignore
+	edgeCasePurgeStates: Map<TextChannel, PurgeConfiguration>
+		= new Map<TextChannel, PurgeConfiguration>();
+
 	@Slash({
 		name: "purge",
 		description: "Purges messages from a channel",
-		defaultMemberPermissions: PermissionsBitField.Flags.ManageMessages
+		defaultMemberPermissions: PermissionsBitField.Flags.ManageMessages,
 	})
 	async purge(
 		@SlashOption({
@@ -33,137 +50,128 @@ export class Purge {
 			type: ApplicationCommandOptionType.Integer,
 			minValue: 1,
 			maxValue: 100,
-			required: false
+			required: false,
 		})
-			amount: number | undefined,
+		amount: number | undefined,
 		@SlashOption({
 			name: "target",
 			description: "The target to purge messages from",
 			type: ApplicationCommandOptionType.User,
-			required: false
+			required: false,
 		})
-			target: GuildMember | undefined,
+		target: GuildMember | undefined,
 		@SlashOption({
 			name: "keyword",
 			description: "The keyword to purge messages that contain it",
 			type: ApplicationCommandOptionType.String,
-			required: false
+			minLength: 1,
+			maxLength: 1000,
+			required: false,
 		})
-			keyword: string | undefined,
+		keyword: string | undefined,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for purging messages",
 			type: ApplicationCommandOptionType.String,
-			required: false
+			required: false,
 		})
-			reason: string,
+		reason: string | undefined,
+		@SlashOption({
+			name: "invert",
+			description: "Whether to invert the filter specified",
+			type: ApplicationCommandOptionType.Boolean,
+			required: false,
+		})
+		invert: boolean | undefined,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
-		
-		this.resultMessage = await interaction.fetchReply();
-		this.commandInteraction = interaction;
-		this.reason = reason;
-		
+		const config: PurgeConfiguration = {
+			channel: <TextChannel>interaction.channel,
+			replyId: (await interaction.fetchReply()).id,
+			interactor: interaction.user,
+			invert: invert ?? false,
+			amount: amount,
+			target: target,
+			keyword: keyword,
+			reason: reason,
+		};
+		if (this.isEdgeCase(config).isEdgeCase) {
+			await this.handleEdgeCases(interaction, config);
+		} else {
+			await this.purgeAction(config, false, interaction, null);
+		}
+	}
+
+	isEdgeCase(config: PurgeConfiguration): EdgeCaseState {
+		let edgeCaseMessage: string | undefined = undefined;
+		const { amount, target, keyword, invert } = config;
 		if (noParametersProvided([amount, target, keyword])) {
-			await interaction.editReply({
-				components: [
-					new ActionRowBuilder<ButtonBuilder>().addComponents([
-						new ButtonBuilder()
-							.setCustomId("force-purge")
-							.setLabel("Yes, proceed.")
-							.setStyle(ButtonStyle.Danger),
-						
-						new ButtonBuilder()
-							.setCustomId("cancel-purge")
-							.setLabel("Oh, heavens no.")
-							.setStyle(ButtonStyle.Primary)
-					])
-				],
-				embeds: [
-					createWarningEmbed(
-						"No parameters were provided! \
-						This means all messages match the purge filter and will be deleted!\n\
-						Did you really want to purge the channel's recent messages?"
-					).setFooter({
-						text: "Once you choose one of the below options, this embed will disappear."
-					})
-				]
-			});
-		} else {
-			await this.purgeAction(
-				<TextChannel>interaction.channel,
-				amount,
-				target,
-				keyword,
-				interaction,
-				reason
-			);
+			edgeCaseMessage = invert
+				? "That does nothing! You can't invert the filter if you don't specify one!"
+				: "With no arguments, this command will delete all messages in the channel that are less than two weeks old!";
+		} else if (!noParametersProvided([target, keyword]) && invert) {
+			edgeCaseMessage =
+				"Inverting the filter while also specifying the target and/or keyword " +
+				"can potentially target a lot of messages!";
 		}
+
+		return {
+			isEdgeCase: edgeCaseMessage !== undefined,
+			message: edgeCaseMessage,
+		};
 	}
-	
-	async purgeDelete(
-		channel: TextChannel,
-		amount: number | undefined,
-		target: GuildMember | undefined,
-		keyword: string | undefined
-	): Promise<number> {
-		const messages = await channel.messages.fetch();
-		
-		const twoWeeksAgo = new Date();
-		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-		
-		const purgelist = messages.filter(message => (
-			(!target || message.author.id === target.id)
-			&& (!keyword || message.content.includes(keyword))
-			&& this.resultMessage?.id !== message.id
-			&& message.createdAt > twoWeeksAgo
-		));
-		
-		let purgeAmount: number;
-		if (amount === undefined) {
-			purgeAmount = purgelist.size;
-		} else {
-			purgeAmount = Math.min(amount, purgelist.size);
-		}
-		
-		channel.bulkDelete(purgelist.first(purgeAmount));
-		
-		return purgeAmount;
-	}
-	
-	@ButtonComponent({ id: "force-purge" })
-	async forcePurge(interaction: ButtonInteraction): Promise<void> {
-		await interaction.deferUpdate();
-		await this.purgeAction(
-			<TextChannel>interaction.channel,
-			undefined,
-			undefined,
-			undefined,
-			this.commandInteraction!, // skipcq: JS-0349
-			this.reason
-		);
-		await this.commandInteraction?.editReply({
-			components: [],
-			embeds: await this.commandInteraction?.fetchReply().then(reply => reply.embeds)
+
+	async handleEdgeCases(interaction: CommandInteraction, config: PurgeConfiguration): Promise<void> {
+		const edgeCaseState = this.isEdgeCase(config);
+		this.edgeCasePurgeStates.set(<TextChannel>interaction.channel, config);
+		edgeCaseState.message += "\nDo you still want to follow through with the operation?";
+		await interaction.editReply({
+			components: [responseButtons()],
+			embeds: [
+				createWarningEmbed(edgeCaseState.message!).setFooter({
+					text: "This is a one-time choice.",
+				}),
+			],
 		});
 	}
-	
-	@ButtonComponent({ id: "cancel-purge" })
-	async cancelPurge(): Promise<void> {
-		await this.commandInteraction?.deleteReply();
+
+	async purgeDelete(config: PurgeConfiguration): Promise<number> {
+		const { channel, amount, target, keyword, invert } = config;
+		let twoWeeksAgo = new Date();
+		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+		// prettier-ignore
+		const messages = (await channel.messages.fetch({ limit: 100 })).filter((message) =>
+			message.deletable
+			&& message.createdAt > twoWeeksAgo
+			&& message.id !== config.replyId
+		);
+
+		// prettier-ignore
+		const messagesMatchingFilter = messages.filter((message) =>
+			(!target || message.author.id === target.id)
+			&& (!keyword || message.content.includes(keyword))
+		);
+
+		const purgelist = invert
+			? messages.filter((message) => !messagesMatchingFilter.has(message.id))
+			: messagesMatchingFilter;
+
+		let purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
+
+		await channel.bulkDelete(purgelist.first(purgeAmount));
+		return purgeAmount;
 	}
-	
-	private async purgeAction(
-		channel: TextChannel,
-		amount: number | undefined,
-		target: GuildMember | undefined,
-		keyword: string | undefined,
-		interaction: CommandInteraction,
-		reason: string | undefined
-	) {
-		const purgedCount = await this.purgeDelete(channel, amount, target, keyword);
-		
+
+	async purgeAction(
+		config: PurgeConfiguration,
+		fromForcePurge: boolean,
+		safePurgeCommandInteraction: CommandInteraction | null,
+		forcePurgeButtonInteraction: ButtonInteraction | null
+	): Promise<void> {
+		const { channel, invert, amount, target, keyword, reason } = config;
+		const purgedCount = await this.purgeDelete(config);
+
 		let purgeMessage;
 		if (purgedCount === 0) {
 			purgeMessage = "No messages";
@@ -173,38 +181,102 @@ export class Purge {
 			purgeMessage = `${pluralize("message", purgedCount, true)}`;
 		}
 		purgeMessage += ` ${pluralize("was", purgedCount)} purged.`;
-		
-		await interaction.editReply({
+
+		const aftermath: WebhookEditMessageOptions = {
 			embeds: [
-				createSuccessEmbed(purgeMessage)
-					.addFields([
-						{
-							name: "Amount",
-							value: purgedCount.toString(),
-							inline: true
-						},
-						{
-							name: "Channel",
-							value: channel.toString(),
-							inline: true
-						},
-						{
-							name: "Target",
-							value: target?.toString() ?? "None",
-							inline: true
-						},
-						{
-							name: "Keyword",
-							value: keyword ?? "None",
-							inline: true
-						},
-						{
-							name: "Reason",
-							value: reason ?? "Unspecified",
-							inline: true
-						}
-					])
-			]
-		});
+				createSuccessEmbed(purgeMessage).addFields([
+					{
+						name: "Inverted?",
+						value: invert ? "Yes" : "No",
+						inline: true,
+					},
+					{
+						name: "Amount",
+						value: purgedCount.toString(),
+						inline: true,
+					},
+					{
+						name: "Target",
+						value: target ? target.toString() : "None",
+						inline: true,
+					},
+					{
+						name: "Keyword",
+						value: keyword ?? "None",
+					},
+					{
+						name: "Channel",
+						value: channel.toString(),
+					},
+					{
+						name: "Reason",
+						value: reason ?? "Unspecified",
+					},
+				]),
+			],
+		};
+		if (fromForcePurge) {
+			aftermath.embeds!.push(
+				createInfoEmbed("Okay, *here goes nothing*.", "You have chosen to proceed with the purge operation.")
+			);
+			aftermath.components = [selectOnceButton(responseButtons(), 0, "Proceeded.", ButtonStyle.Success)];
+			await forcePurgeButtonInteraction!.editReply(aftermath);
+		} else {
+			await safePurgeCommandInteraction!.editReply(aftermath);
+		}
+	}
+
+	@ButtonComponent({ id: "forcePurge" })
+	async confirmPurge(interaction: ButtonInteraction): Promise<void> {
+		try {
+			const channel = <TextChannel>interaction.channel;
+			const edgeCasePurgeState = this.edgeCasePurgeStates.get(channel)!;
+			if (interaction.user.id !== edgeCasePurgeState.interactor.id) {
+				await tryDeferring(interaction, { ephemeral: true });
+				await interaction.editReply({
+					embeds: [
+						createErrorEmbed(
+							"Hey! Only the person who initiated the purge operation can proceed with it.",
+							"You do not match with the person who initiated the purge operation.",
+							"Please ask them to confirm the operation."
+						),
+					],
+				});
+			} else {
+				await interaction.deferUpdate();
+				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
+				this.edgeCasePurgeStates.delete(channel);
+			}
+		} catch (e) {} // In case the Sentinel instance is reset and the purge state is lost.
+	}
+
+	@ButtonComponent({ id: "cancelPurge" })
+	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
+		try {
+			const originalInteractorId = this.edgeCasePurgeStates.get(<TextChannel>interaction.channel)!.interactor.id;
+			if (interaction.user.id !== originalInteractorId) {
+				await tryDeferring(interaction, { ephemeral: true });
+				await interaction.editReply({
+					embeds: [
+						createErrorEmbed(
+							"Hey! Only the person who initiated the purge operation can cancel it.",
+							"You do not match with the person who initiated the purge operation.",
+							"Please ask them to cancel the operation."
+						),
+					],
+				});
+			} else {
+				await interaction.deferUpdate();
+				await interaction.editReply({
+					components: [selectOnceButton(responseButtons(), 1, "Cancelled.", ButtonStyle.Success)],
+					embeds: [
+						createInfoEmbed(
+							"That was a close one.",
+							"You have chosen to not follow through with the purge operation."
+						),
+					],
+				});
+			}
+		} catch (e) {} // Line 250
 	}
 }

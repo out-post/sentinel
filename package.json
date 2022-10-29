@@ -1,6 +1,6 @@
 {
 	"name": "tsentinel",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"private": true,
 	"license": "Sentinel-License",
 	"type": "module",
@@ -9,7 +9,8 @@
 		"build": "tsc",
 		"exec": "ts-node-esm src/main.ts",
 		"watch": "nodemon --exec ts-node-esm src/main.ts",
-		"test-import": "ts-node-esm src/test-import.ts"
+		"test-import": "ts-node-esm src/test-import.ts",
+		"pre-commit": "npx prettier --write . && npx eslint --fix && npm ci"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.1.0",
@@ -25,7 +26,10 @@
 	"devDependencies": {
 		"@types/node": "^18.7.14",
 		"@types/pluralize": "^0.0.29",
+		"@typescript-eslint/eslint-plugin": "^5.41.0",
+		"@typescript-eslint/parser": "^5.41.0",
 		"dotenv": "^16.0.3",
+		"eslint": "^8.26.0",
 		"nodemon": "^2.0.19",
 		"prettier": "^2.7.1",
 		"ts-node": "^10.9.1",

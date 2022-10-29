@@ -1,0 +1,10 @@
+{
+	"printWidth": 120,
+	"tabWidth": 4,
+	"useTabs": true,
+	"semi": true,
+	"quoteProps": "as-needed",
+	"bracketSpacing": true,
+	"arrowParens": "always",
+	"endOfLine": "lf"
+}

@@ -7,7 +7,7 @@ import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
 export class Changelog {
 	@Slash({
 		name: "changelog",
-		description: "Displays the changelog for the specified version"
+		description: "Displays the changelog for the specified version",
 	})
 	async changelog(
 		@SlashChoice(...getAllVersionStrings())
@@ -15,9 +15,9 @@ export class Changelog {
 			name: "version",
 			description: "The version to display the changelog for. If not specified, the latest version will be used.",
 			type: ApplicationCommandOptionType.String,
-			required: false
+			required: false,
 		})
-			version: string | undefined,
+		version: string | undefined,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
@@ -29,17 +29,12 @@ export class Changelog {
 						`Invalid version for TSentinel: ${version}`,
 						"You might have mistyped the version, or the version might not exist.",
 						"Choose one version from the autocomplete list."
-					)
-				]
+					),
+				],
 			});
 		} else {
 			await interaction.editReply({
-				embeds: [
-					createInfoEmbed(
-						"Changelog",
-						`**Version:** ${version}\n\n>>> ${getChangelog(version)}`
-					)
-				]
+				embeds: [createInfoEmbed("Changelog", `**Version:** ${version}\n\n>>> ${getChangelog(version)}`)],
 			});
 		}
 	}

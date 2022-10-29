@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`kick target [--reason reason]` 
+`kick target [--reason reason]`
 
 ## DESCRIPTION
 
