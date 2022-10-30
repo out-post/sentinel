@@ -2,7 +2,7 @@ import { dirname, importx } from "@discordx/importer";
 import { Client } from "discordx";
 import { config as dotenvConfig } from "dotenv";
 import "reflect-metadata";
-import * as mongoose from "mongoose";
+import * as mongoose from "mongoose"; // skipcq JS-C1003git ocmmit -a
 
 dotenvConfig();
 
@@ -13,7 +13,7 @@ export const bot = new Client({
 });
 
 async function run() {
-	await mongoose.connect(process.env.MONGODB_URI!).catch(console.error);
+	await mongoose.connect(process.env.MONGODB_URI!);
 	await importx(`${dirname(import.meta.url)}/{events,commands}/**/*.{ts,js}`);
 	void bot.login(process.env.DISCORD_BOT_TOKEN!, true);
 }

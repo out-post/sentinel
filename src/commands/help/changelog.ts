@@ -26,7 +26,7 @@ export class Changelog {
 			await interaction.editReply({
 				embeds: [
 					createErrorEmbed(
-						`Invalid version for TSentinel: ${version}`,
+						`Invalid version for TSentinel: ${version}`, // skipcq: JS-0378
 						"You might have mistyped the version, or the version might not exist.",
 						"Choose one version from the autocomplete list."
 					),
@@ -34,7 +34,7 @@ export class Changelog {
 			});
 		} else {
 			await interaction.editReply({
-				embeds: [createInfoEmbed("Changelog", `**Version:** ${version}\n\n>>> ${getChangelog(version)}`)],
+				embeds: [createInfoEmbed("Changelog", `**Version:** ${version}\n\n>>> ${getChangelog(version)}`)], // skipcq: JS-0378
 			});
 		}
 	}
