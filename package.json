@@ -10,6 +10,7 @@
 		"exec": "ts-node-esm src/main.ts",
 		"watch": "nodemon --exec ts-node-esm src/main.ts",
 		"test-import": "ts-node-esm src/test-import.ts",
+		"lint": "npx prettier --write . && npx eslint --extZ",
 		"pre-commit": "npx prettier --write . && npx eslint --fix && npm ci"
 	},
 	"dependencies": {
@@ -33,7 +34,8 @@
 		"nodemon": "^2.0.20",
 		"prettier": "^2.7.1",
 		"ts-node": "^10.9.1",
-		"typescript": "4.8.4"
+		"typescript": "^4.8.4",
+		"typescript-eslint": "^0.0.1-alpha.0"
 	},
 	"engines": {
 		"node": ">=16.0.0",
