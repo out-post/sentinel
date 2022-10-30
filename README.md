@@ -39,8 +39,6 @@ Sentinel is a brand name - **NOT THIS PRODUCT'S NAME**. This repository, and the
 to diverge into Sentinel Guardian and **be renamed** into Sentinel Bodyguard in 2024. Until then, "Sentinel" and "
 Sentinel Bodyguard" are still suitable names for this product.
 
-We are in **desperate need for a new logo.**
-
 ### 🪪 Licensing
 
 This project is licensed under a custom license made only for this bot. While it is not possible to redistribute the
