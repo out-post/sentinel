@@ -1,9 +1,9 @@
-import {ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField} from "discord.js";
-import {Discord, Slash, SlashOption} from "discordx";
-import {Compare} from "../../util/compare.js";
-import {createErrorEmbed, createInfoEmbed, createSuccessEmbed} from "../../util/embed.js";
-import {compareRoles} from "../../util/precheck.js";
-import {getName} from "../../util/query.js";
+import { ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField } from "discord.js";
+import { Discord, Slash, SlashOption } from "discordx";
+import { Compare } from "../../util/compare.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed } from "../../util/embed.js";
+import { compareRoles } from "../../util/precheck.js";
+import { getName } from "../../util/query.js";
 
 @Discord()
 export class Kick {
@@ -19,14 +19,14 @@ export class Kick {
 			type: ApplicationCommandOptionType.User,
 			required: true,
 		})
-			target: GuildMember,
+		target: GuildMember,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the kick",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-			reason: string | undefined,
+		reason: string | undefined,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
@@ -40,7 +40,7 @@ export class Kick {
 				embeds: [
 					createInfoEmbed("Kicked!", `You have been kicked from ${interaction.guild!.name}.`)
 						.setTitle("Kicked! :mans_shoe:")
-						.addFields([{name: "Reason", value: reason, inline: true}])
+						.addFields([{ name: "Reason", value: reason, inline: true }])
 						.setTimestamp(interaction.createdTimestamp),
 				],
 			});
@@ -49,7 +49,7 @@ export class Kick {
 
 			embedArray.push(
 				createSuccessEmbed(`Successfully kicked ${getName(target.user)}.`).addFields([
-					{name: "Reason", value: reason, inline: false},
+					{ name: "Reason", value: reason, inline: false },
 				])
 			);
 		} else {
@@ -58,11 +58,11 @@ export class Kick {
 					`Failed to kick ${getName(target.user)}, because __you don't have enough permissions.__`,
 					"_**Insufficient permissions**_: User's highest role is **smaller** than the target's highest role.",
 					"Make sure **your** highest role is **larger than the target's** highest role." +
-					" How would kicking upwards even work logistically?"
+						" How would kicking upwards even work logistically?"
 				)
 			);
 		}
 
-		await interaction.followUp({embeds: embedArray});
+		await interaction.followUp({ embeds: embedArray });
 	}
 }

@@ -1,6 +1,6 @@
-import {dirname, importx} from "@discordx/importer";
-import {Client} from "discordx";
-import {config as dotenvConfig} from "dotenv";
+import { dirname, importx } from "@discordx/importer";
+import { Client } from "discordx";
+import { config as dotenvConfig } from "dotenv";
 import "reflect-metadata";
 import * as mongoose from "mongoose";
 

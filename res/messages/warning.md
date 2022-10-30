@@ -30,7 +30,8 @@ I would have **killed** you three times if I was sentient.
 Warning: _This is a distraction!_
 Please keep your distance _four dancing penguins apart_.
 Zombie outbreak!
-If this warning is not enough **by all means** try again and see what happens. _Not that it's going to change or anything._
+If this warning is not enough **by all means** try again and see what happens. _Not that it's going to change or
+anything._
 **Quit hiding the bodies**, they are coming!
 **_you have been warned_**
 sudo rm -rf /
