@@ -10,8 +10,8 @@
 		"exec": "ts-node-esm src/main.ts",
 		"watch": "nodemon --exec ts-node-esm src/main.ts",
 		"test-import": "ts-node-esm src/test-import.ts",
-		"lint": "npx prettier --write . && npx eslint --extZ",
-		"pre-commit": "npx prettier --write . && npx eslint --fix && npm ci"
+		"lint": "npx eslint src/**/*.ts",
+		"pre-commit": "npx prettier --write src/**/*.ts && npx eslint --fix src/**/*.ts && npm i"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
@@ -20,6 +20,7 @@
 		"@types/node": "^18.11.7",
 		"discord.js": "^14.6.0",
 		"discordx": "^11.4.0",
+		"mongoose": "^6.7.0",
 		"pluralize": "^8.0.0",
 		"reflect-metadata": "^0.1.13",
 		"util": "^0.12.5"
@@ -31,6 +32,7 @@
 		"@typescript-eslint/parser": "^5.41.0",
 		"dotenv": "^16.0.3",
 		"eslint": "^8.26.0",
+		"eslint-config-prettier": "^8.5.0",
 		"nodemon": "^2.0.20",
 		"prettier": "^2.7.1",
 		"ts-node": "^10.9.1",

@@ -21,7 +21,7 @@ export class Changelog {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
-		version = version ?? <string>process.env.npm_package_version;
+		version = version ?? process.env.npm_package_version!;
 		if (!getAllVersionStrings().includes(version) && version !== getLatestVersionNumber()) {
 			await interaction.editReply({
 				embeds: [

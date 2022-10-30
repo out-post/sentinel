@@ -1,6 +1,6 @@
 import { GuildMember, TextChannel, User } from "discord.js";
 
-export type PurgeConfiguration = {
+export interface PurgeConfiguration {
 	channel: TextChannel;
 	replyId: string;
 	interactor: User;
@@ -9,9 +9,9 @@ export type PurgeConfiguration = {
 	target?: GuildMember;
 	keyword?: string;
 	reason?: string;
-};
+}
 
-export type EdgeCaseState = {
+export interface EdgeCaseState {
 	isEdgeCase: boolean;
 	message?: string;
-};
+}

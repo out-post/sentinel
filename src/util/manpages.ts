@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "fs";
 
 const files: string[] = readdirSync("res/manpages");
-export const manpages: Map<string, string> = new Map();
+export const manpages = new Map<string, string>();
 
 for (const file of files) {
 	const contents = readFileSync(`res/manpages/${file}`, "utf-8");

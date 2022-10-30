@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "fs";
 
 const files: string[] = readdirSync("res/changelogs");
 
-export const changelogs: Map<string, string> = new Map();
+export const changelogs = new Map<string, string>();
 for (const file of files) {
 	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
 	const lines = changelog.split("\n");

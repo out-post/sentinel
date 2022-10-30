@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "fs";
 
 const files: string[] = readdirSync("res/messages");
 export type Category = "ban" | "error" | "warning" | "success" | "info";
-export const messages: { [key: string]: string[] } = {};
+export const messages: Record<string, string[]> = {};
 
 for (const file of files) {
 	messages[file.split(".")[0]] = readFileSync(`res/messages/${file}`, "utf-8").split("\n");

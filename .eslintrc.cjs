@@ -1,19 +1,29 @@
 module.exports = {
-	extends: [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking",
-		"plugin:@typescript-eslint/strict",
-		"prettier"
-	],
-	parser: "@typescript-eslint/parser",
+	root: true,
+	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		tsconfigRootDir: __dirname,
-		project: ["./tsconfig.json"]
+		project: ['./tsconfig.json'],
 	},
-	compilerOptions: {
-		"noEmit": true
+	plugins: ['@typescript-eslint'],
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
+		'plugin:@typescript-eslint/strict',
+		'prettier',
+	],
+	rules: {
+		"quotes": ["error", "double"],
+		"semi": ["error", "always"],
 	},
-	plugins: ["@typescript-eslint"],
-	root: true
+	overrides: [
+		{
+			files: ["*.ts"],
+			rules: {
+				"no-empty": "off",
+				"@typescript-eslint/no-non-null-assertion": "off",
+			}
+		}
+	]
 };

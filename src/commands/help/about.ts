@@ -10,7 +10,7 @@ export class About {
 		description: "Displays general information about the bot",
 	})
 	async about(interaction: CommandInteraction): Promise<void> {
-		const latestVersion = <string>process.env.npm_package_version;
+		const latestVersion = process.env.npm_package_version!;
 		await interaction.reply({
 			embeds: [
 				createInfoEmbed(

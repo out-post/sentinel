@@ -1,9 +1,9 @@
-import { ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
-import { Compare } from "../../util/compare.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
-import { compareRoles } from "../../util/precheck.js";
-import { getName } from "../../util/query.js";
+import {ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField} from "discord.js";
+import {Discord, Slash, SlashOption} from "discordx";
+import {Compare} from "../../util/compare.js";
+import {createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed} from "../../util/embed.js";
+import {compareRoles} from "../../util/precheck.js";
+import {getName} from "../../util/query.js";
 
 @Discord()
 export class Ban {
@@ -19,44 +19,44 @@ export class Ban {
 			type: ApplicationCommandOptionType.User,
 			required: true,
 		})
-		target: GuildMember,
+			target: GuildMember,
 		@SlashOption({
 			name: "cleanup",
 			description: "Whether to cleanup messages from the banned user",
 			type: ApplicationCommandOptionType.Boolean,
 			required: true,
 		})
-		cleanup: boolean,
+			cleanup: boolean,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the ban",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason: string | undefined,
+			reason: string | undefined,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
 
-		const commander = <GuildMember>interaction.member;
-		reason = reason || "Unspecified";
+		const commander = interaction.member as GuildMember;
+		reason = reason ?? "Unspecified";
 
 		const embedArray = [];
 		if (compareRoles(commander, target) === Compare.LARGER) {
-			await target.ban(cleanup ? { reason: reason } : { deleteMessageDays: 7, reason: reason });
+			await target.ban(cleanup ? {reason: reason} : {deleteMessageDays: 7, reason: reason});
 
 			embedArray.push(
 				createSuccessEmbed(`Successfully banned ${getName(target.user)}.`).addFields([
-					{ name: "Reason", value: reason, inline: false },
+					{name: "Reason", value: reason, inline: false},
 				])
 			);
 
 			await target
 				.send({
 					embeds: [
-						createInfoEmbed("Banned!", `You have been banned from ${interaction.guild?.name}.`)
+						createInfoEmbed("Banned!", `You have been banned from ${interaction.guild!.name}.`)
 							.setTitle("Banned! :hammer:")
-							.addFields([{ name: "Reason", value: reason, inline: true }])
+							.addFields([{name: "Reason", value: reason, inline: true}])
 							.setTimestamp(interaction.createdTimestamp),
 					],
 				})
@@ -82,6 +82,6 @@ export class Ban {
 			);
 		}
 
-		await interaction.followUp({ embeds: embedArray });
+		await interaction.followUp({embeds: embedArray});
 	}
 }

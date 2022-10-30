@@ -47,7 +47,7 @@ We have a few requirements when it comes to annotating types:
 - Functions, methods and arguments **must** be annotated.
 - Variables must be annotated if they are not initialized with a value.
 - If a variable is initialized with a value, it must be annotated if the type of the value is not obvious.
-- Type assertions use the `<>` syntax, not the `as` keyword.
+- Type assertions use the `as` keyword over the `<>` syntax.
 - Never use `any`. When in doubt, please use `unknown`.
 
 Otherwise, happy coding!
