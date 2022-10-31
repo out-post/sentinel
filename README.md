@@ -18,18 +18,18 @@ This bot aims to be an all-in-one solution for server owners, providing a variet
 to make server management easier.
 These features, whether implemented or on the roadmap, are listed below:
 
--   Moderation tool suite: Commands, infraction system, censorship, and more.
--   Raid prevention and verification.
--   Other features: Key guild data & visualizations, fun commands, and more!
+- Moderation tool suite: Commands, infraction system, censorship, and more.
+- Raid prevention and verification.
+- Other features: Key guild data & visualizations, fun commands, and more!
 
 More advanced features are expected to diverge into Sentinel Guardian.
 
 ## 🔧 Languages, Tools & Frameworks:
 
--   [Node.js](https://nodejs.org/en/)
--   [TypeScript](https://www.typescriptlang.org/)
--   [Discord.js](https://discord.js.org/#/)
--   [DiscordX](https://discordx.js.org/)
+- [Node.js](https://nodejs.org/en/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Discord.js](https://discord.js.org/#/)
+- [DiscordX](https://discordx.js.org/)
 
 ## 🤔 About...
 
