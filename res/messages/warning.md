@@ -26,7 +26,6 @@ I'd like to speak to the manager.
 _Adderall overdose much?_
 You are about to enter _Area 51_.
 Warning! _May contain small amounts of sarcasm_
-I would have **killed** you three times if I was sentient.
 Warning: _This is a distraction!_
 Please keep your distance _four dancing penguins apart_.
 Zombie outbreak!
@@ -34,6 +33,6 @@ If this warning is not enough **by all means** try again and see what happens. _
 anything._
 **Quit hiding the bodies**, they are coming!
 **_you have been warned_**
-sudo rm -rf /
+`sudo rm -rf /`
 Fart!
 **You're** the reason we put warning signs up for everyone.

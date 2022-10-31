@@ -1,3 +1,4 @@
+**ERROR!**
 Too bad.
 Unfortunate.
 **Big** whoopsies.
@@ -36,16 +37,10 @@ lmao error
 Estimated time: _32 years and counting..._
 Aw, snap!
 No- **BAD**! Not on the carpet.
-TS69420: Error: Program cannot comprehend dumb user input
-TypeError: Cannot read property 'sense' of dumbUserInput
-user.dumb ~= true
-userInput.sense === null
 _smth happened_
 This application encountered a fatal error. Stack trace: 0xDEADBEEF
-java.lang.NoSuchMethodError: dumbUserInput.makeSense()
-panic!(\"user input is dumb\")
-throw new Error(\"user input is dumb\")
-raise Error(\"user input is dumb\")
+`throw new Error('Something went wrong');`
+`panic!()`
 Segmentation fault (core dumped)
 `exit(-1)`
 **RTFM**

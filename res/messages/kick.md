@@ -1,8 +1,14 @@
 Dibs!
 **Kicked!**
 Booted from the club!
-There's a spider on the ceiling!
 Dumped!
 Out you go.
 **Knock, knock!** _Who's there?_ **_THE DOOR!_**
-Big Black Suit Joey said "nay", unfortunately
+**--== KICK ==--**
+What's the **kick**er?
+Get outta here!
+Away, away!
+Blown out of the water! _No, like literally._
+**Evicted!**
+Removed from the guild!
+

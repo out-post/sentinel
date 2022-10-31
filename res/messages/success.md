@@ -10,3 +10,10 @@ Now I can go back to refactoring.
 No errors happened. Weird.
 **Why is this working???**
 Lucky.
+Bazinga!
+**--== SUCCESS ==--**
+Done!
+`exit(0)`
+You won the lottery!
+Mistakes? What mistakes?
+

@@ -53,4 +53,4 @@ We have a few requirements when it comes to annotating types:
 - Type assertions use the `as` keyword over the `<>` syntax.
 - Never use `any`. When in doubt, please use `unknown`.
 
-Otherwise, happy coding!
+Happy coding!
