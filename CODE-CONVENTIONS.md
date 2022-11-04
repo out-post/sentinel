@@ -64,5 +64,11 @@ We have a few requirements when it comes to annotating types:
     if the type of the value is not obvious.
 -   Type assertions use the `as` keyword over the `<>` syntax.
 -   Never use `any`. When in doubt, please use `unknown`.
+-   Shorthand when you can, but don't care too much about it. We disabled this
+    rule for DeepSource already.
+-   Use `interface` over `type` for object type definitions.
+-   Always use template literals over string concatenation.
+-   It is best to compare `typeof x` against `"undefined"` instead of
+    `x === undefined`.
 
 Happy coding!

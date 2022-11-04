@@ -32,7 +32,6 @@ export function compare(a: number, b: number): Compare {
 		return Compare.SMALLER;
 	} else if (a === b) {
 		return Compare.EQUAL;
-	} else {
-		return Compare.LARGER;
 	}
+	return Compare.LARGER;
 }

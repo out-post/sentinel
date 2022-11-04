@@ -16,7 +16,7 @@ function processedManpage(contents: string): string {
 	const lines = contents.split("\n");
 	for (let i = 0; i < lines.length; i++) {
 		if (lines[i].startsWith("##")) {
-			lines[i] = lines[i].replace("##", "**") + "**";
+			lines[i] = `${lines[i].replace("##", "**")}**`;
 		}
 	}
 	return lines.join("\n");
