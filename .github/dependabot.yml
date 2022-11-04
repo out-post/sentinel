@@ -1,18 +1,18 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "08:00"
-      timezone: "Asia/Bangkok"
-    target-branch: "main"
-    open-pull-requests-limit: 10
-    allow:
-      - dependency-type: "direct"
-      - dependency-type: "development"
-    assignees:
-      - "developer-ramen"
-    reviewers:
-      - "developer-ramen"
+    - package-ecosystem: "npm"
+      directory: "/"
+      schedule:
+          interval: "weekly"
+          day: "monday"
+          time: "08:00"
+          timezone: "Asia/Bangkok"
+      target-branch: "main"
+      open-pull-requests-limit: 10
+      allow:
+          - dependency-type: "direct"
+          - dependency-type: "development"
+      assignees:
+          - "developer-ramen"
+      reviewers:
+          - "developer-ramen"

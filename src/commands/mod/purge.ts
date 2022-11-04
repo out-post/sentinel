@@ -13,31 +13,58 @@ import {
 } from "discord.js";
 import { EdgeCaseState, PurgeConfiguration } from "../types.js";
 import { noParametersProvided } from "../../util/precheck.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
+import {
+	createErrorEmbed,
+	createInfoEmbed,
+	createSuccessEmbed,
+	createWarningEmbed,
+} from "../../util/embed.js";
 import pluralize from "pluralize";
 import { selectOnceButton, tryDeferring } from "../../util/operation.js";
 
 // prettier-ignore
+/**
+ * Function for constructing a row of response buttons used in precaution embeds.
+ */
 function responseButtons(): ActionRowBuilder<ButtonBuilder> {
-  return new ActionRowBuilder<ButtonBuilder>().addComponents([
-    new ButtonBuilder()
-      .setCustomId("forcePurge")
-      .setLabel("Yes, still proceed.")
-      .setStyle(ButtonStyle.Danger),
+	return new ActionRowBuilder<ButtonBuilder>().addComponents([
+		new ButtonBuilder()
+			.setCustomId("forcePurge")
+			.setLabel("Yes, still proceed.")
+			.setStyle(ButtonStyle.Danger),
 
-    new ButtonBuilder()
-      .setCustomId("cancelPurge")
-      .setLabel("Oh, heavens no.")
-      .setStyle(ButtonStyle.Primary)
-  ]);
+		new ButtonBuilder()
+			.setCustomId("cancelPurge")
+			.setLabel("Oh, heavens no.")
+			.setStyle(ButtonStyle.Primary)
+	]);
 }
 
+/**
+ * Class for holding the /purge command.
+ */
 @Discord()
 export class Purge {
 	//prettier-ignore
+	/**
+	 * A map of channels to their respective edge case purge configurations.
+	 * This is only used to store edge case purge configurations. Do not put
+	 * any other configurations in here.
+	 */
 	edgeCasePurgeStates: Map<TextChannel, PurgeConfiguration>
-    = new Map<TextChannel, PurgeConfiguration>();
+		= new Map<TextChannel, PurgeConfiguration>();
 
+	/**
+	 * Internal method.
+	 * Purges messages.
+	 *
+	 * @param amount
+	 * @param target
+	 * @param keyword
+	 * @param reason
+	 * @param invert
+	 * @param interaction
+	 */
 	@Slash({
 		name: "purge",
 		description: "Purges messages from a channel",
@@ -103,6 +130,10 @@ export class Purge {
 		}
 	}
 
+	/**
+	 * Checks if a purge configuration is an edge case.
+	 * @param config
+	 */
 	isEdgeCase(config: PurgeConfiguration): EdgeCaseState {
 		let edgeCaseMessage: string | undefined;
 		const { amount, target, keyword, invert } = config;
@@ -118,51 +149,79 @@ export class Purge {
 
 		return {
 			isEdgeCase: edgeCaseMessage !== undefined,
-			message: edgeCaseMessage,
+			warningMessage: edgeCaseMessage,
 		};
 	}
 
-	async handleEdgeCases(interaction: CommandInteraction, config: PurgeConfiguration): Promise<void> {
+	/**
+	 * Handles edge cases, by sending a precaution if the configuration is an
+	 * edge case.
+	 * @param interaction
+	 * @param config
+	 */
+	async handleEdgeCases(
+		interaction: CommandInteraction,
+		config: PurgeConfiguration
+	): Promise<void> {
 		const edgeCaseState = this.isEdgeCase(config);
-		this.edgeCasePurgeStates.set(interaction.channel as TextChannel, config);
-		edgeCaseState.message += "\nDo you still want to follow through with the operation?";
+		this.edgeCasePurgeStates.set(
+			interaction.channel as TextChannel,
+			config
+		);
+		edgeCaseState.warningMessage +=
+			"\nDo you still want to follow through with the operation?";
 		await interaction.editReply({
 			components: [responseButtons()],
 			embeds: [
-				createWarningEmbed(edgeCaseState.message!).setFooter({
+				createWarningEmbed(edgeCaseState.warningMessage!).setFooter({
 					text: "This is a one-time choice.",
 				}),
 			],
 		});
 	}
 
+	/**
+	 * The actual deletion of the /purge command.
+	 * @param config
+	 */
 	async purgeDelete(config: PurgeConfiguration): Promise<number> {
 		const { channel, amount, target, keyword, invert } = config;
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 		// prettier-ignore
-		const messages = (await channel.messages.fetch({ limit: 100 })).filter((message) =>
-      message.deletable
-      && message.createdAt > twoWeeksAgo
-      && message.id !== config.replyId
-    );
+		const messages = (await channel.messages.fetch({limit: 100})).filter((message) =>
+			message.deletable
+			&& message.createdAt > twoWeeksAgo
+			&& message.id !== config.replyId
+		);
 
 		// prettier-ignore
 		const messagesMatchingFilter = messages.filter((message) =>
-      (!target || message.author.id === target.id)
-      && (!keyword || message.content.includes(keyword))
-    );
+			(!target || message.author.id === target.id)
+			&& (!keyword || message.content.includes(keyword))
+		);
 
+		// prettier-ignore
 		const purgelist = invert
 			? messages.filter((message) => !messagesMatchingFilter.has(message.id))
 			: messagesMatchingFilter;
 
-		const purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
+		const purgeAmount = amount
+			? Math.min(amount, purgelist.size)
+			: purgelist.size;
 
 		await channel.bulkDelete(purgelist.first(purgeAmount));
 		return purgeAmount;
 	}
 
+	/**
+	 * Handles the purge deletion, and the relevant dialogs.
+	 *
+	 * @param config
+	 * @param fromForcePurge
+	 * @param safePurgeCommandInteraction
+	 * @param forcePurgeButtonInteraction
+	 */
 	async purgeAction(
 		config: PurgeConfiguration,
 		fromForcePurge: boolean,
@@ -217,15 +276,29 @@ export class Purge {
 		};
 		if (fromForcePurge) {
 			aftermath.embeds!.push(
-				createInfoEmbed("Okay, *here goes nothing*.", "You have chosen to proceed with the purge operation.")
+				createInfoEmbed(
+					"Okay, *here goes nothing*.",
+					"You have chosen to proceed with the purge operation."
+				)
 			);
-			aftermath.components = [selectOnceButton(responseButtons(), 0, "Proceeded.", ButtonStyle.Success)];
+			aftermath.components = [
+				selectOnceButton(
+					responseButtons(),
+					0,
+					"Proceeded.",
+					ButtonStyle.Success
+				),
+			];
 			await forcePurgeButtonInteraction!.editReply(aftermath); // skipcq: JS-0349
 		} else {
 			await safePurgeCommandInteraction!.editReply(aftermath); // skipcq: JS-0349
 		}
 	}
 
+	/**
+	 * Handles the button for proceeding with an edge case purge.
+	 * @param interaction
+	 */
 	@ButtonComponent({ id: "forcePurge" })
 	async confirmPurge(interaction: ButtonInteraction): Promise<void> {
 		try {
@@ -244,18 +317,28 @@ export class Purge {
 				});
 			} else {
 				await interaction.deferUpdate();
-				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
+				await this.purgeAction(
+					edgeCasePurgeState,
+					true,
+					null,
+					interaction
+				);
 				this.edgeCasePurgeStates.delete(channel);
 			}
 		} catch (e) {} // skipcq: JS-0009
 		// In case the Sentinel instance is reset and the purge state is lost.
 	}
 
+	/**
+	 * Handles the button for cancelling an edge case purge.
+	 * @param interaction
+	 */
 	@ButtonComponent({ id: "cancelPurge" })
 	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
 		try {
-			const originalInteractorId = this.edgeCasePurgeStates.get(interaction.channel as TextChannel)!.interactor
-				.id;
+			const originalInteractorId = this.edgeCasePurgeStates.get(
+				interaction.channel as TextChannel
+			)!.interactor.id;
 			if (interaction.user.id !== originalInteractorId) {
 				await tryDeferring(interaction, { ephemeral: true });
 				await interaction.editReply({
@@ -270,7 +353,14 @@ export class Purge {
 			} else {
 				await interaction.deferUpdate();
 				await interaction.editReply({
-					components: [selectOnceButton(responseButtons(), 1, "Cancelled.", ButtonStyle.Success)],
+					components: [
+						selectOnceButton(
+							responseButtons(),
+							1,
+							"Cancelled.",
+							ButtonStyle.Success
+						),
+					],
 					embeds: [
 						createInfoEmbed(
 							"That was a close one.",

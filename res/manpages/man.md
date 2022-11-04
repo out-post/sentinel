@@ -4,23 +4,23 @@
 
 ## SYNOPSIS
 
-`man --command command`
+`man --command=""`
 
 ## DESCRIPTION
 
 Views a manpage for a command.
 
-You might have noticed that this and the manpage system is an exact rendition of the UNIX `man` command and the manpage
-system. Well... you're _not wrong_...
+You might have noticed that this and the manpage system is an exact rendition of
+the UNIX `man` command and the manpage system. Well, you're _not wrong_...
 
 ## OPTIONS
 
-`--command command`: The command to view the manpage of.
+`--command=""`: The command to view the manpage of.
 
 ## EXAMPLES
 
-`/command command=purge`: Views the manpage for the `purge` command.
+`/command command=/purge`: Views the manpage for the `purge` command.
 
 ## HISTORY
 
-`man` was introduced in TSentinel 0.0.2.
+`man` was introduced in Sentinel 0.0.2.

@@ -1,12 +1,31 @@
-import { ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	CommandInteraction,
+	GuildMember,
+	PermissionsBitField,
+} from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed } from "../../util/embed.js";
+import {
+	createErrorEmbed,
+	createInfoEmbed,
+	createSuccessEmbed,
+} from "../../util/embed.js";
 import { compareRoles } from "../../util/precheck.js";
 import { getName } from "../../util/query.js";
 
+/**
+ * Class for holding the /kick command.
+ */
 @Discord()
 export class Kick {
+	/**
+	 * Kicks a user.
+	 *
+	 * @param target
+	 * @param reason
+	 * @param interaction
+	 */
 	@Slash({
 		defaultMemberPermissions: PermissionsBitField.Flags.KickMembers,
 		description: "Kicks a user",
@@ -38,9 +57,14 @@ export class Kick {
 		if (compareRoles(commander, target) === Compare.LARGER) {
 			await target.send({
 				embeds: [
-					createInfoEmbed("Kicked!", `You have been kicked from ${interaction.guild!.name}.`)
+					createInfoEmbed(
+						"Kicked!",
+						`You have been kicked from ${interaction.guild!.name}.`
+					)
 						.setTitle("Kicked! :mans_shoe:")
-						.addFields([{ name: "Reason", value: reason, inline: true }])
+						.addFields([
+							{ name: "Reason", value: reason, inline: true },
+						])
 						.setTimestamp(interaction.createdTimestamp),
 				],
 			});
@@ -48,14 +72,16 @@ export class Kick {
 			await target.kick(reason);
 
 			embedArray.push(
-				createSuccessEmbed(`Successfully kicked ${getName(target.user)}.`).addFields([
-					{ name: "Reason", value: reason, inline: false },
-				])
+				createSuccessEmbed(
+					`Successfully kicked ${getName(target.user)}.`
+				).addFields([{ name: "Reason", value: reason, inline: false }])
 			);
 		} else {
 			embedArray.push(
 				createErrorEmbed(
-					`Failed to kick ${getName(target.user)}, because __you don't have enough permissions.__`,
+					`Failed to kick ${getName(
+						target.user
+					)}, because __you don't have enough permissions.__`,
 					"_**Insufficient permissions**_: User's highest role is **smaller** than the target's highest role.",
 					"Make sure **your** highest role is **larger than the target's** highest role." +
 						" How would kicking upwards even work logistically?"

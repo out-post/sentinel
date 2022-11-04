@@ -1,5 +1,8 @@
 import { GuildMember, TextChannel, User } from "discord.js";
 
+/**
+ * A configuration for the /purge command.
+ */
 export interface PurgeConfiguration {
 	channel: TextChannel;
 	replyId: string;
@@ -11,7 +14,10 @@ export interface PurgeConfiguration {
 	reason?: string;
 }
 
+/**
+ * The state that represents whether a case is an edge case or not.
+ */
 export interface EdgeCaseState {
 	isEdgeCase: boolean;
-	message?: string;
+	warningMessage?: string;
 }

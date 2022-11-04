@@ -8,9 +8,9 @@
 
 ## DESCRIPTION
 
-Displays the About embed. The embed consists of general information in regard to the bot, as well as the latest
-changelog.
+Displays the About embed. The embed consists of general information in regard to
+the bot, as well as the latest changelog.
 
 ## HISTORY
 
-`about` was introduced in TSentinel 0.0.2.
+`about` was introduced in Sentinel 0.0.2.

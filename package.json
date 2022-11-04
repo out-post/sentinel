@@ -8,11 +8,11 @@
 	"scripts": {
 		"build": "tsc",
 		"exec": "ts-node-esm src/main.ts",
-		"watch": "nodemon --exec ts-node-esm src/main.ts",
+		"watch": "nodemon --exec npm run exec",
 		"test-import": "ts-node-esm src/test-import.ts",
-		"lint": "npx eslint src --ext *.ts",
+		"lint": "npx eslint src/*.ts",
 		"format": "npx prettier --write src/**/*.ts",
-		"pre-commit": "npx prettier --write ./** && npx eslint src --fix *.ts && npm i"
+		"pre-commit": "npx prettier --write . && npx eslint src/*.ts --fix && npm i"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",

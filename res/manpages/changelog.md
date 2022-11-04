@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`changelog [--version version]`
+`changelog --version?=""`
 
 ## DESCRIPTION
 
@@ -12,7 +12,8 @@ Views a changelog from a version.
 
 ## OPTIONS
 
-`--version version`: The version to view. If not specified, the latest version will be viewed.
+`--version?=""`: The version to view. If not specified, the latest version will
+be viewed.
 
 ## EXAMPLES
 
@@ -22,4 +23,4 @@ Views a changelog from a version.
 
 ## HISTORY
 
-`version` was introduced in TSentinel 0.0.2.
+`version` was introduced in Sentinel 0.0.2.

@@ -1,12 +1,33 @@
-import { ApplicationCommandOptionType, CommandInteraction, GuildMember, PermissionsBitField } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	CommandInteraction,
+	GuildMember,
+	PermissionsBitField,
+} from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
+import {
+	createErrorEmbed,
+	createInfoEmbed,
+	createSuccessEmbed,
+	createWarningEmbed,
+} from "../../util/embed.js";
 import { compareRoles } from "../../util/precheck.js";
 import { getName } from "../../util/query.js";
 
+/**
+ * Class for holding the /ban command.
+ */
 @Discord()
 export class Ban {
+	/**
+	 * Bans a user.
+	 *
+	 * @param target
+	 * @param cleanup
+	 * @param reason
+	 * @param interaction
+	 */
 	@Slash({
 		description: "Bans a user",
 		name: "ban",
@@ -43,26 +64,41 @@ export class Ban {
 
 		const embedArray = [];
 		if (compareRoles(commander, target) === Compare.LARGER) {
-			await target.ban(cleanup ? { reason: reason } : { deleteMessageDays: 7, reason: reason });
+			await target.ban(
+				cleanup
+					? { reason: reason }
+					: { deleteMessageDays: 7, reason: reason }
+			);
 
 			embedArray.push(
-				createSuccessEmbed(`Successfully banned ${getName(target.user)}.`).addFields([
-					{ name: "Reason", value: reason, inline: false },
-				])
+				createSuccessEmbed(
+					`Successfully banned ${getName(target.user)}.`
+				).addFields([{ name: "Reason", value: reason, inline: false }])
 			);
 
 			await target
 				.send({
 					embeds: [
-						createInfoEmbed("Banned!", `You have been banned from ${interaction.guild!.name}.`)
+						createInfoEmbed(
+							"Banned!",
+							`You have been banned from ${
+								interaction.guild!.name
+							}.`
+						)
 							.setTitle("Banned! :hammer:")
-							.addFields([{ name: "Reason", value: reason, inline: true }])
+							.addFields([
+								{ name: "Reason", value: reason, inline: true },
+							])
 							.setTimestamp(interaction.createdTimestamp),
 					],
 				})
 				.then(() => {
 					embedArray.push(
-						createSuccessEmbed(`Target ${getName(target.user)} has been notified of their ban.`)
+						createSuccessEmbed(
+							`Target ${getName(
+								target.user
+							)} has been notified of their ban.`
+						)
 					);
 				})
 				.catch(() => {
@@ -75,7 +111,9 @@ export class Ban {
 		} else {
 			embedArray.push(
 				createErrorEmbed(
-					`Failed to ban ${getName(target.user)}, because __you don't have enough permissions.__`,
+					`Failed to ban ${getName(
+						target.user
+					)}, because __you don't have enough permissions.__`,
 					"_**Insufficient permissions**_: User's highest role is **smaller** than the target's highest role.",
 					"Make sure **your** highest role is **larger than the target's** highest role. After all, you can't ban upwards, can you?"
 				)
