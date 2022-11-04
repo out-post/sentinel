@@ -18,7 +18,7 @@
 		"@discordjs/collection": "^1.2.0",
 		"@discordjs/voice": "^0.13.0",
 		"@discordx/importer": "^1.1.10",
-		"@types/node": "^18.11.8",
+		"@types/node": "^18.11.9",
 		"discord.js": "^14.6.0",
 		"discordx": "^11.4.0",
 		"mongoose": "^6.7.1",
@@ -28,7 +28,7 @@
 		"util": "^0.12.5"
 	},
 	"devDependencies": {
-		"@types/node": "^18.11.8",
+		"@types/node": "^18.11.9",
 		"@types/pluralize": "^0.0.29",
 		"@typescript-eslint/eslint-plugin": "^5.42.0",
 		"@typescript-eslint/parser": "^5.41.0",
