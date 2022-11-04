@@ -66,6 +66,8 @@ Sentinel Guardian is expected to be a "Pro" or "Enterprise Version" of sorts.
 to use, with a few requirements before using it. Sentinel Guardian is expected
 to be closed-source, however.
 
+##
+
 ---
 
 Copyright (C) 2022 - Kisuzume & developer-ramen
