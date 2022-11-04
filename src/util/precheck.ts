@@ -1,5 +1,5 @@
-import {GuildMember} from "discord.js";
-import {compare, Compare} from "./compare.js";
+import { GuildMember } from "discord.js";
+import { compare, Compare } from "./compare.js";
 
 /**
  * Compares two members by their highest roles.
