@@ -1,11 +1,7 @@
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import {
-	getAllVersionStrings,
-	getChangelog,
-	getLatestVersionNumber,
-} from "../../util/changelogs.js";
-import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
+import {ApplicationCommandOptionType, CommandInteraction} from "discord.js";
+import {Discord, Slash, SlashChoice, SlashOption} from "discordx";
+import {getAllVersionStrings, getChangelog, getLatestVersionNumber,} from "../../util/changelogs.js";
+import {createErrorEmbed, createInfoEmbed} from "../../util/embed.js";
 
 /**
  * Class for holding the /changelog command.
@@ -54,6 +50,7 @@ export class Changelog {
 				embeds: [
 					createInfoEmbed(
 						"Changelog",
+						// skipcq: JS-0378
 						`**Version:** ${version}\n\n>>> ${getChangelog(
 							version
 						)}`

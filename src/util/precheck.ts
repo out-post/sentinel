@@ -1,5 +1,5 @@
-import { GuildMember } from "discord.js";
-import { compare, Compare } from "./compare.js";
+import {GuildMember} from "discord.js";
+import {compare, Compare} from "./compare.js";
 
 /**
  * Compares two members by their highest roles.
@@ -23,5 +23,5 @@ export function compareRoles(
  * @param params The parameters to check
  */
 export function noParametersProvided(params: unknown[]): boolean {
-	return params.every((param: unknown) => param === undefined);
+	return params.every((param: unknown) => typeof param === "undefined");
 }
