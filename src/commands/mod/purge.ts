@@ -1,4 +1,4 @@
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
+import {ButtonComponent, Discord, Slash, SlashOption} from "discordx";
 import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
@@ -11,16 +11,11 @@ import {
 	TextChannel,
 	WebhookEditMessageOptions,
 } from "discord.js";
-import { EdgeCaseState, PurgeConfiguration } from "../types.js";
-import { noParametersProvided } from "../../util/precheck.js";
-import {
-	createErrorEmbed,
-	createInfoEmbed,
-	createSuccessEmbed,
-	createWarningEmbed,
-} from "../../util/embed.js";
+import {EdgeCaseState, PurgeConfiguration} from "../types.js";
+import {noParametersProvided} from "../../util/precheck.js";
+import {createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed,} from "../../util/embed.js";
 import pluralize from "pluralize";
-import { selectOnceButton, tryDeferring } from "../../util/operation.js";
+import {selectOnceButton, tryDeferring} from "../../util/operation.js";
 
 // prettier-ignore
 /**
@@ -310,7 +305,7 @@ export class Purge {
 					embeds: [
 						createErrorEmbed(
 							"Hey! Only the person who initiated the purge operation can proceed with it.",
-							"You do not match with the person who initiated the purge operation.",
+							`You are not the person who initiated the purge operation: ${edgeCasePurgeState.interactor.toString()}`,
 							"Please ask them to confirm the operation."
 						),
 					],
@@ -336,16 +331,16 @@ export class Purge {
 	@ButtonComponent({ id: "cancelPurge" })
 	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
 		try {
-			const originalInteractorId = this.edgeCasePurgeStates.get(
+			const originalInteractor = this.edgeCasePurgeStates.get(
 				interaction.channel as TextChannel
-			)!.interactor.id;
-			if (interaction.user.id !== originalInteractorId) {
+			)!.interactor;
+			if (interaction.user.id !== originalInteractor.id) {
 				await tryDeferring(interaction, { ephemeral: true });
 				await interaction.editReply({
 					embeds: [
 						createErrorEmbed(
 							"Hey! Only the person who initiated the purge operation can cancel it.",
-							"You do not match with the person who initiated the purge operation.",
+							`You are not the person who initiated the purge operation: ${originalInteractor.toString()}`,
 							"Please ask them to cancel the operation."
 						),
 					],
