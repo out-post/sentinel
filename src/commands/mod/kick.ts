@@ -45,15 +45,13 @@ export class Kick {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason: string | undefined,
+		reason = "Unspecified",
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
-
 		const commander = interaction.member as GuildMember;
-		reason = reason ?? "Unspecified";
-
 		const embedArray = [];
+
 		if (compareRoles(commander, target) === Compare.LARGER) {
 			await target.send({
 				embeds: [
