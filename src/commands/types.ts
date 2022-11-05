@@ -8,10 +8,10 @@ export interface PurgeConfiguration {
 	replyId: string;
 	interactor: User;
 	invert: boolean;
+	reason: string;
 	amount?: number;
 	target?: GuildMember;
 	keyword?: string;
-	reason?: string;
 }
 
 /**

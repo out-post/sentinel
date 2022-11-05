@@ -31,11 +31,10 @@ export class Changelog {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		version: string | undefined,
+		version: string = process.env.npm_package_version!,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: true });
-		version = version ?? process.env.npm_package_version!;
 		if (
 			!getAllVersionStrings().includes(version) &&
 			version !== getLatestVersionNumber()

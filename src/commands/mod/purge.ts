@@ -55,7 +55,6 @@ export class Purge {
 		= new Map<TextChannel, PurgeConfiguration>();
 
 	/**
-	 * Internal method.
 	 * Purges messages.
 	 *
 	 * @param amount
@@ -102,14 +101,14 @@ export class Purge {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason: string | undefined,
+		reason = "Unspecified",
 		@SlashOption({
 			name: "invert",
 			description: "Whether to invert the filter specified",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		})
-		invert: boolean | undefined,
+		invert = false,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
@@ -117,11 +116,11 @@ export class Purge {
 			channel: interaction.channel as TextChannel,
 			replyId: (await interaction.fetchReply()).id,
 			interactor: interaction.user,
-			invert: invert ?? false,
-			amount: amount,
-			target: target,
-			keyword: keyword,
-			reason: reason,
+			invert,
+			reason,
+			amount,
+			target,
+			keyword,
 		};
 		if (this.isEdgeCase(config).isEdgeCase) {
 			await this.handleEdgeCases(interaction, config);
@@ -269,7 +268,7 @@ export class Purge {
 					},
 					{
 						name: "Reason",
-						value: reason ?? "Unspecified",
+						value: reason,
 					},
 				]),
 			],
