@@ -1,5 +1,3 @@
-‌‌
-
 <div>
   <p align="center">
       <img src="https://i.imgur.com/zUKsSHE.png" width="600"/>
@@ -66,7 +64,30 @@ Sentinel Guardian is expected to be a "Pro" or "Enterprise Version" of sorts.
 to use, with a few requirements before using it. Sentinel Guardian is expected
 to be closed-source, however.
 
-##
+## 🧮 Setup
+
+### 📲 Prerequisites
+
+-   [Node.js](https://nodejs.org/en/) (preferably `v18.*`, as it has been
+    tested) (required to even run this project)
+-   [Git](https://git-scm.com/downloads) (optional for cloning and developing -
+    you can download the repository as a ZIP file otherwise)
+-   [A Discord application and bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+-   [A MongoDB cluster](https://www.mongodb.com/) (required)
+
+### 📥 Installation
+
+1. Download the ZIP file for this repository, or `git clone` it.
+2. Run `npm install` to install the dependencies.
+3. Create a `.env` file in the root directory of the project, and add the
+   following:
+
+```env
+DISCORD_BOT_TOKEN=your-bot-token
+MONGO_URI=your-mongo-uri
+```
+
+4. Run `npm run exec` to run the project.
 
 ---
 
