@@ -4,28 +4,30 @@
 
 ## SYNOPSIS
 
-`ban --target=@user --cleanup?=y/n --reason?=""`
+`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"Unspecified"`
 
 ## DESCRIPTION
 
-Bans a member from the guild. Specifically, adds the user to the ban list. The
-user is removed from the guild and cannot rejoin in any way whatsoever.
+Bans a member from the guild. Specifically, adds the user to the ban list. The user is removed from the guild and cannot
+rejoin in any way whatsoever.
 
 ## OPTIONS
 
-`--target=@user`: The target to be banned.
+`target:@user`: The target to be banned.
 
-`--cleanup?=y/n`: Deletes the last 7 days of messages from the user.
+`cleanup?:y/n`: Deletes the last 7 days of messages from the user.
 
-`--reason?=""`: The reason for the ban. If not specified, the reason will be
-"Unspecified".
+`notify?:y/n`: Notifies the user that they have been banned.
+
+`suppress?:false`: Suppresses all output.
+
+`reason?:"Unspecified"`: The reason for the ban. If not specified, the reason will be "Unspecified".
 
 ## EXAMPLES
 
-`/ban target=@user`: Bans the user from the guild.
+`/ban target:@user`: Bans the user from the guild.
 
-`/ban target=@user cleanup=True reason="Example reason"`: Bans the user,
-supplies a ban reason and performs cleanup.
+`/ban target:@user cleanup:True reason:"Example reason"`: Bans the user, supplies a ban reason and performs cleanup.
 
 ## SEE ALSO
 
@@ -37,5 +39,5 @@ supplies a ban reason and performs cleanup.
 
 ## BUGS
 
-`target` might accept a user ID instead of a mention. This might cause the bot
-to look for that ID in the guild, which might fail.
+`target` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which
+might fail.

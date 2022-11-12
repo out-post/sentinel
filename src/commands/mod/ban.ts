@@ -1,19 +1,16 @@
+import { Discord, Slash, SlashOption } from "discordx";
 import {
 	ApplicationCommandOptionType,
 	CommandInteraction,
+	EmbedBuilder,
 	GuildMember,
 	PermissionsBitField,
 } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
-import { Compare } from "../../util/compare.js";
-import {
-	createErrorEmbed,
-	createInfoEmbed,
-	createSuccessEmbed,
-	createWarningEmbed,
-} from "../../util/embed.js";
+import { UserOrMember } from "../types.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import { compareRoles } from "../../util/precheck.js";
-import { getName } from "../../util/query.js";
+import { Compare } from "../../util/compare.js";
+import { editReplyIfSuppressed } from "../../util/operation.js";
 
 /**
  * Class for holding the /ban command.
@@ -21,10 +18,12 @@ import { getName } from "../../util/query.js";
 @Discord()
 export class Ban {
 	/**
-	 * Bans a user.
+	 * Bans a target.
 	 *
 	 * @param target
 	 * @param cleanup
+	 * @param notify
+	 * @param suppress
 	 * @param reason
 	 * @param interaction
 	 */
@@ -40,7 +39,7 @@ export class Ban {
 			type: ApplicationCommandOptionType.User,
 			required: true,
 		})
-		target: GuildMember,
+		target: UserOrMember,
 		@SlashOption({
 			name: "cleanup",
 			description: "Whether to cleanup messages from the banned user",
@@ -48,6 +47,20 @@ export class Ban {
 			required: true,
 		})
 		cleanup: boolean,
+		@SlashOption({
+			name: "notify",
+			description: "Send a DM to notify the target",
+			type: ApplicationCommandOptionType.Boolean,
+			required: true,
+		})
+		notify: boolean,
+		@SlashOption({
+			name: "suppress",
+			description: "Whether to suppress output",
+			type: ApplicationCommandOptionType.Boolean,
+			required: false,
+		})
+		suppress = false,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the ban",
@@ -57,67 +70,58 @@ export class Ban {
 		reason = "Unspecified",
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply();
-		const commander = interaction.member as GuildMember;
-		const embedArray = [];
+		await interaction.deferReply({ ephemeral: suppress });
+		const embeds: EmbedBuilder[] = [];
+		if (target instanceof GuildMember) {
+			if (compareRoles(interaction.member as GuildMember, target) === Compare.LARGER) {
+				embeds.push(createSuccessEmbed(`Successfully banned ${target.user.toString()}.`));
 
-		if (compareRoles(commander, target) === Compare.LARGER) {
-			await target.ban(
-				cleanup
-					? { reason: reason }
-					: { deleteMessageDays: 7, reason: reason }
-			);
+				if (notify) {
+					await target
+						.send({
+							embeds: [
+								createInfoEmbed(
+									"Banned!",
+									`You have been banned from ${interaction.guild!.name}!\nReason: ${reason}`
+								),
+							],
+						})
+						.then(() => {
+							embeds.push(createSuccessEmbed(`Notified ${target.user.toString()} of their ban.`));
+						})
+						.catch(() => {
+							embeds.push(
+								createWarningEmbed(
+									`Unable to DM ${target.toString()}. \
+									They will not be notified of their ban from this server.`
+								)
+							);
+						});
+				}
 
-			embedArray.push(
-				createSuccessEmbed(
-					`Successfully banned ${getName(target.user)}.`
-				).addFields([{ name: "Reason", value: reason, inline: false }])
-			);
-
-			await target
-				.send({
-					embeds: [
-						createInfoEmbed(
-							"Banned!",
-							`You have been banned from ${
-								interaction.guild!.name
-							}.`
-						)
-							.setTitle("Banned! :hammer:")
-							.addFields([
-								{ name: "Reason", value: reason, inline: true },
-							])
-							.setTimestamp(interaction.createdTimestamp),
-					],
-				})
-				.then(() => {
-					embedArray.push(
-						createSuccessEmbed(
-							`Target ${getName(
-								target.user
-							)} has been notified of their ban.`
-						)
-					);
-				})
-				.catch(() => {
-					embedArray.push(
-						createWarningEmbed(
-							`Unable to DM ${target.displayName}. They will not be notified that they have been banned from this server.`
-						)
-					);
+				await target.ban({
+					deleteMessageDays: cleanup ? 7 : undefined, // skipcq JS-0127
+					reason: reason,
 				});
+			} else {
+				embeds.push(
+					createErrorEmbed(
+						`Unable to ban ${target.user.toString()}.`,
+						"Insufficient permissions: You can't ban a user that has a higher role than you!",
+						"Make sure your highest role is larger than the target's highest role."
+					)
+				);
+			}
 		} else {
-			embedArray.push(
+			embeds.push(
 				createErrorEmbed(
-					`Failed to ban ${getName(
-						target.user
-					)}, because __you don't have enough permissions.__`,
-					"_**Insufficient permissions**_: User's highest role is **smaller** than the target's highest role.",
-					"Make sure **your** highest role is **larger than the target's** highest role. After all, you can't ban upwards, can you?"
+					"You can't ban a user that isn't in the server!",
+					`${target.toString()} isn't in the server!`,
+					`Check if the user is actually in the server, though we do doubt that they are anyways. \
+					If you manually typed out the user's ID, make sure that it's correct.`
 				)
 			);
 		}
-
-		await interaction.followUp({ embeds: embedArray });
+		await editReplyIfSuppressed(interaction, suppress, embeds);
 	}
 }

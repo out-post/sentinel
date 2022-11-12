@@ -1,18 +1,16 @@
+import { Discord, Slash, SlashOption } from "discordx";
 import {
 	ApplicationCommandOptionType,
 	CommandInteraction,
+	EmbedBuilder,
 	GuildMember,
 	PermissionsBitField,
 } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
-import { Compare } from "../../util/compare.js";
-import {
-	createErrorEmbed,
-	createInfoEmbed,
-	createSuccessEmbed,
-} from "../../util/embed.js";
+import { UserOrMember } from "../types.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import { compareRoles } from "../../util/precheck.js";
-import { getName } from "../../util/query.js";
+import { Compare } from "../../util/compare.js";
+import { editReplyIfSuppressed } from "../../util/operation.js";
 
 /**
  * Class for holding the /kick command.
@@ -20,16 +18,18 @@ import { getName } from "../../util/query.js";
 @Discord()
 export class Kick {
 	/**
-	 * Kicks a user.
+	 * Kicks a target.
 	 *
 	 * @param target
+	 * @param notify
+	 * @param suppress
 	 * @param reason
 	 * @param interaction
 	 */
 	@Slash({
-		defaultMemberPermissions: PermissionsBitField.Flags.KickMembers,
-		description: "Kicks a user",
 		name: "kick",
+		description: "Kicks a user",
+		defaultMemberPermissions: PermissionsBitField.Flags.KickMembers,
 	})
 	async kick(
 		@SlashOption({
@@ -38,7 +38,21 @@ export class Kick {
 			type: ApplicationCommandOptionType.User,
 			required: true,
 		})
-		target: GuildMember,
+		target: UserOrMember,
+		@SlashOption({
+			name: "notify",
+			description: "Send a DM to notify the target",
+			type: ApplicationCommandOptionType.Boolean,
+			required: true,
+		})
+		notify: boolean,
+		@SlashOption({
+			name: "suppress",
+			description: "Whether to suppress output",
+			type: ApplicationCommandOptionType.Boolean,
+			required: false,
+		})
+		suppress = false,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the kick",
@@ -48,45 +62,55 @@ export class Kick {
 		reason = "Unspecified",
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply();
-		const commander = interaction.member as GuildMember;
-		const embedArray = [];
+		await interaction.deferReply({ ephemeral: suppress });
+		const embeds: EmbedBuilder[] = [];
+		if (target instanceof GuildMember) {
+			if (compareRoles(interaction.member as GuildMember, target) === Compare.LARGER) {
+				embeds.push(createSuccessEmbed(`Successfully kicked ${target.user.toString()}.`));
 
-		if (compareRoles(commander, target) === Compare.LARGER) {
-			await target.send({
-				embeds: [
-					createInfoEmbed(
-						"Kicked!",
-						`You have been kicked from ${interaction.guild!.name}.`
+				if (notify) {
+					await target
+						.send({
+							embeds: [
+								createInfoEmbed(
+									"Kicked!",
+									`You have been kicked from ${interaction.guild!.name}!\nReason: ${reason}`
+								),
+							],
+						})
+						.then(() => {
+							embeds.push(createSuccessEmbed(`Notified ${target.user.toString()} of their kick.`));
+						})
+						.catch(() => {
+							embeds.push(
+								createWarningEmbed(
+									`Failed to notify ${target.user.toString()} of their kick. \
+									They will not be notified of their kick from this server.`
+								)
+							);
+						});
+				}
+
+				await target.kick(reason);
+			} else {
+				embeds.push(
+					createErrorEmbed(
+						`Unable to kick ${target.user.toString()}`,
+						"Insufficient permissions: You can't kick a user that has a higher role than you!",
+						"Make sure your highest role is larger than the target's highest role."
 					)
-						.setTitle("Kicked! :mans_shoe:")
-						.addFields([
-							{ name: "Reason", value: reason, inline: true },
-						])
-						.setTimestamp(interaction.createdTimestamp),
-				],
-			});
-
-			await target.kick(reason);
-
-			embedArray.push(
-				createSuccessEmbed(
-					`Successfully kicked ${getName(target.user)}.`
-				).addFields([{ name: "Reason", value: reason, inline: false }])
-			);
+				);
+			}
 		} else {
-			embedArray.push(
+			embeds.push(
 				createErrorEmbed(
-					`Failed to kick ${getName(
-						target.user
-					)}, because __you don't have enough permissions.__`,
-					"_**Insufficient permissions**_: User's highest role is **smaller** than the target's highest role.",
-					"Make sure **your** highest role is **larger than the target's** highest role." +
-						" How would kicking upwards even work logistically?"
+					"You can't kick a user that isn't in the server!",
+					`${target.toString()} isn't in the server!`,
+					`Check if the user is actually in the server, though we do doubt that they are anyways. \
+				If you manually typed out the user's ID, make sure that it's correct.`
 				)
 			);
 		}
-
-		await interaction.followUp({ embeds: embedArray });
+		await editReplyIfSuppressed(interaction, suppress, embeds);
 	}
 }

@@ -13,12 +13,7 @@ import {
 } from "discord.js";
 import { EdgeCaseState, PurgeConfiguration } from "../types.js";
 import { noParametersProvided } from "../../util/precheck.js";
-import {
-	createErrorEmbed,
-	createInfoEmbed,
-	createSuccessEmbed,
-	createWarningEmbed,
-} from "../../util/embed.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import pluralize from "pluralize";
 import { selectOnceButton, tryDeferring } from "../../util/operation.js";
 
@@ -60,6 +55,7 @@ export class Purge {
 	 * @param amount
 	 * @param target
 	 * @param keyword
+	 * @param suppress
 	 * @param reason
 	 * @param invert
 	 * @param interaction
@@ -96,6 +92,13 @@ export class Purge {
 		})
 		keyword: string | undefined,
 		@SlashOption({
+			name: "suppress",
+			description: "Whether to suppress warning messages and output",
+			type: ApplicationCommandOptionType.Boolean,
+			required: false,
+		})
+		suppress = false,
+		@SlashOption({
 			name: "reason",
 			description: "The reason for purging messages",
 			type: ApplicationCommandOptionType.String,
@@ -111,20 +114,25 @@ export class Purge {
 		invert = false,
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply();
 		const config: PurgeConfiguration = {
 			channel: interaction.channel as TextChannel,
-			replyId: (await interaction.fetchReply()).id,
 			interactor: interaction.user,
 			invert,
+			suppress,
 			reason,
 			amount,
 			target,
 			keyword,
 		};
+		await interaction.deferReply({ ephemeral: suppress });
+		config.replyId = suppress ? undefined : (await interaction.fetchReply()).id; // skipcq JS-0127
+
 		if (this.isEdgeCase(config).isEdgeCase) {
 			await this.handleEdgeCases(interaction, config);
 		} else {
+			await interaction.editReply({
+				embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
+			});
 			await this.purgeAction(config, false, interaction, null);
 		}
 	}
@@ -134,21 +142,24 @@ export class Purge {
 	 * @param config
 	 */
 	isEdgeCase(config: PurgeConfiguration): EdgeCaseState {
-		let edgeCaseMessage: string | undefined;
-		const { amount, target, keyword, invert } = config;
-		if (noParametersProvided([amount, target, keyword])) {
-			edgeCaseMessage = invert
-				? "That does nothing! You can't invert the filter if you don't specify one!"
-				: "With no arguments, this command will delete all messages in the channel that are less than two weeks old!";
-		} else if (!noParametersProvided([target, keyword]) && invert) {
-			edgeCaseMessage =
-				"Inverting the filter while also specifying the target and/or keyword " +
-				"can potentially target a lot of messages!";
+		let warningMessage: string | undefined;
+		const { amount, target, keyword, invert, suppress } = config;
+
+		if (!suppress) {
+			if (noParametersProvided([amount, target, keyword])) {
+				warningMessage = invert
+					? "That does nothing! You can't invert the filter if you don't specify one!"
+					: "With no arguments, this command will delete all messages in the channel that are less than two weeks old!";
+			} else if (!noParametersProvided([target, keyword]) && invert) {
+				warningMessage =
+					"Inverting the filter while also specifying the target and/or keyword " +
+					"can potentially target a lot of messages!";
+			}
 		}
 
 		return {
-			isEdgeCase: typeof edgeCaseMessage !== "undefined",
-			warningMessage: edgeCaseMessage,
+			isEdgeCase: typeof warningMessage !== "undefined",
+			warningMessage,
 		};
 	}
 
@@ -158,17 +169,10 @@ export class Purge {
 	 * @param interaction
 	 * @param config
 	 */
-	async handleEdgeCases(
-		interaction: CommandInteraction,
-		config: PurgeConfiguration
-	): Promise<void> {
+	async handleEdgeCases(interaction: CommandInteraction, config: PurgeConfiguration): Promise<void> {
 		const edgeCaseState = this.isEdgeCase(config);
-		this.edgeCasePurgeStates.set(
-			interaction.channel as TextChannel,
-			config
-		);
-		edgeCaseState.warningMessage +=
-			"\nDo you still want to follow through with the operation?";
+		this.edgeCasePurgeStates.set(interaction.channel as TextChannel, config);
+		edgeCaseState.warningMessage += "\nDo you still want to follow through with the operation?";
 		await interaction.editReply({
 			components: [responseButtons()],
 			embeds: [
@@ -205,9 +209,7 @@ export class Purge {
 			? messages.filter((message) => !messagesMatchingFilter.has(message.id))
 			: messagesMatchingFilter;
 
-		const purgeAmount = amount
-			? Math.min(amount, purgelist.size)
-			: purgelist.size;
+		const purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
 
 		await channel.bulkDelete(purgelist.first(purgeAmount));
 		return purgeAmount;
@@ -227,71 +229,66 @@ export class Purge {
 		safePurgeCommandInteraction: CommandInteraction | null,
 		forcePurgeButtonInteraction: ButtonInteraction | null
 	): Promise<void> {
-		const { channel, invert, amount, target, keyword, reason } = config;
-		const purgedCount = await this.purgeDelete(config);
+		const { channel, invert, amount, target, keyword, suppress, reason } = config;
+		await this.purgeDelete(config).then(async (purgedCount) => {
+			if (!suppress) {
+				let purgeMessage;
+				if (purgedCount === 0) {
+					purgeMessage = "No messages";
+				} else if (amount && purgedCount < amount) {
+					purgeMessage = `Only ${pluralize("message", purgedCount, true)}`;
+				} else {
+					purgeMessage = `${pluralize("message", purgedCount, true)}`;
+				}
+				purgeMessage += ` ${pluralize("was", purgedCount)} purged.`;
 
-		let purgeMessage;
-		if (purgedCount === 0) {
-			purgeMessage = "No messages";
-		} else if (amount && purgedCount < amount) {
-			purgeMessage = `Only ${pluralize("message", purgedCount, true)}`;
-		} else {
-			purgeMessage = `${pluralize("message", purgedCount, true)}`;
-		}
-		purgeMessage += ` ${pluralize("was", purgedCount)} purged.`;
-
-		const aftermath: WebhookEditMessageOptions = {
-			embeds: [
-				createSuccessEmbed(purgeMessage).addFields([
-					{
-						name: "Inverted?",
-						value: invert ? "Yes" : "No",
-						inline: true,
-					},
-					{
-						name: "Amount",
-						value: purgedCount.toString(),
-						inline: true,
-					},
-					{
-						name: "Target",
-						value: target ? target.toString() : "None",
-						inline: true,
-					},
-					{
-						name: "Keyword",
-						value: keyword ?? "None",
-					},
-					{
-						name: "Channel",
-						value: channel.toString(), // eslint-disable-line @typescript-eslint/no-base-to-string
-					},
-					{
-						name: "Reason",
-						value: reason,
-					},
-				]),
-			],
-		};
-		if (fromForcePurge) {
-			aftermath.embeds!.push(
-				createInfoEmbed(
-					"Okay, *here goes nothing*.",
-					"You have chosen to proceed with the purge operation."
-				)
-			);
-			aftermath.components = [
-				selectOnceButton(
-					responseButtons(),
-					0,
-					"Proceeded.",
-					ButtonStyle.Success
-				),
-			];
-			await forcePurgeButtonInteraction!.editReply(aftermath); // skipcq: JS-0349
-		} else {
-			await safePurgeCommandInteraction!.editReply(aftermath); // skipcq: JS-0349
-		}
+				const aftermath: WebhookEditMessageOptions = {
+					embeds: [
+						createSuccessEmbed(purgeMessage).addFields([
+							{
+								name: "Inverted?",
+								value: invert ? "Yes" : "No",
+								inline: true,
+							},
+							{
+								name: "Amount",
+								value: purgedCount.toString(),
+								inline: true,
+							},
+							{
+								name: "Target",
+								value: target ? target.toString() : "None",
+								inline: true,
+							},
+							{
+								name: "Keyword",
+								value: keyword ?? "None",
+							},
+							{
+								name: "Channel",
+								value: channel.toString(), // eslint-disable-line @typescript-eslint/no-base-to-string
+							},
+							{
+								name: "Reason",
+								value: reason,
+							},
+						]),
+					],
+				};
+				if (fromForcePurge) {
+					aftermath.embeds!.push(
+						createInfoEmbed(
+							"Okay, *here goes nothing*.",
+							"You have chosen to proceed with the purge operation."
+						)
+					);
+					aftermath.components = [selectOnceButton(responseButtons(), 0, "Proceeded.", ButtonStyle.Success)];
+					await forcePurgeButtonInteraction!.editReply(aftermath); // skipcq: JS-0349
+				} else {
+					await safePurgeCommandInteraction!.editReply(aftermath); // skipcq: JS-0349
+				}
+			}
+		});
 	}
 
 	/**
@@ -316,12 +313,7 @@ export class Purge {
 				});
 			} else {
 				await interaction.deferUpdate();
-				await this.purgeAction(
-					edgeCasePurgeState,
-					true,
-					null,
-					interaction
-				);
+				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
 				this.edgeCasePurgeStates.delete(channel);
 			}
 		} catch (e) {} // skipcq: JS-0009
@@ -335,9 +327,7 @@ export class Purge {
 	@ButtonComponent({ id: "cancelPurge" })
 	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
 		try {
-			const originalInteractor = this.edgeCasePurgeStates.get(
-				interaction.channel as TextChannel
-			)!.interactor;
+			const originalInteractor = this.edgeCasePurgeStates.get(interaction.channel as TextChannel)!.interactor;
 			if (interaction.user.id !== originalInteractor.id) {
 				await tryDeferring(interaction, { ephemeral: true });
 				await interaction.editReply({
@@ -352,14 +342,7 @@ export class Purge {
 			} else {
 				await interaction.deferUpdate();
 				await interaction.editReply({
-					components: [
-						selectOnceButton(
-							responseButtons(),
-							1,
-							"Cancelled.",
-							ButtonStyle.Success
-						),
-					],
+					components: [selectOnceButton(responseButtons(), 1, "Cancelled.", ButtonStyle.Success)],
 					embeds: [
 						createInfoEmbed(
 							"That was a close one.",
