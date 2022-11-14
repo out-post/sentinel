@@ -11,7 +11,11 @@ import {
 	TextChannel,
 	WebhookEditMessageOptions,
 } from "discord.js";
-import { EdgeCaseState, ModularCategory, PurgeConfiguration } from "../types.js";
+import {
+	EdgeCaseState,
+	ModularCategory,
+	PurgeConfiguration,
+} from "../types.js";
 import { noParametersProvided } from "../../util/precheck.js";
 import {
 	createErrorEmbed,
