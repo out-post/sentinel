@@ -5,7 +5,10 @@ export type Category = "ban" | "error" | "warning" | "success" | "info";
 export const messages: Record<string, string[]> = {};
 
 for (const file of files) {
-	messages[file.split(".")[0]] = readFileSync(`res/messages/${file}`, "utf-8").split("\n");
+	messages[file.split(".")[0]] = readFileSync(
+		`res/messages/${file}`,
+		"utf-8"
+	).split("\n");
 }
 
 /**
@@ -14,5 +17,7 @@ for (const file of files) {
  * @param category
  */
 export function getRandomMessage(category: Category): string {
-	return messages[category][Math.floor(Math.random() * messages[category].length)];
+	return messages[category][
+		Math.floor(Math.random() * messages[category].length)
+	];
 }

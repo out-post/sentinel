@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`kick target:@usr, notify:y/n, suppress?:false, reason?:"Unspecified"`
+`kick --target=@usr --reason?=""`
 
 ## DESCRIPTION
 
@@ -12,23 +12,22 @@ Kicks a member from the guild. Specifically, removes the user from the guild.
 
 ## OPTIONS
 
-`target:@user`: The target to be banned.
+`--target=@user`: The target to be banned.
 
-`notify:y/n`: Notifies the user that they have been kicked.
-
-`suppress?:false`: Suppresses all output.
-
-`reason?:"Unspecified"`: The reason for the ban. If not specified, the reason will be "Unspecified".
+`--reason?=""`: The reason for the ban. If not specified, the reason will be
+"Unspecified".
 
 ## EXAMPLES
 
-`/kick target:@user`: Kicks the user from the guild.
+`/kick target=@user`: Kicks the user from the guild.
 
-`/ban target:@user reason:"Test"`: Kicks the user and supplies a kick reason: "Test".
+`/ban target=@user reason="Example reason"`: Kicks the user and supplies a kick
+reason.
 
 ## SEE ALSO
 
-`/ban`: A harsher alternative to kicking, also preventing the user from ever re-entering the guild.
+`/ban`: A harsher alternative to kicking, also preventing the user from ever
+re-entering the guild.
 
 ## HISTORY
 
@@ -36,5 +35,5 @@ Kicks a member from the guild. Specifically, removes the user from the guild.
 
 ## BUGS
 
-`kick` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which
-might fail.
+`kick` might accept a user ID instead of a mention. This might cause the bot to
+look for that ID in the guild, which might fail.

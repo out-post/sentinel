@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
+import { CommandInteraction } from "discord.js";
+import { Discord, Slash } from "discordx";
 import { getChangelog } from "../../util/changelogs.js";
 import { createInfoEmbed } from "../../util/embed.js";
 import { Category } from "@discordx/utilities";
@@ -14,26 +14,15 @@ export class About {
 	/**
 	 * Displays the changelog for the specified version.
 	 *
-	 * @param broadcast
 	 * @param interaction
 	 */
 	@Slash({
 		name: "about",
 		description: "Displays general information about the bot",
 	})
-	async about(
-		@SlashOption({
-			name: "broadcast",
-			description: "Whether to broadcast the output to the current channel",
-			type: ApplicationCommandOptionType.Boolean,
-			required: false,
-		})
-		broadcast = false,
-		interaction: CommandInteraction
-	): Promise<void> {
+	async about(interaction: CommandInteraction): Promise<void> {
 		const latestVersion = process.env.npm_package_version!;
 		await interaction.reply({
-			ephemeral: !broadcast,
 			embeds: [
 				createInfoEmbed(
 					"About",
