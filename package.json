@@ -21,7 +21,7 @@
 		"@types/node": "^18.11.9",
 		"discord.js": "^14.6.0",
 		"discordx": "^11.4.0",
-		"mongoose": "^6.7.1",
+		"mongoose": "^6.7.2",
 		"pluralize": "^8.0.0",
 		"prettier": "^2.7.1",
 		"reflect-metadata": "^0.1.13",
