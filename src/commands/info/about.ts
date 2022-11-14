@@ -2,11 +2,14 @@ import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { getChangelog } from "../../util/changelogs.js";
 import { createInfoEmbed } from "../../util/embed.js";
+import { Category } from "@discordx/utilities";
+import { ModularCategory } from "../types.js";
 
 /**
  * Class for holding the /about command.
  */
 @Discord()
+@Category(ModularCategory.Info)
 export class About {
 	/**
 	 * Displays the changelog for the specified version.

@@ -11,11 +11,12 @@ import {
 	TextChannel,
 	WebhookEditMessageOptions,
 } from "discord.js";
-import { EdgeCaseState, PurgeConfiguration } from "../types.js";
+import { EdgeCaseState, ModularCategory, PurgeConfiguration } from "../types.js";
 import { noParametersProvided } from "../../util/precheck.js";
 import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import pluralize from "pluralize";
 import { selectOnceButton, tryDeferring } from "../../util/operation.js";
+import { Category } from "@discordx/utilities";
 
 // prettier-ignore
 /**
@@ -39,6 +40,7 @@ function responseButtons(): ActionRowBuilder<ButtonBuilder> {
  * Class for holding the /purge command.
  */
 @Discord()
+@Category(ModularCategory.Mod)
 export class Purge {
 	//prettier-ignore
 	/**

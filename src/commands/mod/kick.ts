@@ -6,16 +6,18 @@ import {
 	GuildMember,
 	PermissionsBitField,
 } from "discord.js";
-import { UserOrMember } from "../types.js";
+import { ModularCategory, UserOrMember } from "../types.js";
 import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
 import { compareRoles } from "../../util/precheck.js";
 import { Compare } from "../../util/compare.js";
 import { editReplyIfSuppressed } from "../../util/operation.js";
+import { Category } from "@discordx/utilities";
 
 /**
  * Class for holding the /kick command.
  */
 @Discord()
+@Category(ModularCategory.Mod)
 export class Kick {
 	/**
 	 * Kicks a target.

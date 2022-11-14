@@ -24,3 +24,11 @@ export interface EdgeCaseState {
 	isEdgeCase: boolean;
 	warningMessage?: string;
 }
+
+/**
+ * The modular category of a command.
+ */
+export enum ModularCategory {
+	Mod = "Mod",
+	Info = "Info",
+}
