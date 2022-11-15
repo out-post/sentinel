@@ -18,7 +18,6 @@ for (const file of files) {
  * @param version
  */
 export function getChangelog(version: string): string {
-	version = version.split(" ")[0]; // Just for the <version> (latest) case
 	if (!changelogs.has(version)) {
 		throw new Error(`Changelog for version ${version} does not exist.`);
 	}
@@ -29,8 +28,12 @@ export function getChangelog(version: string): string {
  * Gets all versions with a changelog.
  */
 export function getAllVersionStrings(): string[] {
+	return [...changelogs.keys()];
+}
+
+export function getAllVersionStringsButFancy(): string[] {
 	const versions = [...changelogs.keys()];
-	versions[versions.length - 1] += " (latest)";
+	versions[versions.length - 1] = "latest";
 	return versions;
 }
 
