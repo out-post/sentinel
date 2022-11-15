@@ -9,7 +9,6 @@
 		"build": "tsc",
 		"exec": "ts-node-esm src/main.ts",
 		"watch": "nodemon --exec ts-node-esm src/main.ts",
-		"test-import": "ts-node-esm src/test-import.ts",
 		"lint": "npx eslint src/*.ts",
 		"format": "npx prettier --write src/**/*.ts",
 		"pre-commit": "npx prettier --write . && npx eslint src/*.ts --fix && npm i"
