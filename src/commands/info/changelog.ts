@@ -1,12 +1,15 @@
+import { Category } from "@discordx/utilities";
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import { getAllVersionStrings, getChangelog, getLatestVersionNumber } from "../../util/changelogs.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
+import { ModularCategory } from "../types.js";
 
 /**
  * Class for holding the /changelog command.
  */
 @Discord()
+@Category(ModularCategory.Information)
 export class Changelog {
 	/**
 	 * Displays the changelog for the specified version.

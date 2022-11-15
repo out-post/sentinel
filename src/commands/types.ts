@@ -24,3 +24,12 @@ export interface EdgeCaseState {
 	isEdgeCase: boolean;
 	warningMessage?: string;
 }
+
+/**
+ * Organizes commands into multiple modules.
+ * Add more as you see fit.
+ */
+export enum ModularCategory {
+	Moderation = "Moderation",
+	Information = "Information",
+}

@@ -1,12 +1,15 @@
+import { Category } from "@discordx/utilities";
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
 import { getAllManpageStrings, getManpage } from "../../util/manpages.js";
+import { ModularCategory } from "../types.js";
 
 /**
  * Class for holding the /man command.
  */
 @Discord()
+@Category(ModularCategory.Information)
 export class Man {
 	/**
 	 * Displays the manpage for the specified command.
