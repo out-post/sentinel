@@ -31,6 +31,9 @@ export function getAllVersionStrings(): string[] {
 	return [...changelogs.keys()];
 }
 
+/**
+ * Gets all changelogs, and does fancy annotations to them.
+ */
 export function getAllVersionStringsButFancy(): string[] {
 	const versions = [...changelogs.keys()];
 	versions[versions.length - 1] = "latest";
