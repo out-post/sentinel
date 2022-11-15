@@ -11,7 +11,7 @@
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"skipLibCheck": false,
+		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["src/**/*", "node_modules/@types/**/*", "./*.json"],
