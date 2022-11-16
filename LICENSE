@@ -1,35 +1,55 @@
-Sentinel License 1.0.1
+# Sentinel License 2.0
 
-Version 1.0.1, 11th October, 2022
-Kisuzume & developer-ramen
+_Version 2.0, 16th November, 2022_  
+_Copyright © 2022 Kisuzume & developer-ramen_
 
 Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed. The
 application of this license is reserved to the Copyright Holders of Sentinel, "Kisuzume" and "developer-ramen" on Github.
-
-Definitions
-
-"Package" or "Source Code" refers to the collection of files (unless something else is indicated inside the file) distributed
-by the Copyright Holder, and derivatives of that collection of files created through textual modification.
-
-"Copyright Holder" is whoever is named in the copyright or copyrights for the package.
-
-"You" or "Your" is you, if you're thinking about copying or distributing this Package.
-
-Copyright © 2022 - Kisuzume & developer-ramen
-
-You are not allowed to redistribute full, partial or modified versions of the package to which the license
-is associated. This license does not apply to modules or extensions that use but do not contain full,
+You are not allowed to redistribute full, partial or modified versions of the package to which the license 
+is associated. This license does not apply to modules or extensions that use but do not contain full, 
 partial or modified code from this package.
 
-Terms & Conditions For Copying, Distribution, and Modification
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-1. You have the right to change/modify any aspect of my code in ways considered appropriate (e.g, to not
-cause harm to others) as long as you keep it to yourself or have the copyright holder's permission.
+### Definitions
 
-2. You are not allowed to redistribute full, partial or modified versions of the package.
+**"Package" or "Source Code"** refers to the collection of files (unless something else is indicated inside the file) distributed
+by the Copyright Holder, and derivatives of that collection of files created through textual modification.
 
-3. Code is provided with no warranty. You have the right (and are even encouraged) to propose improvements
-to the package as long as you don't use it as a way to circumvent the restrictions of the license.
+**"Sentinel"** refers to the Discord Application "Sentinel", a product of "Sentinel Solutions"
 
-4. By proposing a modification you agree to assign all your rights on your code to the Copyright Holder.
-You must therefore own the modifications you propose or have the permission to assign their rights.
+**"Sentinel Solutions" or "Outpost"** refers to the organization under which Sentinel is published and maintained.
+
+**"Copyright Holder(s)"** is/are whoever is/are named in the copyright or copyrights for the package.
+
+**"You" or "Your"** refers to you, the reader of this license.
+
+---
+
+### Terms & Conditions For Copying, Distribution, and Modification
+
+1. The modification of Sentinel's source code in ways considered appropriate without the implication of malicious
+intent and the proposition of benefitting improvements is an encouraged right, done without circumventing this
+license's restrictions.
+
+    * **(a)** This clause doesn't apply to Sentinel Guardian or any other closed-source or developing products
+which haven't been released to the general public yet.
+
+2. Distributing full, partial, or modified versions of this package is strictly prohibited. 
+
+    * **(a)** Sentinel's source code is never to be exploited for monetary gain.
+
+3. Source code is provided without warranty. No warranties shall ever be imposed.
+
+4. By proposing improvements, and modifications, you (in the case you aren't the rightful owner of the modifications
+you look to propose) agree to assign all your rights on your code to the Copyright Holders of Sentinel Solutions (Outpost).
+You must therefore own the modifications you propose or have the permission(s) to assign their rights.
+
+---
+
+### Termination of Sentinel Solutions's Services
+
+In order to utilize the services provided by Sentinel Solutions, you must be compliant with the following terms stated. 
+Failure to follow these terms will result in immediate termination of Sentinel's services and removal of all data retained 
+in relation to you. Sentinel Solutions reserve the right to change these requirements at 
+any time.
