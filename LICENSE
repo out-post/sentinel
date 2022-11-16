@@ -1,7 +1,7 @@
-# Sentinel License 2.0
+Sentinel License 2.0
 
-_Version 2.0, 16th November, 2022_  
-_Copyright © 2022 Kisuzume & developer-ramen_
+Version 2.0, 16th November, 2022
+Copyright © 2022 Kisuzume & developer-ramen
 
 Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed. The
 application of this license is reserved to the Copyright Holders of Sentinel, "Kisuzume" and "developer-ramen" on Github.
@@ -11,33 +11,33 @@ partial or modified code from this package.
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### Definitions
+Definitions
 
-**"Package" or "Source Code"** refers to the collection of files (unless something else is indicated inside the file) distributed
+"Package" or "Source Code" refers to the collection of files (unless something else is indicated inside the file) distributed
 by the Copyright Holder, and derivatives of that collection of files created through textual modification.
 
-**"Sentinel"** refers to the Discord Application "Sentinel", a product of "Sentinel Solutions"
+"Sentinel" refers to the Discord Application "Sentinel", a product of "Sentinel Solutions"
 
-**"Sentinel Solutions" or "Outpost"** refers to the organization under which Sentinel is published and maintained.
+"Sentinel Solutions" or "Outpost" refers to the organization under which Sentinel is published and maintained.
 
-**"Copyright Holder(s)"** is/are whoever is/are named in the copyright or copyrights for the package.
+"Copyright Holder(s)" is/are whoever is/are named in the copyright or copyrights for the package.
 
-**"You" or "Your"** refers to you, the reader of this license.
+"You" or "Your" refers to you, the reader of this license.
 
 ---
 
-### Terms & Conditions For Copying, Distribution, and Modification
+Terms & Conditions For Copying, Distribution, and Modification
 
 1. The modification of Sentinel's source code in ways considered appropriate without the implication of malicious
 intent and the proposition of benefitting improvements is an encouraged right, done without circumventing this
 license's restrictions.
 
-    * **(a)** This clause doesn't apply to Sentinel Guardian or any other closed-source or developing products
+    * (a) This clause doesn't apply to Sentinel Guardian or any other closed-source or developing products
 which haven't been released to the general public yet.
 
 2. Distributing full, partial, or modified versions of this package is strictly prohibited. 
 
-    * **(a)** Sentinel's source code is never to be exploited for monetary gain.
+    * (a) Sentinel's source code is never to be exploited for monetary gain.
 
 3. Source code is provided without warranty. No warranties shall ever be imposed.
 
@@ -47,7 +47,7 @@ You must therefore own the modifications you propose or have the permission(s) t
 
 ---
 
-### Termination of Sentinel Solutions's Services
+Termination of Sentinel Solutions's Services
 
 In order to utilize the services provided by Sentinel Solutions, you must be compliant with the following terms stated. 
 Failure to follow these terms will result in immediate termination of Sentinel's services and removal of all data retained 
