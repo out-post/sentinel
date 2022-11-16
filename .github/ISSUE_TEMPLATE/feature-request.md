@@ -3,7 +3,7 @@ name: Feature Request
 about: Suggest ideas for Sentinel!
 title: "[SUGGEST] - "
 labels: "\U0001F502  Suggestion"
-assignees: Kisuzume
+assignees: developer-ramen, Kisuzume
 
 ---
 
