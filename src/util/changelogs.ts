@@ -29,7 +29,7 @@ export function getChangelog(version: string): string {
  * Gets all versions with a changelog.
  */
 export function getAllVersionStrings(): string[] {
-	const versions = [...changelogs.keys()];
+	const versions = [...changelogs.keys()]; // skipcq JS-0083
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }

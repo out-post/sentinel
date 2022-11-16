@@ -101,7 +101,7 @@ export class Ban {
 
 				await target.ban({
 					deleteMessageDays: cleanup ? 7 : undefined, // skipcq JS-0127
-					reason: reason,
+					reason,
 				});
 			} else {
 				embeds.push(
