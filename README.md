@@ -1,6 +1,6 @@
 <div>
   <p align="center">
-      <img src="https://i.imgur.com/zUKsSHE.png" width="600"/>
+      <img src="https://i.imgur.com/onuSpJZ.png" width="630"/>
   <p align="center">
     <b> A satisfactory moderation solution for server owners! </b>
   </p>
