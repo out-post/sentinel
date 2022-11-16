@@ -1,8 +1,4 @@
-import {
-	ApplicationCommandOptionType,
-	CommandInteraction,
-	EmbedBuilder,
-} from "discord.js";
+import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embed.js";
 import { getAllManpageStrings, getManpage } from "../../util/manpages.js";
@@ -16,6 +12,7 @@ export class Man {
 	 * Displays the manpage for the specified command.
 	 *
 	 * @param command
+	 * @param broadcast
 	 * @param interaction
 	 */
 	@Slash({
@@ -31,9 +28,16 @@ export class Man {
 			required: true,
 		})
 		command: string,
+		@SlashOption({
+			name: "broadcast",
+			description: "Whether to broadcast the output to the current channel",
+			type: ApplicationCommandOptionType.Boolean,
+			required: false,
+		})
+		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: !broadcast });
 		let response: EmbedBuilder;
 		if (!getAllManpageStrings().includes(command)) {
 			response = createErrorEmbed(
@@ -42,10 +46,7 @@ export class Man {
 				"Choose one command from the autocomplete list."
 			);
 		} else {
-			response = createInfoEmbed(
-				"Command",
-				`**Command:** ${command}\n\n>>> ${getManpage(command)}`
-			);
+			response = createInfoEmbed("Command", `**Command:** ${command}\n\n>>> ${getManpage(command)}`);
 		}
 		await interaction.editReply({ embeds: [response] });
 	}

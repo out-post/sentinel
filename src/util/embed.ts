@@ -14,9 +14,7 @@ function createEmbedWithRandomCategorizedTitle(
 	color: ColorResolvable
 ): EmbedBuilder {
 	return new EmbedBuilder()
-		.setTitle(
-			category === null ? "placeholder" : getRandomMessage(category)
-		)
+		.setTitle(category === null ? "placeholder" : getRandomMessage(category))
 		.setDescription(description)
 		.setColor(color)
 		.setTimestamp(new Date());
@@ -29,18 +27,10 @@ function createEmbedWithRandomCategorizedTitle(
  * @param cause
  * @param hint
  */
-export function createErrorEmbed(
-	description: string,
-	cause: string,
-	hint: string | null
-): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"error",
-		description,
-		Colors.Red
-	).addFields([
-		{ name: "Cause", value: cause, inline: true },
-		{ name: "Hint", value: hint ?? "No hints provided", inline: true },
+export function createErrorEmbed(description: string, cause: string, hint: string | null): EmbedBuilder {
+	return createEmbedWithRandomCategorizedTitle("error", description, Colors.Red).addFields([
+		{ name: "Cause", value: cause, inline: false },
+		{ name: "Hint", value: hint ?? "No hints provided", inline: false },
 	]);
 }
 
@@ -50,11 +40,7 @@ export function createErrorEmbed(
  * @param warning
  */
 export function createWarningEmbed(warning: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"warning",
-		warning,
-		Colors.Gold
-	);
+	return createEmbedWithRandomCategorizedTitle("warning", warning, Colors.Gold);
 }
 
 /**
@@ -63,11 +49,7 @@ export function createWarningEmbed(warning: string): EmbedBuilder {
  * @param success
  */
 export function createSuccessEmbed(success: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		"success",
-		success,
-		Colors.Green
-	);
+	return createEmbedWithRandomCategorizedTitle("success", success, Colors.Green);
 }
 
 /**
@@ -77,9 +59,5 @@ export function createSuccessEmbed(success: string): EmbedBuilder {
  * @param info
  */
 export function createInfoEmbed(title: string, info: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(
-		null,
-		info,
-		Colors.Blurple
-	).setTitle(title);
+	return createEmbedWithRandomCategorizedTitle(null, info, Colors.Blurple).setTitle(title);
 }

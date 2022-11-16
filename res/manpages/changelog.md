@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`changelog --version?=""`
+`changelog version?:"<whatever version is>(latest)"`
 
 ## DESCRIPTION
 
@@ -12,14 +12,13 @@ Views a changelog from a version.
 
 ## OPTIONS
 
-`--version?=""`: The version to view. If not specified, the latest version will
-be viewed.
+`version?:"<whatever version is>(latest)`: The version to view.
 
 ## EXAMPLES
 
 `/version`: Views the latest changelog.
 
-`/version version=0.0.1`: Views the changelog for version 0.0.1.
+`/version version:0.0.1`: Views the changelog for version 0.0.1.
 
 ## HISTORY
 

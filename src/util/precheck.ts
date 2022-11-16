@@ -7,14 +7,8 @@ import { compare, Compare } from "./compare.js";
  * @param commandUser
  * @param targetUser
  */
-export function compareRoles(
-	commandUser: GuildMember,
-	targetUser: GuildMember
-): Compare {
-	return compare(
-		commandUser.roles.highest.position,
-		targetUser.roles.highest.position
-	);
+export function compareRoles(commandUser: GuildMember, targetUser: GuildMember): Compare {
+	return compare(commandUser.roles.highest.position, targetUser.roles.highest.position);
 }
 
 /**
