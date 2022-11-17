@@ -1,11 +1,11 @@
 import {
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonInteraction,
-    ButtonStyle,
-    CommandInteraction,
-    EmbedBuilder,
-    InteractionDeferReplyOptions
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonInteraction,
+	ButtonStyle,
+	CommandInteraction,
+	EmbedBuilder,
+	InteractionDeferReplyOptions,
 } from "discord.js";
 import { createWarningEmbed } from "./embeds.js";
 
