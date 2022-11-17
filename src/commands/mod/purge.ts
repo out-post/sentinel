@@ -8,7 +8,7 @@ import {
 	GuildMember,
 	PermissionsBitField,
 	TextChannel,
-	WebhookEditMessageOptions
+	WebhookEditMessageOptions,
 } from "discord.js";
 import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
