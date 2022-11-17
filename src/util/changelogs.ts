@@ -1,5 +1,4 @@
 import { readdirSync, readFileSync } from "fs";
-import { versions } from "process";
 
 const files: string[] = readdirSync("res/changelogs");
 
