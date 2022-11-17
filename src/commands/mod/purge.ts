@@ -1,4 +1,3 @@
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
@@ -9,13 +8,14 @@ import {
 	GuildMember,
 	PermissionsBitField,
 	TextChannel,
-	WebhookEditMessageOptions,
+	WebhookEditMessageOptions
 } from "discord.js";
-import { EdgeCaseState, PurgeConfiguration } from "../types.js";
-import { noParametersProvided } from "../../util/precheck.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
+import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
-import { selectOnceButton, tryDeferring } from "../../util/operation.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
+import { selectOnceButton, tryDeferring } from "../../util/operations.js";
+import { noParametersProvided } from "../../util/prechecks.js";
+import { EdgeCaseState, PurgeConfiguration } from "../types.js";
 
 // prettier-ignore
 /**

@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { getChangelog } from "../../util/changelogs.js";
-import { createInfoEmbed } from "../../util/embed.js";
+import { createInfoEmbed } from "../../util/embeds.js";
 
 /**
  * Class for holding the /about command.

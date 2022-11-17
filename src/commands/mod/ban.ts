@@ -1,16 +1,16 @@
-import { Discord, Slash, SlashOption } from "discordx";
 import {
 	ApplicationCommandOptionType,
 	CommandInteraction,
 	EmbedBuilder,
 	GuildMember,
-	PermissionsBitField,
+	PermissionsBitField
 } from "discord.js";
-import { UserOrMember } from "../types.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embed.js";
-import { compareRoles } from "../../util/precheck.js";
+import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
-import { editReplyIfSuppressed } from "../../util/operation.js";
+import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
+import { editReplyIfSuppressed } from "../../util/operations.js";
+import { compareRoles } from "../../util/prechecks.js";
+import { UserOrMember } from "../types.js";
 
 /**
  * Class for holding the /ban command.

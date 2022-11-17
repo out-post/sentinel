@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "fs";
+import { versions } from "process";
 
 const files: string[] = readdirSync("res/changelogs");
 
@@ -18,18 +19,21 @@ for (const file of files) {
  * @param version
  */
 export function getChangelog(version: string): string {
-	version = version.split(" ")[0]; // Just for the <version> (latest) case
 	if (!changelogs.has(version)) {
 		throw new Error(`Changelog for version ${version} does not exist.`);
 	}
 	return changelogs.get(version)!;
 }
 
+export function getAllVersionStrings(): string[] {
+	return [...changelogs.keys()];
+}
+
 /**
  * Gets all versions with a changelog.
  */
-export function getAllVersionStrings(): string[] {
-	const versions = [...changelogs.keys()]; // skipcq JS-0083
+export function getAllVersionNames(): string[] {
+	const versions = getAllVersionStrings(); // skipcq JS-0083
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }
@@ -38,5 +42,6 @@ export function getAllVersionStrings(): string[] {
  * Gets the latest version.
  */
 export function getLatestVersionNumber(): string {
-	return [...changelogs.keys()].pop()!.replace(" (latest)", "");
+	const versions = [...changelogs.keys()];
+	return versions[versions.length - 1];
 }
