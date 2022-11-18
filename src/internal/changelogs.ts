@@ -24,6 +24,9 @@ export function getChangelog(version: string): string {
 	return changelogs.get(version)!.trim();
 }
 
+/**
+ * Gets all version name strings.
+ */
 export function getAllVersionStrings(): string[] {
 	return [...changelogs.keys()];
 }
@@ -38,8 +41,9 @@ export function getAllVersionNames(): string[] {
 }
 
 /**
- * Gets the latest version.
+ * Gets the latest version. This is dependent on what files are present in the res/changelogs directory.
  */
 export function getLatestVersionNumber(): string {
-	return process.env.npm_package_version!;
+	const versionNames = getAllVersionStrings();
+	return versionNames[versionNames.length - 1];
 }
