@@ -33,6 +33,7 @@
 		"@types/pluralize": "^0.0.29",
 		"@typescript-eslint/eslint-plugin": "^5.42.0",
 		"@typescript-eslint/parser": "^5.42.0",
+		"@vitest/coverage-istanbul": "^0.25.2",
 		"dotenv": "^16.0.3",
 		"eslint": "^8.27.0",
 		"eslint-config-prettier": "^8.5.0",

@@ -14,6 +14,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/**/*", "node_modules/@types/**/*", "./*.json", "test/**/*"],
+	"include": ["src/**/*", "node_modules/@types/**/*", "./*.json", "test/**/*", "vitest.config.ts"],
 	"exclude": ["build", "node_modules"]
 }
