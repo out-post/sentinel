@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionNames, getChangelog, getLatestVersionNumber } from "../../util/changelogs.js";
+import { getAllVersionNames, getChangelog, getLatestVersionNumber } from "../../internal/changelogs.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -27,7 +27,7 @@ export class Changelog {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		version: string = process.env.npm_package_version!,
+		version: string = getLatestVersionNumber(),
 		@SlashOption({
 			name: "broadcast",
 			description: "Whether to broadcast the output to the current channel",

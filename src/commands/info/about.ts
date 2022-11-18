@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { getChangelog } from "../../util/changelogs.js";
+import { getChangelog, getLatestVersionNumber } from "../../internal/changelogs.js";
 import { createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -28,12 +28,12 @@ export class About {
 		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
-		const latestVersion = process.env.npm_package_version!;
+		const latestVersion = getLatestVersionNumber();
 		await interaction.reply({
 			ephemeral: !broadcast,
 			embeds: [
 				createInfoEmbed(
-					"About",
+					"About Sentinel",
 					`
 					A Discord bot for **moderation**, for _entertainment_, and for the __enjoyment and ease__ of using Discord.
 				

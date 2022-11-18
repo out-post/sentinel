@@ -12,14 +12,14 @@ for (const file of files) {
  * Process the manpage, by stripping header symbols and replacing them with bold indicators.
  * @param contents
  */
-function processedManpage(contents: string): string {
+export function processedManpage(contents: string): string {
 	const lines = contents.split("\n");
 	for (let i = 0; i < lines.length; i++) {
-		if (lines[i].startsWith("##")) {
-			lines[i] = `${lines[i].replace("##", "**")}**`;
+		if (lines[i].startsWith("## ")) {
+			lines[i] = `${lines[i].replace("## ", "**")}**`;
 		}
 	}
-	return lines.join("\n");
+	return lines.join("\n").trim();
 }
 
 /**
@@ -37,6 +37,6 @@ export function getManpage(command: string): string {
 /**
  * Gets all manpage command strings.
  */
-export function getAllManpageStrings(): string[] {
+export function getAllManpageNames(): string[] {
 	return [...manpages.keys()];
 }

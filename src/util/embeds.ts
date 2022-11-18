@@ -1,5 +1,4 @@
 import { ColorResolvable, Colors, EmbedBuilder } from "discord.js";
-import { Category, getRandomMessage } from "./messages.js";
 
 /**
  * Creates an embed with the specified text.
@@ -8,16 +7,8 @@ import { Category, getRandomMessage } from "./messages.js";
  * @param description
  * @param color
  */
-function createEmbedWithRandomCategorizedTitle(
-	category: Category | null,
-	description: string,
-	color: ColorResolvable
-): EmbedBuilder {
-	return new EmbedBuilder()
-		.setTitle(category === null ? "placeholder" : getRandomMessage(category))
-		.setDescription(description)
-		.setColor(color)
-		.setTimestamp(new Date());
+function createEmbed(description: string, color: ColorResolvable): EmbedBuilder {
+	return new EmbedBuilder().setDescription(description).setColor(color).setTimestamp(new Date());
 }
 
 /**
@@ -28,10 +19,12 @@ function createEmbedWithRandomCategorizedTitle(
  * @param hint
  */
 export function createErrorEmbed(description: string, cause: string, hint: string | null): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle("error", description, Colors.Red).addFields([
-		{ name: "Cause", value: cause, inline: false },
-		{ name: "Hint", value: hint ?? "No hints provided", inline: false },
-	]);
+	return createEmbed(description, Colors.Red)
+		.setTitle("**Error!**")
+		.addFields([
+			{ name: "Cause", value: cause, inline: false },
+			{ name: "Hint", value: hint ?? "No hints provided", inline: false },
+		]);
 }
 
 /**
@@ -40,7 +33,7 @@ export function createErrorEmbed(description: string, cause: string, hint: strin
  * @param warning
  */
 export function createWarningEmbed(warning: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle("warning", warning, Colors.Gold);
+	return createEmbed(warning, Colors.Gold).setTitle("*Warning!*");
 }
 
 /**
@@ -49,7 +42,7 @@ export function createWarningEmbed(warning: string): EmbedBuilder {
  * @param success
  */
 export function createSuccessEmbed(success: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle("success", success, Colors.Green);
+	return createEmbed(success, Colors.Green).setTitle("Success!");
 }
 
 /**
@@ -59,5 +52,5 @@ export function createSuccessEmbed(success: string): EmbedBuilder {
  * @param info
  */
 export function createInfoEmbed(title: string, info: string): EmbedBuilder {
-	return createEmbedWithRandomCategorizedTitle(null, info, Colors.Blurple).setTitle(title);
+	return createEmbed(info, Colors.Blurple).setTitle(title);
 }

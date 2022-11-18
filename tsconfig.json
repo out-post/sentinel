@@ -14,6 +14,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/**/*", "node_modules/@types/**/*", "./*.json"],
+	"include": ["src/**/*", "node_modules/@types/**/*", "./*.json", "test"],
 	"exclude": ["build", "node_modules"]
 }

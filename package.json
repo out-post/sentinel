@@ -9,9 +9,10 @@
 		"build": "tsc",
 		"exec": "ts-node-esm src/main.ts",
 		"watch": "nodemon --exec ts-node-esm src/main.ts",
-		"lint": "npx eslint src/*.ts",
-		"format": "npx prettier --write src/**/*.ts",
-		"pre-commit": "npx prettier --write . && npx eslint src/*.ts --fix && npm i"
+		"test": "vitest",
+		"lint": "eslint src/*.ts",
+		"format": "prettier --write .",
+		"precommit": "npm run format && npx eslint src/*.ts --fix && npm test run && npm i"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
@@ -24,7 +25,8 @@
 		"pluralize": "^8.0.0",
 		"prettier": "^2.7.1",
 		"reflect-metadata": "^0.1.13",
-		"util": "^0.12.5"
+		"util": "^0.12.5",
+		"vitest": "^0.25.2"
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.9",

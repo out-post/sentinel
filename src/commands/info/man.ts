@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
+import { getAllManpageNames, getManpage } from "../../internal/manpages.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
-import { getAllManpageStrings, getManpage } from "../../util/manpages.js";
 
 /**
  * Class for holding the /man command.
@@ -20,7 +20,7 @@ export class Man {
 		description: "Displays the manpage for the specified command",
 	})
 	async man(
-		@SlashChoice(...getAllManpageStrings())
+		@SlashChoice(...getAllManpageNames())
 		@SlashOption({
 			name: "command",
 			description: "The command to get the manpage for",
@@ -39,7 +39,7 @@ export class Man {
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: !broadcast });
 		let response: EmbedBuilder;
-		if (!getAllManpageStrings().includes(command)) {
+		if (!getAllManpageNames().includes(command)) {
 			response = createErrorEmbed(
 				`Invalid command for Sentinel: ${command}`,
 				"You might have mistyped the command, or the command might not exist.",

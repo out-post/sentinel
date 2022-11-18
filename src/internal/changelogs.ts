@@ -21,7 +21,7 @@ export function getChangelog(version: string): string {
 	if (!changelogs.has(version)) {
 		throw new Error(`Changelog for version ${version} does not exist.`);
 	}
-	return changelogs.get(version)!;
+	return changelogs.get(version)!.trim();
 }
 
 export function getAllVersionStrings(): string[] {
@@ -41,6 +41,5 @@ export function getAllVersionNames(): string[] {
  * Gets the latest version.
  */
 export function getLatestVersionNumber(): string {
-	const versions = [...changelogs.keys()];
-	return versions[versions.length - 1];
+	return process.env.npm_package_version!;
 }

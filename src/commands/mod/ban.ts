@@ -3,7 +3,7 @@ import {
 	CommandInteraction,
 	EmbedBuilder,
 	GuildMember,
-	PermissionsBitField
+	PermissionsBitField,
 } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
