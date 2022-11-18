@@ -12,7 +12,7 @@
 		"test": "vitest",
 		"lint": "eslint src/*.ts",
 		"format": "prettier --write .",
-		"precommit": "npm run format && npx eslint src/*.ts --fix && npm test run && npm i"
+		"pre-commit": "npm run format && npx eslint src/*.ts --fix && npm test run && npm i"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",

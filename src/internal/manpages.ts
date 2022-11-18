@@ -31,7 +31,7 @@ export function getManpage(command: string): string {
 	if (!manpages.has(command)) {
 		throw new Error(`Manpage for command ${command} does not exist.`);
 	}
-	return manpages.get(command)!;
+	return manpages.get(command)!.trim();
 }
 
 /**

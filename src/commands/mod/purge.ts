@@ -130,9 +130,11 @@ export class Purge {
 		if (this.isEdgeCase(config).isEdgeCase) {
 			await this.handleEdgeCases(interaction, config);
 		} else {
-			await interaction.editReply({
-				embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
-			});
+			if (suppress) {
+				await interaction.editReply({
+					embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
+				});
+			}
 			await this.purgeAction(config, false, interaction, null);
 		}
 	}
