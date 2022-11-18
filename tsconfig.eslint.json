@@ -2,9 +2,5 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"noEmit": true
-<<<<<<< HEAD
 	},
-=======
-	}
->>>>>>> 6586b96 (FEATURE: Configure Istanbul as code coverage tool)
 }
