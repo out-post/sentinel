@@ -13,6 +13,7 @@ follow these conventions.
    MongoDB database. You can get this URI by creating a new cluster in the
    [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) website.
 4. Run `npm run exec` to start the bot, or `npm run watch` to begin developing with `nodemon`.
+5. Run `npm test` to test-watch the bot (provide a subcommand to let `vitest` know what mode you are in).
 
 ## File structure
 
@@ -41,9 +42,11 @@ follow these conventions.
 -   Use `Prettier` for formatting, and ESLint for linting.
 -   Please note that there are issues with the `indent` option for `ESLint`, so we have chosen to disable any warnings
     or errors for it.
--   When `git commit`ing, make sure to run `npm run pre-commit` to lint and reformat.
+-   When `git commit`ing, make sure to run `npm run pre-commit` to lint, reformat and test.
 -   For general Markdown documents, please don't mind using your own formatting, since Prettier will go in and change it
     anyways.
+-   Sign your commits! See [this gist](https://gist.github.com/Beneboe/3183a8a9eb53439dbee07c90b344c77e) for a quick and
+    easy tutorial on signing.
 
 ## TypeScript & Type Annotating
 
