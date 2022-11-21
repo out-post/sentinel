@@ -15,6 +15,8 @@ follow these conventions.
 4. Run `npm run exec` to start the bot, or `npm run watch` to begin developing with `nodemon`.
 5. Run `npm test` to test-watch the bot (provide a subcommand to let `vitest` know what mode you are in).
 
+*(btw, both Jest and Chai flavors are fine for Vitest, just be consistent with using them in your commits :D)*
+
 ## File structure
 
 -   The `res` folder contains all the **public** resources for the project.
