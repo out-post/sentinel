@@ -23,7 +23,7 @@ export class Changelog {
 		@SlashChoice(...getAllVersionNames())
 		@SlashOption({
 			name: "version",
-			description: "The version to display the changelog for. If not specified, the latest version will be used.",
+			description: "The version to display the changelog for. If unspecified, the latest version will be used.",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})

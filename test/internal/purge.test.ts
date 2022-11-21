@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { MessageLike, purgeFilter, PurgeFilter } from "./../../src/internal/purge";
 import { HasId } from "./../../src/internal/types";
-import * as lodash from "lodash";
+import { difference, range } from "lodash";
 
 interface Author extends HasId {
 	name: string;
@@ -58,7 +58,7 @@ const testset: TestCase[] = [
 	{
 		name: "purge filter with no target and no keyword",
 		config: { invert: false },
-		matches: lodash.range(0, 8),
+		matches: range(0, 8),
 	},
 	{
 		name: 'purge filter with keyword "hello"',
@@ -78,7 +78,7 @@ const testset: TestCase[] = [
 	{
 		name: 'inverted purge filter with keyword "badword"',
 		config: { invert: true, keyword: "badword" },
-		matches: lodash.difference(lodash.range(0, 8), [3, 6]),
+		matches: difference(range(0, 8), [3, 6]),
 	},
 	{
 		name: 'purge filter with target "A"',
@@ -98,7 +98,7 @@ const testset: TestCase[] = [
 	{
 		name: 'inverted purge filter with target "B"',
 		config: { invert: true, target: authors[1] },
-		matches: lodash.difference(lodash.range(0, 8), [4, 5, 6]),
+		matches: difference(range(0, 8), [4, 5, 6]),
 	},
 	{
 		name: 'purge filter with target "A" and keyword "hello"',

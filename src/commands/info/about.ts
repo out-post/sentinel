@@ -35,15 +35,17 @@ export class About {
 				createInfoEmbed(
 					"About Sentinel",
 					`
-					A Discord bot for **moderation**, for _entertainment_, and for the __enjoyment and ease__ of using Discord.
+					A Discord bot for **moderation**, for _entertainment_, and for the __enjoyment and ease__ of using Discord,\
+					bringing automated, reliable and customizable security to each and every Discord server.
 				
 					**Version:** ${latestVersion}
 
-					**Developer:** [Developer Ramen](https://github.com/developer-ramen/)
+					**Developers:** [Developer Ramen](https://github.com/developer-ramen/) \
+					& [Kisuzume (Kageroumaru)(https://github.com/kisuzume/)]
 
-					**Repository:** [GitHub](https://github.com/developer-ramen/sentinel.git)
+					**Repository:** [GitHub](https://github.com/out-post/sentinel)
 
-					**License:** [Sentinel-License](https://github.com/developer-ramen/sentinel/blob/main/LICENSE)
+					**License:** [Sentinel-License](https://github.com/out-post/sentinel/blob/main/LICENSE)
 
 					**Changelog:**\n>>> ${getChangelog(latestVersion)}
 				`

@@ -18,16 +18,16 @@ export interface PurgeFilter {
 }
 
 /**
- * Purges messages from a dataset.
- * @param messages The messages to purge.
- * @param config The purge filter.
+ * Applies the purge filter to a message.
+ * @param message
+ * @param filter The purge filter.
  * @returns The purged messages.
  */
-export function purgeFilter(message: MessageLike, config: PurgeFilter): boolean {
-	const { target, invert } = config;
+export function purgeFilter(message: MessageLike, filter: PurgeFilter): boolean {
+	const { target, invert } = filter;
 	let keyword;
-	if (config.keyword !== undefined) {
-		keyword = config.keyword?.toLowerCase();
+	if (filter.keyword !== undefined) {
+		keyword = filter.keyword.toLowerCase();
 	}
 
 	// prettier-ignore
