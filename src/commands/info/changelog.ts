@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionNames, getChangelog, getLatestVersionNumber } from "../../internal/changelogs.js";
+import { getAllVersionNames, getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
 /**

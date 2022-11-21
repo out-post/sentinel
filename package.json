@@ -21,6 +21,7 @@
 		"@types/node": "^18.11.9",
 		"discord.js": "^14.6.0",
 		"discordx": "^11.4.0",
+		"lodash": "^4.17.21",
 		"mongoose": "^6.7.1",
 		"pluralize": "^8.0.0",
 		"prettier": "^2.7.1",
@@ -29,6 +30,7 @@
 		"vitest": "^0.25.2"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.14.189",
 		"@types/node": "^18.11.9",
 		"@types/pluralize": "^0.0.29",
 		"@typescript-eslint/eslint-plugin": "^5.42.0",

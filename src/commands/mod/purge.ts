@@ -12,6 +12,7 @@ import {
 } from "discord.js";
 import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
+import { purgeFilter } from "../../internal/purge.js";
 import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
 import { selectOnceButton, tryDeferring } from "../../util/operations.js";
 import { noParametersProvided } from "../../util/prechecks.js";
@@ -84,7 +85,7 @@ export class Purge {
 		target: GuildMember | undefined,
 		@SlashOption({
 			name: "keyword",
-			description: "The keyword to purge messages that contain it",
+			description: "The keyword to purge messages that contain it (case-insensitive)",
 			type: ApplicationCommandOptionType.String,
 			minLength: 1,
 			maxLength: 1000,
@@ -114,6 +115,7 @@ export class Purge {
 		invert = false,
 		interaction: CommandInteraction
 	): Promise<void> {
+		await interaction.deferReply({ ephemeral: suppress });
 		const config: PurgeConfiguration = {
 			channel: interaction.channel as TextChannel,
 			interactor: interaction.user,
@@ -123,9 +125,8 @@ export class Purge {
 			amount,
 			target,
 			keyword,
+			replyId: suppress ? undefined : (await interaction.fetchReply()).id, // skipcq JS-0127
 		};
-		await interaction.deferReply({ ephemeral: suppress });
-		config.replyId = suppress ? undefined : (await interaction.fetchReply()).id; // skipcq JS-0127
 
 		if (this.isEdgeCase(config).isEdgeCase) {
 			await this.handleEdgeCases(interaction, config);
@@ -190,9 +191,13 @@ export class Purge {
 	 * @param config
 	 */
 	async purgeDelete(config: PurgeConfiguration): Promise<number> {
-		const { channel, amount, target, keyword, invert } = config;
+		const { channel } = config;
+		let { amount } = config;
+		amount ??= 100;
+
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
 		// prettier-ignore
 		const messages = (await channel.messages.fetch({limit: 100})).filter((message) =>
 			message.deletable
@@ -200,20 +205,10 @@ export class Purge {
 			&& message.id !== config.replyId
 		);
 
-		// prettier-ignore
-		const messagesMatchingFilter = messages.filter((message) =>
-			(!target || message.author.id === target.id)
-			&& (!keyword || message.content.includes(keyword))
-		);
-
-		// prettier-ignore
-		const purgelist = invert
-			? messages.filter((message) => !messagesMatchingFilter.has(message.id))
-			: messagesMatchingFilter;
-
+		const purgelist = messages.filter((message) => purgeFilter(message, config));
 		const purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
-
 		await channel.bulkDelete(purgelist.first(purgeAmount));
+
 		return purgeAmount;
 	}
 
@@ -316,6 +311,7 @@ export class Purge {
 			} else {
 				await interaction.deferUpdate();
 				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
+
 				this.edgeCasePurgeStates.delete(channel);
 			}
 		} catch (e) {} // skipcq: JS-0009

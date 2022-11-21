@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { getChangelog, getLatestVersionNumber } from "../../internal/changelogs.js";
+import { getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
 import { createInfoEmbed } from "../../util/embeds.js";
 
 /**

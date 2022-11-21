@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "vitest";
 import {
 	getAllVersionNames,
 	getAllVersionStrings,
 	getChangelog,
 	getLatestVersionNumber,
-} from "../../src/internal/changelogs.js";
+} from "../../src/internal/changelog.js";
 
 const changelogToMatch = `
 Welcome to the **first ever** release of TSentinel!
@@ -25,23 +25,23 @@ Stay tuned until I have the courage to make this thing's GitHub repository publi
 `.trim();
 
 describe("getting changelogs", () => {
-	it("gets the changelog for v0.0.1-alpha", () => {
-		expect(getChangelog("0.0.1-alpha")).eq(changelogToMatch);
+	test("gets the changelog for v0.0.1-alpha", () => {
+		expect(getChangelog("0.0.1-alpha")).toBe(changelogToMatch);
 	});
 
-	it("throws when getting an invalid changelog", () => {
-		expect(() => getChangelog("invalid")).throws();
+	test("throws when getting an invalid changelog", () => {
+		expect(() => getChangelog("invalid")).toThrow();
 	});
 });
 
 describe("getting changelog names", () => {
-	it("is always v0.0.1-alpha as the first ever version", () => {
-		expect(getAllVersionStrings()[0]).eq("0.0.1-alpha");
-		expect(getAllVersionNames()[0]).eq("0.0.1-alpha");
+	test("is always v0.0.1-alpha as the first ever version", () => {
+		expect(getAllVersionStrings()[0]).toBe("0.0.1-alpha");
+		expect(getAllVersionNames()[0]).toBe("0.0.1-alpha");
 	});
 
-	it('appends "(latest)" to the end of latest version name', () => {
+	test('appends "(latest)" to the end of latest version name', () => {
 		const versionNames = getAllVersionNames();
-		expect(versionNames[versionNames.length - 1]).eq(`${getLatestVersionNumber()} (latest)`);
+		expect(versionNames[versionNames.length - 1]).toBe(`${getLatestVersionNumber()} (latest)`);
 	});
 });

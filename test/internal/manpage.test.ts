@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { getManpage, processedManpage } from "../../src/internal/manpages.js";
+import { describe, expect, test } from "vitest";
+import { getManpage, processedManpage } from "../../src/internal/manpage.js";
 
 const banManpage = `
 ## NAME
@@ -94,17 +94,17 @@ might fail.
 `.trim();
 
 describe("getting manpages", () => {
-	it("gets the manpage for /ban", () => {
-		expect(getManpage("ban")).eq(processedBanManpage);
+	test("gets the manpage for /ban", () => {
+		expect(getManpage("ban")).toBe(processedBanManpage);
 	});
 
-	it("throws when getting an invalid manpage", () => {
-		expect(() => getManpage("invalid")).throws();
+	test("throws when getting an invalid manpage", () => {
+		expect(() => getManpage("invalid")).toThrow();
 	});
 });
 
 describe("processing manpages", () => {
-	it("processes the manpage for /ban", () => {
-		expect(processedManpage(banManpage)).eq(processedBanManpage);
+	test("processes the manpage for /ban", () => {
+		expect(processedManpage(banManpage)).toBe(processedBanManpage);
 	});
 });
