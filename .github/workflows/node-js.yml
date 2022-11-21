@@ -22,4 +22,5 @@ jobs:
                   cache: "npm"
             - run: npm ci
             - run: npm run build
+            - run: rm -rf build
             - run: npm test run
