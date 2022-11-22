@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionNames, getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
+import { getAllVersionNamesButFancy, getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -20,7 +20,7 @@ export class Changelog {
 		description: "Displays the changelog for the specified version",
 	})
 	async changelog(
-		@SlashChoice(...getAllVersionNames())
+		@SlashChoice(...getAllVersionNamesButFancy())
 		@SlashOption({
 			name: "version",
 			description: "The version to display the changelog for. If unspecified, the latest version will be used.",
@@ -38,15 +38,15 @@ export class Changelog {
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: !broadcast });
-		version = version.split(" ")[0]; // skipcq JS-0083
 		let response: EmbedBuilder;
-		if (!getAllVersionNames().includes(version) && version !== getLatestVersionNumber()) {
+		if (!getAllVersionNamesButFancy().includes(version) && version !== getLatestVersionNumber()) {
 			response = createErrorEmbed(
 				`Invalid version for Sentinel: ${version}`, // skipcq: JS-0378
 				"You might have mistyped the version, or the version might not exist.",
 				"Choose one version from the autocomplete list."
 			);
 		} else {
+			version = version.split(" ")[0]; // skipcq JS-0083
 			response = createInfoEmbed(
 				"Changelog",
 				// skipcq: JS-0378

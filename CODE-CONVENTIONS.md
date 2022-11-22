@@ -15,8 +15,6 @@ follow these conventions.
 4. Run `npm run exec` to start the bot, or `npm run watch` to begin developing with `nodemon`.
 5. Run `npm test` to test-watch the bot (provide a subcommand to let `vitest` know what mode you are in).
 
-_(btw, both Jest and Chai flavors are fine for Vitest, just be consistent with using them in your commits :D)_
-
 ## File structure
 
 -   The `res` folder contains all the **public** resources for the project.
@@ -63,5 +61,11 @@ We have a few requirements when it comes to annotating types:
 -   Use `interface` over `type` for object type definitions.
 -   Always use template literals over string concatenation.
 -   It is best to compare `typeof x` against `"undefined"` instead of `x === undefined`.
+
+## Miscellaneous
+
+-   Both Jest and Chai flavors are fine for Vitest, just be consistent with using them in your commits :D
+-   Try to utilize Lodash as much as possible, since if we had this big-ass library, why aren't we trying to use any of
+    it? We didn't bother to import individual functions, by the way.
 
 Happy coding!

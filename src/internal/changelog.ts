@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "fs";
+import { last } from "lodash-es";
 
 const files: string[] = readdirSync("res/changelogs");
 
@@ -18,6 +19,9 @@ for (const file of files) {
  * @param version
  */
 export function getChangelog(version: string): string {
+	if (version.startsWith("v")) {
+		version = version.slice(1); // skipcq JS-0083
+	}
 	if (!changelogs.has(version)) {
 		throw new Error(`Changelog for version ${version} does not exist.`);
 	}
@@ -27,15 +31,15 @@ export function getChangelog(version: string): string {
 /**
  * Gets all version name strings.
  */
-export function getAllVersionStrings(): string[] {
+export function getAllVersionNames(): string[] {
 	return [...changelogs.keys()];
 }
 
 /**
  * Gets all versions with a changelog.
  */
-export function getAllVersionNames(): string[] {
-	const versions = getAllVersionStrings(); // skipcq JS-0083
+export function getAllVersionNamesButFancy(): string[] {
+	const versions = getAllVersionNames().map((version) => `v${version}`); // skipcq JS-0083
 	versions[versions.length - 1] += " (latest)";
 	return versions;
 }
@@ -44,6 +48,6 @@ export function getAllVersionNames(): string[] {
  * Gets the latest version. This is dependent on what files are present in the res/changelogs directory.
  */
 export function getLatestVersionNumber(): string {
-	const versionNames = getAllVersionStrings();
-	return versionNames[versionNames.length - 1];
+	const versionNames = getAllVersionNames();
+	return last(versionNames)!;
 }

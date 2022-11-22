@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllManpageNames, getManpage } from "../../internal/manpage.js";
+import { getAllManpageNames, getAllManpageNamesButFancy, getManpage } from "../../internal/manpage.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -20,7 +20,7 @@ export class Man {
 		description: "Displays the manpage for the specified command",
 	})
 	async man(
-		@SlashChoice(...getAllManpageNames())
+		@SlashChoice(...getAllManpageNamesButFancy())
 		@SlashOption({
 			name: "command",
 			description: "The command to get the manpage for",

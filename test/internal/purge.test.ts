@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { MessageLike, purgeFilter, PurgeFilter } from "./../../src/internal/purge";
 import { HasId } from "./../../src/internal/types";
-import { difference, range } from "lodash";
+import { difference, range } from "lodash-es";
 
 interface Author extends HasId {
 	name: string;

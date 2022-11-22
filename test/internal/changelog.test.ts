@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
 	getAllVersionNames,
-	getAllVersionStrings,
+	getAllVersionNamesButFancy,
 	getChangelog,
 	getLatestVersionNumber,
 } from "../../src/internal/changelog.js";
@@ -27,6 +27,7 @@ Stay tuned until I have the courage to make this thing's GitHub repository publi
 describe("getting changelogs", () => {
 	test("gets the changelog for v0.0.1-alpha", () => {
 		expect(getChangelog("0.0.1-alpha")).toBe(changelogToMatch);
+		expect(getChangelog("v0.0.1-alpha")).toBe(changelogToMatch);
 	});
 
 	test("throws when getting an invalid changelog", () => {
@@ -36,12 +37,12 @@ describe("getting changelogs", () => {
 
 describe("getting changelog names", () => {
 	test("is always v0.0.1-alpha as the first ever version", () => {
-		expect(getAllVersionStrings()[0]).toBe("0.0.1-alpha");
 		expect(getAllVersionNames()[0]).toBe("0.0.1-alpha");
+		expect(getAllVersionNamesButFancy()[0]).toBe("v0.0.1-alpha");
 	});
 
-	test('appends "(latest)" to the end of latest version name', () => {
-		const versionNames = getAllVersionNames();
-		expect(versionNames[versionNames.length - 1]).toBe(`${getLatestVersionNumber()} (latest)`);
+	test('appends "(latest)" to the end of latest fancy version name', () => {
+		const versionNames = getAllVersionNamesButFancy();
+		expect(versionNames[versionNames.length - 1]).toBe(`v${getLatestVersionNumber()} (latest)`);
 	});
 });

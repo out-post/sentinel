@@ -28,6 +28,9 @@ export function processedManpage(contents: string): string {
  * @param command
  */
 export function getManpage(command: string): string {
+	if (command.startsWith("/")) {
+		command = command.slice(1); // skipcq JS-0083
+	}
 	if (!manpages.has(command)) {
 		throw new Error(`Manpage for command ${command} does not exist.`);
 	}
@@ -39,4 +42,8 @@ export function getManpage(command: string): string {
  */
 export function getAllManpageNames(): string[] {
 	return [...manpages.keys()];
+}
+
+export function getAllManpageNamesButFancy(): string[] {
+	return getAllManpageNames().map((command) => `/${command}`);
 }

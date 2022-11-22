@@ -1,5 +1,10 @@
 import { describe, expect, test } from "vitest";
-import { getManpage, processedManpage } from "../../src/internal/manpage.js";
+import {
+	getAllManpageNames,
+	getAllManpageNamesButFancy,
+	getManpage,
+	processedManpage,
+} from "../../src/internal/manpage.js";
 
 const banManpage = `
 ## NAME
@@ -96,6 +101,12 @@ might fail.
 describe("getting manpages", () => {
 	test("gets the manpage for /ban", () => {
 		expect(getManpage("ban")).toBe(processedBanManpage);
+		expect(getManpage("/ban")).toBe(processedBanManpage);
+	});
+
+	test("all manpages includes /ban", () => {
+		expect(getAllManpageNames().includes("ban")).toBe(true);
+		expect(getAllManpageNamesButFancy().includes("/ban")).toBe(true);
 	});
 
 	test("throws when getting an invalid manpage", () => {
