@@ -37,7 +37,7 @@ _(btw, both Jest and Chai flavors are fine for Vitest, just be consistent with u
 
 ## General code rules
 
--   Use 4-space tabs for indentation.
+-   Use **tabs** for indentation.
 -   Use `const` and `let` instead of `var`.
 -   `async`-`await` is preferred over `.then()` and `.catch()`.
 -   Use `import` and `export` instead of `require` and `module.exports`.
