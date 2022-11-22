@@ -65,6 +65,7 @@ We have a few requirements when it comes to annotating types:
 ## Miscellaneous
 
 -   Both Jest and Chai flavors are fine for Vitest, just be consistent with using them in your commits :D
+-   When importing from Lodash, use`from "lodash-es"`. Traditional `lodash` is CommonJS and uses the `require` syntax.
 -   Try to utilize Lodash as much as possible, since if we had this big-ass library, why aren't we trying to use any of
     it? We didn't bother to import individual functions, by the way.
 

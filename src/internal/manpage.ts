@@ -44,6 +44,9 @@ export function getAllManpageNames(): string[] {
 	return [...manpages.keys()];
 }
 
+/**
+ * Gets all manpage names, but with a / prefix.
+ */
 export function getAllManpageNamesButFancy(): string[] {
 	return getAllManpageNames().map((command) => `/${command}`);
 }
