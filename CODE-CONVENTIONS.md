@@ -65,8 +65,12 @@ We have a few requirements when it comes to annotating types:
 ## Miscellaneous
 
 -   Both Jest and Chai flavors are fine for Vitest, just be consistent with using them in your commits :D
--   When importing from Lodash, use`from "lodash-es"`. Traditional `lodash` is CommonJS and uses the `require` syntax.
+-   When `import`ing from Lodash, use `from "lodash-es"`. Traditional `lodash` is CommonJS and uses the `require`
+    syntax.
 -   Try to utilize Lodash as much as possible, since if we had this big-ass library, why aren't we trying to use any of
-    it? We didn't bother to import individual functions, by the way.
+    it? We didn't bother to import individual functions' packages, by the way.
+-   About the `internal` folder: Whenever you feel like something can be tested (it is highly algorithmic or has
+    multiple outcomes and such), use the `internal` folder to put all of the backend code in there.
+-   Mirror the `src` folder's structure in the `internal` folder.
 
 Happy coding!
