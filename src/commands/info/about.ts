@@ -41,7 +41,7 @@ export class About {
 					**Version:** ${latestVersion}
 
 					**Developers:** [Developer Ramen](https://github.com/developer-ramen/) \
-					& [Kisuzume (Kageroumaru)(https://github.com/kisuzume/)]
+					& [Kisuzume (Kageroumaru)](https://github.com/kisuzume/)
 
 					**Repository:** [GitHub](https://github.com/out-post/sentinel)
 

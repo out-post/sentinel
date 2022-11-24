@@ -1,16 +1,37 @@
 import { readdirSync, readFileSync } from "fs";
-import { last } from "lodash-es";
+import { last, pullAt } from "lodash-es";
 
 const files: string[] = readdirSync("res/changelogs");
 
 export const changelogs = new Map<string, string>();
 for (const file of files) {
 	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
-	const lines = changelog.split("\n");
+	changelogs.set(file.split(".").slice(0, 3).join("."), processChangelog(changelog));
+}
+
+/**
+ * Process the changelog, by stripping header symbols and replacing them with bold indicators.
+ *
+ * @param raw
+ */
+export function processChangelog(raw: string): string {
+	const newlinesToRemove = [];
+	for (let i = 0; i < raw.length; i++) {
+		if (raw[i] === "\n" && raw.at(i + 1) !== "\n") {
+			if (i === 0 || raw.at(i - 1) !== "\n") {
+				newlinesToRemove.push(i);
+			}
+		}
+	}
+	const rawChars = raw.split("");
+	pullAt(rawChars, newlinesToRemove);
+	raw = rawChars.join("");
+
+	const lines = raw.split("\n");
 	for (let i = 0; i < 2; i++) {
 		lines.shift();
 	}
-	changelogs.set(file.split(".").slice(0, 3).join("."), lines.join("\n"));
+	return lines.join("\n");
 }
 
 /**
