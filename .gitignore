@@ -7,7 +7,6 @@ yarn.lock
 # folders
 build
 node_modules
-coverage
 
 .idea/
 .vscode/
