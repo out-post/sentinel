@@ -10,6 +10,38 @@
 
 An experimental utilitarian and administration assistant for Discord server owners written in TypeScript.
 
+## 🪪 Badges
+
+We love our badges. Deal with it.
+
+### GitHub
+
+![GitHub commit checks state](https://img.shields.io/github/checks-status/out-post/sentinel/HEAD?logo=github&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Build?logo=github&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Test?logo=github&label=tests&style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/out-post/sentinel?logo=github&style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/out-post/sentinel?logo=github&style=flat-square)
+![GitHub milestones](https://img.shields.io/github/milestones/open/out-post/sentinel?logo=github&style=flat-square)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/out-post/sentinel?display_name=tag&include_prereleases&logo=github&sort=semver&style=flat-square)
+
+### DeepSource
+
+[![DeepSource](https://deepsource.io/gh/out-post/sentinel.svg/?label=active+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8)](https://deepsource.io/gh/out-post/sentinel/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/out-post/sentinel.svg/?label=resolved+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8)](https://deepsource.io/gh/out-post/sentinel/?ref=repository-badge)
+
+### Istanbul code coverage
+
+![Statements](https://img.shields.io/badge/statements-100%25-brightgreen.svg?style=flat)
+![Branches](https://img.shields.io/badge/branches-100%25-brightgreen.svg?style=flat)
+![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat)
+![Lines](https://img.shields.io/badge/lines-100%25-brightgreen.svg?style=flat)
+
+### Code Climate
+
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/out-post/sentinel?logo=codeclimate&style=flat-square)
+![Code Climate issues](https://img.shields.io/codeclimate/issues/out-post/sentinel?logo=codeclimate&style=flat-square)
+![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/out-post/sentinel?logo=codeclimate&style=flat-square)
+
 ## 🛡 Preamble
 
 This bot aims to be an all-in-one solution for server owners, providing a variety of utilities and administration tools
