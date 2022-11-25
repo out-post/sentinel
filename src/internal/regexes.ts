@@ -16,7 +16,7 @@ export function stripExcessNewlines(raw: string): string {
 	return raw
 		.replace(/\n+$/, "")
 		.replace(/^\n*/g, "")
-		.replace(/(([^\n])\n([^\n-]))/gm, "$2 $3");
+		.replace(/(?<before>[^\n])\n(?<after>[^\n-])/gm, "$<before> $<after>");
 }
 
 /**

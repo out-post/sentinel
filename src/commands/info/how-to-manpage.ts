@@ -2,11 +2,19 @@ import { Discord, Slash, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { readFileSync } from "fs";
 
+/**
+ * Class for holding the /how-to-manpage command.
+ */
 @Discord()
 export class HowToManpage {
+	/**
+	 * The /how-to-manpage command.
+	 * @param broadcast
+	 * @param interaction
+	 */
 	@Slash({
 		name: "how-to-manpage",
-		description: "I see how it is."
+		description: "Displays information on how to read, write and make sense of manpages."
 	})
 	async howToManpage(
 		@SlashOption({

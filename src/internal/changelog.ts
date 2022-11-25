@@ -1,15 +1,6 @@
 import { readdirSync, readFileSync } from "fs";
 import { last } from "lodash-es";
-import { cleanWhitespace, stripExcessNewlines } from "./regexes.js";
-
-const files: string[] = readdirSync("res/changelogs");
-
-export const changelogs = new Map<string, string>();
-
-for (const file of files) {
-	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
-	changelogs.set(getVersionFromFileName(file), processChangelog(changelog));
-}
+import { cleanWhitespace } from "./regexes.js";
 
 /**
  * Gets the version from the file name.
@@ -30,6 +21,15 @@ export function processChangelog(raw: string): string {
 		lines.shift();
 	}
 	return cleanWhitespace(lines.join("\n")).trim();
+}
+
+const files: string[] = readdirSync("res/changelogs");
+
+export const changelogs = new Map<string, string>();
+
+for (const file of files) {
+	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
+	changelogs.set(getVersionFromFileName(file), processChangelog(changelog));
 }
 
 /**

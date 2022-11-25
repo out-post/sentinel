@@ -20,7 +20,7 @@ for (const file of files) {
  * @param raw
  */
 export function processManpage(raw: string): string {
-	return cleanWhitespace(raw.replace(/^## (.*)/gm, "**$1**")).trim();
+	return cleanWhitespace(raw.replace(/^## (?<header>.*)/gm, "**$<header>**")).trim();
 }
 
 /**
