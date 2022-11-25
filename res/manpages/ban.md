@@ -8,8 +8,7 @@
 
 ## DESCRIPTION
 
-Bans a member from the guild. Specifically, adds the user to the ban list. The user is removed from the guild and cannot
-rejoin in any way whatsoever.
+Bans a member from the guild. Specifically, adds the user to the ban list. The user is removed from the guild and cannot rejoin in any way whatsoever.
 
 ## OPTIONS
 
@@ -39,5 +38,4 @@ rejoin in any way whatsoever.
 
 ## BUGS
 
-`target` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which
-might fail.
+`target` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which might fail.

@@ -1,37 +1,35 @@
 import { readdirSync, readFileSync } from "fs";
-import { last, pullAt } from "lodash-es";
+import { last } from "lodash-es";
+import { cleanWhitespace, stripExcessNewlines } from "./regexes.js";
 
 const files: string[] = readdirSync("res/changelogs");
 
 export const changelogs = new Map<string, string>();
+
 for (const file of files) {
 	const changelog = readFileSync(`res/changelogs/${file}`, "utf-8");
-	changelogs.set(file.split(".").slice(0, 3).join("."), processChangelog(changelog));
+	changelogs.set(getVersionFromFileName(file), processChangelog(changelog));
 }
 
 /**
- * Process the changelog, by stripping header symbols and replacing them with bold indicators.
+ * Gets the version from the file name.
+ * @param file
+ */
+export function getVersionFromFileName(file: string): string {
+	return file.split(".").slice(0, 3).join(".");
+}
+
+/**
+ * Process the changelog, by stripping header symbols, replacing them with bold indicators, and removing excess newlines.
  *
  * @param raw
  */
 export function processChangelog(raw: string): string {
-	const newlinesToRemove = [];
-	for (let i = 0; i < raw.length; i++) {
-		if (raw[i] === "\n" && raw.at(i + 1) !== "\n") {
-			if (i === 0 || raw.at(i - 1) !== "\n") {
-				newlinesToRemove.push(i);
-			}
-		}
-	}
-	const rawChars = raw.split("");
-	pullAt(rawChars, newlinesToRemove);
-	raw = rawChars.join("");
-
 	const lines = raw.split("\n");
 	for (let i = 0; i < 2; i++) {
 		lines.shift();
 	}
-	return lines.join("\n");
+	return cleanWhitespace(lines.join("\n")).trim();
 }
 
 /**

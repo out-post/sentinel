@@ -4,13 +4,13 @@ import {
 	getAllVersionNamesButFancy,
 	getChangelog,
 	getLatestVersionNumber,
+	getVersionFromFileName
 } from "../../src/internal/changelog.js";
 
 const changelogToMatch = `
 Welcome to the **first ever** release of TSentinel!
 
-_**Warning**: This release is a **pre-alpha** release, meaning that it is not ready for production use. It is not
-recommended to use this in a production environment._
+_**Warning**: This release is a **pre-alpha** release, meaning that it is not ready for production use. It is not recommended to use this in a production environment._
 
 What in the **_H-E-double-hockey-sticks_** does TSentinel even have right now? I dunno, slash commands I guess?
 
@@ -23,6 +23,15 @@ Here are those Slash Commands:
 
 Stay tuned until I have the courage to make this thing's GitHub repository public!
 `.trim();
+
+describe("analyzing changelog file names", () => {
+	test("gets the version from the file name", () => {
+		expect(getVersionFromFileName("1.0.0.md")).toBe("1.0.0");
+		expect(getVersionFromFileName("1.0.0-alpha.md")).toBe("1.0.0-alpha");
+		expect(getVersionFromFileName("1.0.0-beta.md")).toBe("1.0.0-beta");
+		expect(getVersionFromFileName("1.0.0-rc.md")).toBe("1.0.0-rc");
+	});
+});
 
 describe("getting changelogs", () => {
 	test("gets the changelog for v0.0.1-alpha", () => {

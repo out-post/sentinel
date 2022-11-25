@@ -37,6 +37,7 @@ export class Man {
 		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
+		command = command.slice(1); // skipcq: JS-0083
 		await interaction.deferReply({ ephemeral: !broadcast });
 		let response: EmbedBuilder;
 		if (!getAllManpageNames().includes(command)) {

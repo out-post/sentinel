@@ -1,25 +1,26 @@
 import { readdirSync, readFileSync } from "fs";
+import { cleanWhitespace } from "./regexes.js";
 
 const files: string[] = readdirSync("res/manpages");
 export const manpages = new Map<string, string>();
 
 for (const file of files) {
-	const contents = readFileSync(`res/manpages/${file}`, "utf-8");
-	manpages.set(file.split(".")[0], processedManpage(contents)); // skipcq
+	if (![
+		"how-to-manpage.md",
+		"how-to-manpage-full.md",
+		"man-demonstration.gif"
+	].includes(file)) {
+		const contents = readFileSync(`res/manpages/${file}`, "utf-8");
+		manpages.set(file.split(".")[0], processManpage(contents)); // skipcq
+	}
 }
 
 /**
  * Process the manpage, by stripping header symbols and replacing them with bold indicators.
- * @param contents
+ * @param raw
  */
-export function processedManpage(contents: string): string {
-	const lines = contents.split("\n");
-	for (let i = 0; i < lines.length; i++) {
-		if (lines[i].startsWith("## ")) {
-			lines[i] = `${lines[i].replace("## ", "**")}**`;
-		}
-	}
-	return lines.join("\n").trim();
+export function processManpage(raw: string): string {
+	return cleanWhitespace(raw.replace(/^## (.*)/gm, "**$1**")).trim();
 }
 
 /**

@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`changelog version?:"<whatever version is>(latest)"`
+`changelog version?:"<whatever version is> (latest)"`
 
 ## DESCRIPTION
 

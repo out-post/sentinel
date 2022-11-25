@@ -3,7 +3,7 @@ import {
 	getAllManpageNames,
 	getAllManpageNamesButFancy,
 	getManpage,
-	processedManpage,
+	processManpage
 } from "../../src/internal/manpage.js";
 
 const banManpage = `
@@ -63,8 +63,7 @@ const processedBanManpage = `
 
 **DESCRIPTION**
 
-Bans a member from the guild. Specifically, adds the user to the ban list. The user is removed from the guild and cannot
-rejoin in any way whatsoever.
+Bans a member from the guild. Specifically, adds the user to the ban list. The user is removed from the guild and cannot rejoin in any way whatsoever.
 
 **OPTIONS**
 
@@ -94,8 +93,7 @@ rejoin in any way whatsoever.
 
 **BUGS**
 
-\`target\` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which
-might fail.
+\`target\` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which might fail.
 `.trim();
 
 describe("getting manpages", () => {
@@ -104,18 +102,24 @@ describe("getting manpages", () => {
 		expect(getManpage("/ban")).toBe(processedBanManpage);
 	});
 
+	test("throws when getting an invalid manpage", () => {
+		expect(() => getManpage("invalid")).toThrow();
+		expect(() => getManpage("how-to-manpage")).toThrow();
+	});
+
 	test("all manpages includes /ban", () => {
 		expect(getAllManpageNames().includes("ban")).toBe(true);
 		expect(getAllManpageNamesButFancy().includes("/ban")).toBe(true);
 	});
 
-	test("throws when getting an invalid manpage", () => {
-		expect(() => getManpage("invalid")).toThrow();
-	});
+	test("some filenames in the res/manpages folder is not supposed to be there", () => {
+		expect(getAllManpageNames().includes("how-to-manpage")).toBe(false);
+		expect(getAllManpageNames().includes("man-demonstration")).toBe(false);
+	})
 });
 
 describe("processing manpages", () => {
 	test("processes the manpage for /ban", () => {
-		expect(processedManpage(banManpage)).toBe(processedBanManpage);
+		expect(processManpage(banManpage)).toBe(processedBanManpage);
 	});
 });
