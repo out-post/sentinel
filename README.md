@@ -16,7 +16,7 @@ We love our badges. Deal with it.
 
 ### GitHub
 
-![GitHub commit checks state](https://img.shields.io/github/checks-status/out-post/sentinel/HEAD?logo=github&style=flat-square)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/out-post/sentinel/badges?logo=github&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Build?logo=github&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Test?logo=github&label=tests&style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/out-post/sentinel?logo=github&style=flat-square)
