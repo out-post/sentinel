@@ -5,6 +5,7 @@ const files: string[] = readdirSync("res/manpages");
 export const manpages = new Map<string, string>();
 
 for (const file of files) {
+<<<<<<< HEAD
 	// prettier-ignore
 	if (![
 		"how-to-manpage.md",
