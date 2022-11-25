@@ -8,7 +8,8 @@
 
 ## DESCRIPTION
 
-Displays the About embed. The embed consists of general information in regard to the bot, as well as the latest changelog.
+Displays the About embed. The embed consists of general information in regard to the bot, as well as the latest
+changelog.
 
 ## OPTIONS
 

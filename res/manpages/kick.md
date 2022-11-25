@@ -36,4 +36,5 @@ Kicks a member from the guild. Specifically, removes the user from the guild.
 
 ## BUGS
 
-`kick` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which might fail.
+`kick` might accept a user ID instead of a mention. This might cause the bot to look for that ID in the guild, which
+might fail.

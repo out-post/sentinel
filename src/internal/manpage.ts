@@ -5,11 +5,7 @@ const files: string[] = readdirSync("res/manpages");
 export const manpages = new Map<string, string>();
 
 for (const file of files) {
-	if (![
-		"how-to-manpage.md",
-		"how-to-manpage-full.md",
-		"man-demonstration.gif"
-	].includes(file)) {
+	if (!["how-to-manpage.md", "how-to-manpage-full.md", "man-demonstration.gif"].includes(file)) {
 		const contents = readFileSync(`res/manpages/${file}`, "utf-8");
 		manpages.set(file.split(".")[0], processManpage(contents)); // skipcq
 	}
