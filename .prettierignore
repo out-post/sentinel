@@ -1,2 +1,2 @@
-res/messages
-test
+res/messages/**
+test/**

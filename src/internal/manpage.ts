@@ -5,6 +5,7 @@ const files: string[] = readdirSync("res/manpages");
 export const manpages = new Map<string, string>();
 
 for (const file of files) {
+	// prettier-ignore
 	if (![
 		"how-to-manpage.md",
 		"how-to-manpage-full.md",
@@ -20,7 +21,7 @@ for (const file of files) {
  * @param raw
  */
 export function processManpage(raw: string): string {
-	return cleanWhitespace(raw.replace(/^## (.*)/gm, "**$1**")).trim();
+	return cleanWhitespace(raw.replace(/^## (?<header>.*)/gm, "**$<header>**")).trim();
 }
 
 /**

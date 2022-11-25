@@ -1,10 +1,12 @@
-
 /**
  * Strips leading whitespace from all lines.
  * @param raw
  */
 export function trimAllLines(raw: string): string {
-	return raw.split("\n").map((line) => line.trim()).join("\n");
+	return raw
+		.split("\n")
+		.map((line) => line.trim())
+		.join("\n");
 }
 
 /**
@@ -16,7 +18,7 @@ export function stripExcessNewlines(raw: string): string {
 	return raw
 		.replace(/\n+$/, "")
 		.replace(/^\n*/g, "")
-		.replace(/(([^\n])\n([^\n-]))/gm, "$2 $3");
+		.replace(/(?<before>[^\n])\n(?<after>[^\n-])/gm, "$<before> $<after>");
 }
 
 /**
