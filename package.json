@@ -38,7 +38,6 @@
 		"dotenv": "^16.0.3",
 		"eslint": "^8.27.0",
 		"eslint-config-prettier": "^8.5.0",
-		"istanbul-badges-readme": "^1.8.2",
 		"nodemon": "^2.0.20",
 		"prettier": "^2.8.0",
 		"ts-node": "^10.9.1",
