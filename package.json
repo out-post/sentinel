@@ -12,7 +12,8 @@
 		"test": "vitest --coverage",
 		"lint": "eslint src/*.ts",
 		"format": "prettier --write .",
-		"pre-commit": "npm run format && npx eslint src/*.ts --fix && npm test run && npm i"
+		"generate-badges": "istanbul-badges-readme",
+		"pre-commit": "npm ci && rm -rf coverage && npm run format && eslint src/*.ts --fix && npm test run"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
@@ -22,6 +23,7 @@
 		"discordx": "^11.4.0",
 		"lodash-es": "^4.17.21",
 		"mongoose": "^6.7.3",
+		"nyc": "^15.1.0",
 		"pluralize": "^8.0.0",
 		"reflect-metadata": "^0.1.13",
 		"util": "^0.12.5"
