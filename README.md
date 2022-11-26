@@ -7,9 +7,9 @@
 </div>
 
 <p align="center">
-<img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/out-post/sentinel/badges?logo=github&style=flat-square">
-<img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Build/badges?logo=github&style=flat-square">
-<img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Test/badges?label=tests&logo=github&style=flat-square">
+<img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/out-post/sentinel/main?logo=github&style=flat-square">
+<img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Build/main?logo=github&style=flat-square">
+<img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/out-post/sentinel/Node.js%20Test/main?label=tests&logo=github&style=flat-square">
 
 <img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/out-post/sentinel.svg/?label=active+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8"/>
 <img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/out-post/sentinel.svg/?label=resolved+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8"/>
