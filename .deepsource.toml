@@ -1,5 +1,11 @@
 version = 1
 
+exclude_patterns = ["coverage/**"]
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
+
 [[analyzers]]
 name = "secrets"
 enabled = true

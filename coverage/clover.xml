@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1669396017036" clover="3.2.0">
-  <project timestamp="1669396017036" name="All files">
+<coverage generated="1669430607345" clover="3.2.0">
+  <project timestamp="1669430607345" name="All files">
     <metrics statements="44" coveredstatements="44" conditionals="18" coveredconditionals="18" methods="17" coveredmethods="17" elements="79" coveredelements="79" complexity="0" loc="44" ncloc="44" packages="1" files="4" classes="4"/>
     <file name="changelog.ts" path="/Users/vduong/Projects/sentinel/src/internal/changelog.ts">
       <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="7" coveredmethods="7"/>
