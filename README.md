@@ -23,6 +23,7 @@
 # 📖 Sentinel (Bodyguard)
 
 An experimental utilitarian and administration assistant for Discord server owners written in TypeScript.
+
 ## 🛡 Preamble
 
 This bot aims to be an all-in-one solution for server owners, providing a variety of utilities and administration tools

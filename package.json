@@ -13,7 +13,7 @@
 		"lint": "eslint src/*.ts",
 		"format": "prettier --write .",
 		"generate-badges": "istanbul-badges-readme",
-		"pre-commit": "rm -rf coverage && npm run format && eslint src/*.ts --fix && npm test run && istanbul-badges-readme && npm i"
+		"pre-commit": "npm ci && rm -rf coverage && npm run format && eslint src/*.ts --fix && npm test run"
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
