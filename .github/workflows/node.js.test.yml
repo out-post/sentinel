@@ -23,9 +23,5 @@ jobs:
               with:
                   node-version: 16
                   cache: "npm"
-            - run: npm run pre-commit
+            - run: npm ci
             - run: npm test run
-            - run: curl https://deepsource.io/cli | sh
-            - run:
-                  ./bin/deepsource report --analyzer test-coverage --key javascript --value-file \
-                  ./coverage/cobertura-coverage.xml
