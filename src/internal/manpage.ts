@@ -8,7 +8,7 @@ for (const file of files) {
 	// prettier-ignore
 	if (![
 		"how-to-manpage.md",
-		"how-to-manpage-full.md",
+		"how-to-manpage.md",
 		"man-demonstration.gif"
 	].includes(file)) {
 		const contents = readFileSync(`res/manpages/${file}`, "utf-8");
