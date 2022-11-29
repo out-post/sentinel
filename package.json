@@ -33,7 +33,7 @@
 		"@types/node": "^18.11.9",
 		"@types/pluralize": "^0.0.29",
 		"@typescript-eslint/eslint-plugin": "^5.44.0",
-		"@typescript-eslint/parser": "^5.44.0",
+		"@typescript-eslint/parser": "^5.45.0",
 		"@vitest/coverage-istanbul": "^0.25.3",
 		"dotenv": "^16.0.3",
 		"eslint": "^8.27.0",
