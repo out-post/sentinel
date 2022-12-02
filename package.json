@@ -19,7 +19,7 @@
 		"@discordjs/collection": "^1.2.0",
 		"@discordjs/voice": "^0.13.0",
 		"@discordx/importer": "^1.1.10",
-		"discord.js": "^14.6.0",
+		"discord.js": "^14.7.1",
 		"discordx": "^11.4.0",
 		"lodash-es": "^4.17.21",
 		"mongoose": "^6.7.3",
