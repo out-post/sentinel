@@ -1,6 +1,10 @@
 import { ApplicationCommandOptionType, CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { getAllVersionNamesButFancy, getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
+import {
+	getAllVersionNamesButFancy,
+	getChangelog,
+	getLatestVersionNumberWithChangelog,
+} from "../../internal/changelog.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -23,11 +27,11 @@ export class Changelog {
 		@SlashChoice(...getAllVersionNamesButFancy())
 		@SlashOption({
 			name: "version",
-			description: "The version to display the changelog for. If unspecified, the latest version will be used.",
+			description: "The version to display the changelog for. If not specified, the latest version will be used.",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		version: string = getLatestVersionNumber(),
+		version: string = getLatestVersionNumberWithChangelog(),
 		@SlashOption({
 			name: "broadcast",
 			description: "Whether to broadcast the output to the current channel",
@@ -39,7 +43,7 @@ export class Changelog {
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: !broadcast });
 		let response: EmbedBuilder;
-		if (!getAllVersionNamesButFancy().includes(version) && version !== getLatestVersionNumber()) {
+		if (!getAllVersionNamesButFancy().includes(version) && version !== getLatestVersionNumberWithChangelog()) {
 			response = createErrorEmbed(
 				`Invalid version for Sentinel: ${version}`, // skipcq: JS-0378
 				"You might have mistyped the version, or the version might not exist.",

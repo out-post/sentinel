@@ -11,7 +11,7 @@ for (const file of files) {
 		"how-to-manpage.md",
 		"man-demonstration.gif"
 	].includes(file)) {
-		const contents = readFileSync(`res/manpages/${file}`, "utf-8");
+		const contents = readFileSync(`res/manpages/${ file }`, "utf-8");
 		manpages.set(file.split(".")[0], processManpage(contents)); // skipcq
 	}
 }

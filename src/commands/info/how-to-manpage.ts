@@ -1,5 +1,5 @@
-import { Discord, Slash, SlashOption } from "discordx";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
+import { Discord, Slash, SlashOption } from "discordx";
 import { cleanWhitespace } from "../../internal/regexes.js";
 
 /**
@@ -28,14 +28,9 @@ export class HowToManpage {
 	): Promise<void> {
 		await interaction.reply({
 			ephemeral: !broadcast,
-			content: cleanWhitespace(`
-			We get it, our manpage system is so unnecessary and hard to read.
-
-			Suck it, here's the [full guide](https://github.com/out-post/sentinel/blob/main/res/manpages/how-to-manpage.md) to
-			reading those.
-			
-			Have a good fricking day.
-			`),
+			content: cleanWhitespace(
+				"Head here: [Manpages 101](https://github.com/out-post/sentinel/blob/main/res/manpages/how-to-manpage.md)"
+			),
 		});
 	}
 }

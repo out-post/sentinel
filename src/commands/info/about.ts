@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { getChangelog, getLatestVersionNumber } from "../../internal/changelog.js";
+import { getChangelog, getLatestVersionNumberWithChangelog } from "../../internal/changelog.js";
 import { createInfoEmbed } from "../../util/embeds.js";
 
 /**
@@ -28,7 +28,7 @@ export class About {
 		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
-		const latestVersion = getLatestVersionNumber();
+		const latestVersion = getLatestVersionNumberWithChangelog();
 		await interaction.reply({
 			ephemeral: !broadcast,
 			embeds: [

@@ -67,7 +67,7 @@ export class Ban {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason = "Unspecified",
+		reason = "<no reason specified>",
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: suppress });
@@ -100,7 +100,7 @@ export class Ban {
 				}
 
 				await target.ban({
-					deleteMessageDays: cleanup ? 7 : undefined, // skipcq JS-0127
+					deleteMessageSeconds: cleanup ? 60 * 60 * 24 * 7 : undefined,
 					reason,
 				});
 			} else {

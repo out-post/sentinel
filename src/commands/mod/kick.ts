@@ -48,7 +48,7 @@ export class Kick {
 		notify: boolean,
 		@SlashOption({
 			name: "suppress",
-			description: "Whether to suppress output",
+			description: "Whether to suppress output. False by default",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		})
@@ -59,7 +59,7 @@ export class Kick {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason = "Unspecified",
+		reason = "<no reason specified>",
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: suppress });

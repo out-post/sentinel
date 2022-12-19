@@ -3,7 +3,6 @@ import { ColorResolvable, Colors, EmbedBuilder } from "discord.js";
 /**
  * Creates an embed with the specified text.
  *
- * @param category
  * @param description
  * @param color
  */

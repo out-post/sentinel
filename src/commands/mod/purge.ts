@@ -94,7 +94,7 @@ export class Purge {
 		keyword: string | undefined,
 		@SlashOption({
 			name: "suppress",
-			description: "Whether to suppress warning messages and output",
+			description: "Whether to suppress warning messages and output. False by default",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		})
@@ -105,10 +105,10 @@ export class Purge {
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		})
-		reason = "Unspecified",
+		reason = "<no reason specified>",
 		@SlashOption({
 			name: "invert",
-			description: "Whether to invert the filter specified",
+			description: "Whether to invert the filter specified. False by default",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		})
@@ -199,7 +199,7 @@ export class Purge {
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
 		// prettier-ignore
-		const messages = (await channel.messages.fetch({limit: 100})).filter((message) =>
+		const messages = (await channel.messages.fetch({ limit: 100 })).filter((message) =>
 			message.deletable
 			&& message.createdAt > twoWeeksAgo
 			&& message.id !== config.replyId

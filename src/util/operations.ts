@@ -70,10 +70,10 @@ export async function editReplyIfSuppressed(
 	// prettier-ignore
 	await interaction.editReply({
 		embeds: suppress
-			? [createWarningEmbed(
+			? [ createWarningEmbed(
 				`All output has been disabled for this command execution. \
 				You will not see any results, warnings, or errors, even if they occur.`
-			)]
+			) ]
 			: embeds,
 	});
 }

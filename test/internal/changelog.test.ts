@@ -3,7 +3,7 @@ import {
 	getAllVersionNames,
 	getAllVersionNamesButFancy,
 	getChangelog,
-	getLatestVersionNumber,
+	getLatestVersionNumberWithChangelog,
 	getVersionFromFileName
 } from "../../src/internal/changelog.js";
 
@@ -52,6 +52,6 @@ describe("getting changelog names", () => {
 
 	test('appends "(latest)" to the end of latest fancy version name', () => {
 		const versionNames = getAllVersionNamesButFancy();
-		expect(versionNames[versionNames.length - 1]).toBe(`v${getLatestVersionNumber()} (latest)`);
+		expect(versionNames[versionNames.length - 1]).toBe(`v${getLatestVersionNumberWithChangelog()} (latest)`);
 	});
 });

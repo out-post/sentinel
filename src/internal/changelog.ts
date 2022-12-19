@@ -64,9 +64,10 @@ export function getAllVersionNamesButFancy(): string[] {
 }
 
 /**
- * Gets the latest version. This is dependent on what files are present in the res/changelogs directory.
+ * Gets the latest version that has a changelog.
+ * This is dependent on what files are present in the res/changelogs directory.
  */
-export function getLatestVersionNumber(): string {
+export function getLatestVersionNumberWithChangelog(): string {
 	const versionNames = getAllVersionNames();
 	return last(versionNames)!;
 }
