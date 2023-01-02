@@ -52,7 +52,7 @@ Bodyguard" are still suitable names for this product.
 
 ### 🪪 Licensing
 
-This project is licensed under a custom license made only for this bot. While it is not possible to redistribute the
+This project is licensed under a custom license made only for this bot. While it is possible to redistribute the
 code of this bot, we highly encourage you to clone this repository, make changes and improvements, and even self-host
 your own instance of Sentinel Bodyguard.
 
@@ -89,7 +89,7 @@ DISCORD_BOT_TOKEN=your-bot-token
 MONGO_URI=your-mongo-uri
 ```
 
-4. Run `npm run exec` to run the project.
+4. Run `npm run start` to run the project.
 
 ---
 
