@@ -12,7 +12,6 @@
 		"test": "vitest --coverage",
 		"lint": "eslint src/*.ts",
 		"format": "prettier --write .",
-		"generate-badges": "istanbul-badges-readme",
 		"pre-commit": "npm ci && rm -rf coverage build && npm run format && eslint src/*.ts --fix && npm test run"
 	},
 	"dependencies": {
