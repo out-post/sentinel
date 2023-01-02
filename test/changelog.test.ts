@@ -5,7 +5,7 @@ import {
 	getChangelog,
 	getLatestVersionNumberWithChangelog,
 	getVersionFromFileName
-} from "../../src/internal/changelog.js";
+} from "../src/internal/changelog.js";
 
 const changelogToMatch = `
 Welcome to the **first ever** release of TSentinel!

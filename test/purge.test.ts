@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { MessageLike, purgeFilter, PurgeFilter } from "./../../src/internal/purge";
-import { HasId } from "./../../src/internal/types";
+import { MessageLike, purgeFilter, PurgeFilter } from "../src/internal/purge.js";
+import { HasId } from "../src/internal/types.js";
 import { difference, range } from "lodash-es";
 
 interface Author extends HasId {

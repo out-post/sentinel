@@ -4,7 +4,7 @@ import {
 	getAllManpageNamesButFancy,
 	getManpage,
 	processManpage
-} from "../../src/internal/manpage.js";
+} from "../src/internal/manpage.js";
 
 const banManpage = `
 ## NAME

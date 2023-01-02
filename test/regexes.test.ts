@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { cleanWhitespace, stripExcessNewlines, trimAllLines } from "../../src/internal/regexes.js";
+import { cleanWhitespace, stripExcessNewlines, trimAllLines } from "../src/internal/regexes.js";
 
 describe("trimming", () => {
 	test("leading whitespace", () => {
