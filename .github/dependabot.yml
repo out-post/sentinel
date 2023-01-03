@@ -3,8 +3,9 @@ updates:
     - package-ecosystem: "npm"
       directory: "/"
       schedule:
-          interval: "weekly"
+          interval: "biweekly"
           time: "08:00"
+          day: "monday"
           timezone: "Asia/Bangkok"
       target-branch: "main"
       open-pull-requests-limit: 10
