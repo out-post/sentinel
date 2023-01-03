@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"@discordjs/collection": "^1.2.0",
-		"@discordjs/voice": "^0.13.0",
+		"@discordjs/voice": "^0.14.0",
 		"@discordx/importer": "^1.1.10",
 		"discord.js": "^14.6.0",
 		"discordx": "^11.5.2",
