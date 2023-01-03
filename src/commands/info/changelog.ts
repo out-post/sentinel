@@ -16,7 +16,6 @@ export class Changelog {
 	 * Displays the changelog for the specified version.
 	 *
 	 * @param version
-	 * @param broadcast
 	 * @param interaction
 	 */
 	@Slash({
@@ -32,16 +31,9 @@ export class Changelog {
 			required: false,
 		})
 		version: string = getLatestVersionNumberWithChangelog(),
-		@SlashOption({
-			name: "broadcast",
-			description: "Whether to broadcast the output to the current channel",
-			type: ApplicationCommandOptionType.Boolean,
-			required: false,
-		})
-		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply({ ephemeral: !broadcast });
+		await interaction.deferReply();
 		let response: EmbedBuilder;
 		if (!getAllVersionNamesButFancy().includes(version) && version !== getLatestVersionNumberWithChangelog()) {
 			response = createErrorEmbed(

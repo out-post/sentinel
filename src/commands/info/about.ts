@@ -11,26 +11,15 @@ export class About {
 	/**
 	 * Displays the changelog for the specified version.
 	 *
-	 * @param broadcast
 	 * @param interaction
 	 */
 	@Slash({
 		name: "about",
 		description: "Displays general information about the bot",
 	})
-	async about(
-		@SlashOption({
-			name: "broadcast",
-			description: "Whether to broadcast the output to the current channel",
-			type: ApplicationCommandOptionType.Boolean,
-			required: false,
-		})
-		broadcast = false,
-		interaction: CommandInteraction
-	): Promise<void> {
+	async about(interaction: CommandInteraction): Promise<void> {
 		const latestVersion = getLatestVersionNumberWithChangelog();
 		await interaction.reply({
-			ephemeral: !broadcast,
 			embeds: [
 				createInfoEmbed(
 					"About Sentinel",

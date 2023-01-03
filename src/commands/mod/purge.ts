@@ -205,9 +205,9 @@ export class Purge {
 			&& message.id !== config.replyId
 		);
 
-		const purgelist = messages.filter((message) => purgeFilter(message, config));
-		const purgeAmount = amount ? Math.min(amount, purgelist.size) : purgelist.size;
-		await channel.bulkDelete(purgelist.first(purgeAmount));
+		const purgeList = messages.filter((message) => purgeFilter(message, config));
+		const purgeAmount = amount ? Math.min(amount, purgeList.size) : purgeList.size;
+		await channel.bulkDelete(purgeList.first(purgeAmount));
 
 		return purgeAmount;
 	}

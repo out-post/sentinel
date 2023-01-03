@@ -8,7 +8,6 @@ import {
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
 import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
-import { editReplyIfSuppressed } from "../../util/operations.js";
 import { compareRoles } from "../../util/prechecks.js";
 import { UserOrMember } from "../types.js";
 
@@ -22,7 +21,6 @@ export class Kick {
 	 *
 	 * @param target
 	 * @param notify
-	 * @param suppress
 	 * @param reason
 	 * @param interaction
 	 */
@@ -47,13 +45,6 @@ export class Kick {
 		})
 		notify: boolean,
 		@SlashOption({
-			name: "suppress",
-			description: "Whether to suppress output. False by default",
-			type: ApplicationCommandOptionType.Boolean,
-			required: false,
-		})
-		suppress = false,
-		@SlashOption({
 			name: "reason",
 			description: "The reason for the kick",
 			type: ApplicationCommandOptionType.String,
@@ -62,7 +53,7 @@ export class Kick {
 		reason = "<no reason specified>",
 		interaction: CommandInteraction
 	): Promise<void> {
-		await interaction.deferReply({ ephemeral: suppress });
+		await interaction.deferReply();
 		const embeds: EmbedBuilder[] = [];
 		if (target instanceof GuildMember) {
 			if (compareRoles(interaction.member as GuildMember, target) === Compare.LARGER) {
@@ -111,6 +102,6 @@ export class Kick {
 				)
 			);
 		}
-		await editReplyIfSuppressed(interaction, suppress, embeds);
+		await interaction.editReply({ embeds });
 	}
 }

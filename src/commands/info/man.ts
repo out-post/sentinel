@@ -12,7 +12,6 @@ export class Man {
 	 * Displays the manpage for the specified command.
 	 *
 	 * @param command
-	 * @param broadcast
 	 * @param interaction
 	 */
 	@Slash({
@@ -28,17 +27,9 @@ export class Man {
 			required: true,
 		})
 		command: string,
-		@SlashOption({
-			name: "broadcast",
-			description: "Whether to broadcast the output to the current channel",
-			type: ApplicationCommandOptionType.Boolean,
-			required: false,
-		})
-		broadcast = false,
 		interaction: CommandInteraction
 	): Promise<void> {
 		command = command.slice(1); // skipcq: JS-0083
-		await interaction.deferReply({ ephemeral: !broadcast });
 		let response: EmbedBuilder;
 		if (!getAllManpageNames().includes(command)) {
 			response = createErrorEmbed(

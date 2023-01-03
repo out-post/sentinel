@@ -55,25 +55,3 @@ export async function tryDeferring(
 	} catch (e) {
 	} // skipcq: JS-0009
 }
-
-/**
- * Default reply editing execution for suppressing output.
- * @param interaction
- * @param suppress
- * @param embeds
- */
-export async function editReplyIfSuppressed(
-	interaction: CommandInteraction | ButtonInteraction,
-	suppress: boolean,
-	embeds: EmbedBuilder[]
-): Promise<void> {
-	// prettier-ignore
-	await interaction.editReply({
-		embeds: suppress
-			? [ createWarningEmbed(
-				`All output has been disabled for this command execution. \
-				You will not see any results, warnings, or errors, even if they occur.`
-			) ]
-			: embeds,
-	});
-}
