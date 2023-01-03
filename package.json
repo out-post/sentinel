@@ -20,7 +20,7 @@
 		"@discordjs/voice": "^0.13.0",
 		"@discordx/importer": "^1.1.10",
 		"discord.js": "^14.6.0",
-		"discordx": "^11.4.0",
+		"discordx": "^11.5.2",
 		"lodash-es": "^4.17.21",
 		"mongoose": "^6.8.2",
 		"nyc": "^15.1.0",
