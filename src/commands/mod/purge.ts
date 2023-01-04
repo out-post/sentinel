@@ -10,13 +10,12 @@ import {
 	TextChannel,
 	WebhookEditMessageOptions,
 } from "discord.js";
-import { ButtonComponent, Discord, Slash, SlashOption } from "discordx";
+import { Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
 import { purgeFilter } from "../../internal/purge.js";
-import { createErrorEmbed, createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
-import { selectOnceButton, tryDeferring } from "../../util/operations.js";
-import { noParametersProvided } from "../../util/prechecks.js";
-import { EdgeCaseState, PurgeConfiguration } from "../types.js";
+import { createInfoEmbed, createSuccessEmbed, createWarningEmbed } from "../../util/embeds.js";
+import { selectOnceButton } from "../../util/operations.js";
+import { PurgeConfiguration } from "../types.js";
 
 // prettier-ignore
 /**
@@ -41,15 +40,6 @@ function responseButtons(): ActionRowBuilder<ButtonBuilder> {
  */
 @Discord()
 export class Purge {
-	//prettier-ignore
-	/**
-	 * A map of channels to their respective edge case purge configurations.
-	 * This is only used to store edge case purge configurations. Do not put
-	 * any other configurations in here.
-	 */
-	edgeCasePurgeStates: Map<TextChannel, PurgeConfiguration>
-		= new Map<TextChannel, PurgeConfiguration>();
-
 	/**
 	 * Purges messages.
 	 *
@@ -127,63 +117,12 @@ export class Purge {
 			keyword,
 			replyId: suppress ? undefined : (await interaction.fetchReply()).id, // skipcq JS-0127
 		};
-
-		if (this.isEdgeCase(config).isEdgeCase) {
-			await this.handleEdgeCases(interaction, config);
-		} else {
-			if (suppress) {
-				await interaction.editReply({
-					embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
-				});
-			}
-			await this.purgeAction(config, false, interaction, null);
+		if (suppress) {
+			await interaction.editReply({
+				embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
+			});
 		}
-	}
-
-	/**
-	 * Checks if a purge configuration is an edge case.
-	 * @param config
-	 */
-	isEdgeCase(config: PurgeConfiguration): EdgeCaseState {
-		let warningMessage: string | undefined;
-		const { amount, target, keyword, invert, suppress } = config;
-
-		if (!suppress) {
-			if (noParametersProvided([amount, target, keyword])) {
-				warningMessage = invert
-					? "That does nothing! You can't invert the filter if you don't specify one!"
-					: "With no arguments, this command will delete all messages in the channel that are less than two weeks old!";
-			} else if (!noParametersProvided([target, keyword]) && invert) {
-				warningMessage =
-					"Inverting the filter while also specifying the target and/or keyword " +
-					"can potentially target a lot of messages!";
-			}
-		}
-
-		return {
-			isEdgeCase: typeof warningMessage !== "undefined",
-			warningMessage,
-		};
-	}
-
-	/**
-	 * Handles edge cases, by sending a precaution if the configuration is an
-	 * edge case.
-	 * @param interaction
-	 * @param config
-	 */
-	async handleEdgeCases(interaction: CommandInteraction, config: PurgeConfiguration): Promise<void> {
-		const edgeCaseState = this.isEdgeCase(config);
-		this.edgeCasePurgeStates.set(interaction.channel as TextChannel, config);
-		edgeCaseState.warningMessage += "\nDo you still want to follow through with the operation?";
-		await interaction.editReply({
-			components: [responseButtons()],
-			embeds: [
-				createWarningEmbed(edgeCaseState.warningMessage!).setFooter({
-					text: "This is a one-time choice.",
-				}),
-			],
-		});
+		await this.purgeAction(config, false, interaction, null);
 	}
 
 	/**
@@ -286,70 +225,5 @@ export class Purge {
 				}
 			}
 		});
-	}
-
-	/**
-	 * Handles the button for proceeding with an edge case purge.
-	 * @param interaction
-	 */
-	@ButtonComponent({ id: "forcePurge" })
-	async confirmPurge(interaction: ButtonInteraction): Promise<void> {
-		try {
-			const channel = interaction.channel as TextChannel;
-			const edgeCasePurgeState = this.edgeCasePurgeStates.get(channel)!;
-			if (interaction.user.id !== edgeCasePurgeState.interactor.id) {
-				await tryDeferring(interaction, { ephemeral: true });
-				await interaction.editReply({
-					embeds: [
-						createErrorEmbed(
-							"Hey! Only the person who initiated the purge operation can proceed with it.",
-							`You are not the person who initiated the purge operation: ${edgeCasePurgeState.interactor.toString()}`,
-							"Please ask them to confirm the operation."
-						),
-					],
-				});
-			} else {
-				await interaction.deferUpdate();
-				await this.purgeAction(edgeCasePurgeState, true, null, interaction);
-
-				this.edgeCasePurgeStates.delete(channel);
-			}
-		} catch (e) {} // skipcq: JS-0009
-		// In case the Sentinel instance is reset and the purge state is lost.
-	}
-
-	/**
-	 * Handles the button for cancelling an edge case purge.
-	 * @param interaction
-	 */
-	@ButtonComponent({ id: "cancelPurge" })
-	async cancelPurge(interaction: ButtonInteraction): Promise<void> {
-		try {
-			const originalInteractor = this.edgeCasePurgeStates.get(interaction.channel as TextChannel)!.interactor;
-			if (interaction.user.id !== originalInteractor.id) {
-				await tryDeferring(interaction, { ephemeral: true });
-				await interaction.editReply({
-					embeds: [
-						createErrorEmbed(
-							"Hey! Only the person who initiated the purge operation can cancel it.",
-							`You are not the person who initiated the purge operation: ${originalInteractor.toString()}`,
-							"Please ask them to cancel the operation."
-						),
-					],
-				});
-			} else {
-				await interaction.deferUpdate();
-				await interaction.editReply({
-					components: [selectOnceButton(responseButtons(), 1, "Cancelled.", ButtonStyle.Success)],
-					embeds: [
-						createInfoEmbed(
-							"That was a close one.",
-							"You have chosen to not follow through with the purge operation."
-						),
-					],
-				});
-			}
-		} catch (e) {} // skipcq: JS-0009
-		// Check comment on line 250
 	}
 }

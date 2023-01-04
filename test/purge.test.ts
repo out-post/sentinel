@@ -1,7 +1,7 @@
+import { difference, range } from "lodash-es";
 import { describe, expect, test } from "vitest";
 import { MessageLike, purgeFilter, PurgeFilter } from "../src/internal/purge.js";
 import { HasId } from "../src/internal/types.js";
-import { difference, range } from "lodash-es";
 
 interface Author extends HasId {
 	name: string;
@@ -10,42 +10,42 @@ interface Author extends HasId {
 const authors: Author[] = [
 	{ name: "A", id: "1" },
 	{ name: "B", id: "2" },
-	{ name: "C", id: "3" },
+	{ name: "C", id: "3" }
 ];
 
 const messages: MessageLike[] = [
 	{
 		author: authors[0],
-		content: "Hello",
+		content: "Hello"
 	},
 	{
 		author: authors[0],
-		content: "World",
+		content: "World"
 	},
 	{
 		author: authors[0],
-		content: "Hello World",
+		content: "Hello World"
 	},
 	{
 		author: authors[0],
-		content: "badword",
+		content: "badword"
 	},
 	{
 		author: authors[1],
-		content: "hElLo",
+		content: "hElLo"
 	},
 	{
 		author: authors[1],
-		content: "Message",
+		content: "Message"
 	},
 	{
 		author: authors[1],
-		content: "inthemiddleofthesentenceawildbadwordappears",
+		content: "inthemiddleofthesentenceawildbadwordappears"
 	},
 	{
 		author: authors[2],
-		content: "world",
-	},
+		content: "world"
+	}
 ];
 
 interface TestCase {
@@ -58,53 +58,53 @@ const testset: TestCase[] = [
 	{
 		name: "purge filter with no target and no keyword",
 		config: { invert: false },
-		matches: range(0, 8),
+		matches: range(0, 8)
 	},
 	{
-		name: 'purge filter with keyword "hello"',
+		name: "purge filter with keyword \"hello\"",
 		config: { invert: false, keyword: "hello" },
-		matches: [0, 2, 4],
+		matches: [0, 2, 4]
 	},
 	{
-		name: 'purge filter with keyword "world"',
+		name: "purge filter with keyword \"world\"",
 		config: { invert: false, keyword: "world" },
-		matches: [1, 2, 7],
+		matches: [1, 2, 7]
 	},
 	{
-		name: 'purge filter with keyword "badword"',
+		name: "purge filter with keyword \"badword\"",
 		config: { invert: false, keyword: "badword" },
-		matches: [3, 6],
+		matches: [3, 6]
 	},
 	{
-		name: 'inverted purge filter with keyword "badword"',
+		name: "inverted purge filter with keyword \"badword\"",
 		config: { invert: true, keyword: "badword" },
-		matches: difference(range(0, 8), [3, 6]),
+		matches: difference(range(0, 8), [3, 6])
 	},
 	{
-		name: 'purge filter with target "A"',
+		name: "purge filter with target \"A\"",
 		config: { invert: false, target: authors[0] },
-		matches: [0, 1, 2, 3],
+		matches: [0, 1, 2, 3]
 	},
 	{
-		name: 'purge filter with target "B"',
+		name: "purge filter with target \"B\"",
 		config: { invert: false, target: authors[1] },
-		matches: [4, 5, 6],
+		matches: [4, 5, 6]
 	},
 	{
-		name: 'purge filter with target "C"',
+		name: "purge filter with target \"C\"",
 		config: { invert: false, target: authors[2] },
-		matches: [7],
+		matches: [7]
 	},
 	{
-		name: 'inverted purge filter with target "B"',
+		name: "inverted purge filter with target \"B\"",
 		config: { invert: true, target: authors[1] },
-		matches: difference(range(0, 8), [4, 5, 6]),
+		matches: difference(range(0, 8), [4, 5, 6])
 	},
 	{
-		name: 'purge filter with target "A" and keyword "hello"',
+		name: "purge filter with target \"A\" and keyword \"hello\"",
 		config: { invert: false, target: authors[0], keyword: "hello" },
-		matches: [0, 2],
-	},
+		matches: [0, 2]
+	}
 ];
 
 function runTest(test: TestCase): number[] {
