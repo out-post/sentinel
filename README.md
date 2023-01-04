@@ -80,7 +80,7 @@ making a pull request.
 
 ```env
 DISCORD_BOT_TOKEN=your-bot-token
-MONGO_URI=your-mongo-uri
+MONGODB_URI=your-mongo-uri
 ```
 
 4. Run `npm run start` to run the project.
