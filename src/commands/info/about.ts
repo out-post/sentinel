@@ -15,7 +15,7 @@ export class About {
 	 */
 	@Slash({
 		name: "about",
-		description: "Displays general information about the bot"
+		description: "Displays general information about the bot",
 	})
 	async about(interaction: CommandInteraction): Promise<void> {
 		const latestVersion = getLatestVersionNumberWithChangelog();
@@ -38,8 +38,8 @@ export class About {
 
 					**Changelog:**\n>>> ${getChangelog(latestVersion)}
 				`
-				)
-			]
+				),
+			],
 		});
 	}
 }

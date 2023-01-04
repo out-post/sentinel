@@ -3,7 +3,7 @@ import {
 	CommandInteraction,
 	EmbedBuilder,
 	GuildMember,
-	PermissionsBitField
+	PermissionsBitField,
 } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
@@ -27,30 +27,30 @@ export class Kick {
 	@Slash({
 		name: "kick",
 		description: "Kicks a user",
-		defaultMemberPermissions: PermissionsBitField.Flags.KickMembers
+		defaultMemberPermissions: PermissionsBitField.Flags.KickMembers,
 	})
 	async kick(
 		@SlashOption({
 			name: "target",
 			description: "The target to kick",
 			type: ApplicationCommandOptionType.User,
-			required: true
+			required: true,
 		})
-			target: UserOrMember,
+		target: UserOrMember,
 		@SlashOption({
 			name: "notify",
 			description: "Send a DM to notify the target",
 			type: ApplicationCommandOptionType.Boolean,
-			required: true
+			required: true,
 		})
-			notify: boolean,
+		notify: boolean,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the kick",
 			type: ApplicationCommandOptionType.String,
-			required: false
+			required: false,
 		})
-			reason = "<no reason specified>",
+		reason = "<no reason specified>",
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
@@ -66,8 +66,8 @@ export class Kick {
 								createInfoEmbed(
 									"Kicked!",
 									`You have been kicked from ${interaction.guild!.name}!\nReason: ${reason}`
-								)
-							]
+								),
+							],
 						})
 						.then(() => {
 							embeds.push(createSuccessEmbed(`Notified ${target.user.toString()} of their kick.`));

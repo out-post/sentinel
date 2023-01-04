@@ -4,7 +4,7 @@ import {
 	ButtonInteraction,
 	ButtonStyle,
 	CommandInteraction,
-	InteractionDeferReplyOptions
+	InteractionDeferReplyOptions,
 } from "discord.js";
 
 /**

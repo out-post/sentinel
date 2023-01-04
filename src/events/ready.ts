@@ -7,6 +7,6 @@ bot.once("ready", async () => {
 
 	bot.user!.setPresence({
 		activities: [{ name: "over the server", type: ActivityType.Watching }],
-		status: "online"
+		status: "online",
 	});
 });

@@ -8,7 +8,7 @@ import {
 	GuildMember,
 	PermissionsBitField,
 	TextChannel,
-	WebhookEditMessageOptions
+	WebhookEditMessageOptions,
 } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import pluralize from "pluralize";
@@ -54,7 +54,7 @@ export class Purge {
 	@Slash({
 		name: "purge",
 		description: "Purges messages from a channel",
-		defaultMemberPermissions: PermissionsBitField.Flags.ManageMessages
+		defaultMemberPermissions: PermissionsBitField.Flags.ManageMessages,
 	})
 	async purge(
 		@SlashOption({
@@ -63,46 +63,46 @@ export class Purge {
 			type: ApplicationCommandOptionType.Integer,
 			minValue: 1,
 			maxValue: 100,
-			required: false
+			required: false,
 		})
-			amount: number | undefined,
+		amount: number | undefined,
 		@SlashOption({
 			name: "target",
 			description: "The target to purge messages from",
 			type: ApplicationCommandOptionType.User,
-			required: false
+			required: false,
 		})
-			target: GuildMember | undefined,
+		target: GuildMember | undefined,
 		@SlashOption({
 			name: "keyword",
 			description: "The keyword to purge messages that contain it (case-insensitive)",
 			type: ApplicationCommandOptionType.String,
 			minLength: 1,
 			maxLength: 1000,
-			required: false
+			required: false,
 		})
-			keyword: string | undefined,
+		keyword: string | undefined,
 		@SlashOption({
 			name: "suppress",
 			description: "Whether to suppress warning messages and output. False by default",
 			type: ApplicationCommandOptionType.Boolean,
-			required: false
+			required: false,
 		})
-			suppress = false,
+		suppress = false,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for purging messages",
 			type: ApplicationCommandOptionType.String,
-			required: false
+			required: false,
 		})
-			reason = "<no reason specified>",
+		reason = "<no reason specified>",
 		@SlashOption({
 			name: "invert",
 			description: "Whether to invert the filter specified. False by default",
 			type: ApplicationCommandOptionType.Boolean,
-			required: false
+			required: false,
 		})
-			invert = false,
+		invert = false,
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply({ ephemeral: suppress });
@@ -115,11 +115,11 @@ export class Purge {
 			amount,
 			target,
 			keyword,
-			replyId: suppress ? undefined : (await interaction.fetchReply()).id // skipcq JS-0127
+			replyId: suppress ? undefined : (await interaction.fetchReply()).id, // skipcq JS-0127
 		};
 		if (suppress) {
 			await interaction.editReply({
-				embeds: [createWarningEmbed("All output has been disabled for this command execution.")]
+				embeds: [createWarningEmbed("All output has been disabled for this command execution.")],
 			});
 		}
 		await this.purgeAction(config, false, interaction, null);
@@ -184,32 +184,32 @@ export class Purge {
 							{
 								name: "Inverted?",
 								value: invert ? "Yes" : "No",
-								inline: true
+								inline: true,
 							},
 							{
 								name: "Amount",
 								value: purgedCount.toString(),
-								inline: true
+								inline: true,
 							},
 							{
 								name: "Target",
 								value: target ? target.toString() : "None",
-								inline: true
+								inline: true,
 							},
 							{
 								name: "Keyword",
-								value: keyword ?? "None"
+								value: keyword ?? "None",
 							},
 							{
 								name: "Channel",
-								value: channel.toString() // eslint-disable-line @typescript-eslint/no-base-to-string
+								value: channel.toString(), // eslint-disable-line @typescript-eslint/no-base-to-string
 							},
 							{
 								name: "Reason",
-								value: reason
-							}
-						])
-					]
+								value: reason,
+							},
+						]),
+					],
 				};
 				if (fromForcePurge) {
 					aftermath.embeds!.push(
