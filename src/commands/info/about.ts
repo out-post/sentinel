@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
+import { Discord, Slash } from "discordx";
 import { getChangelog, getLatestVersionNumberWithChangelog } from "../../internal/changelog.js";
 import { createInfoEmbed } from "../../util/embeds.js";
 
@@ -15,7 +15,7 @@ export class About {
 	 */
 	@Slash({
 		name: "about",
-		description: "Displays general information about the bot",
+		description: "Displays general information about the bot"
 	})
 	async about(interaction: CommandInteraction): Promise<void> {
 		const latestVersion = getLatestVersionNumberWithChangelog();
@@ -38,8 +38,8 @@ export class About {
 
 					**Changelog:**\n>>> ${getChangelog(latestVersion)}
 				`
-				),
-			],
+				)
+			]
 		});
 	}
 }

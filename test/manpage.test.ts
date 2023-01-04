@@ -1,10 +1,5 @@
 import { describe, expect, test } from "vitest";
-import {
-	getAllManpageNames,
-	getAllManpageNamesButFancy,
-	getManpage,
-	processManpage
-} from "../src/internal/manpage.js";
+import { getAllManpageNames, getAllManpageNamesButFancy, getManpage, processManpage } from "../src/internal/manpage.js";
 
 const banManpage = `
 ## NAME
@@ -115,7 +110,7 @@ describe("getting manpages", () => {
 	test("some filenames in the res/manpages folder is not supposed to be there", () => {
 		expect(getAllManpageNames().includes("how-to-manpage")).toBe(false);
 		expect(getAllManpageNames().includes("man-demonstration")).toBe(false);
-	})
+	});
 });
 
 describe("processing manpages", () => {

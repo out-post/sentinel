@@ -9,7 +9,7 @@ dotenvConfig();
 export const bot = new Client({
 	botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
 	intents: 32767,
-	silent: false,
+	silent: false
 });
 
 void (async () => {

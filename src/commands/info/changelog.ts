@@ -3,7 +3,7 @@ import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import {
 	getAllVersionNamesButFancy,
 	getChangelog,
-	getLatestVersionNumberWithChangelog,
+	getLatestVersionNumberWithChangelog
 } from "../../internal/changelog.js";
 import { createErrorEmbed, createInfoEmbed } from "../../util/embeds.js";
 
@@ -20,7 +20,7 @@ export class Changelog {
 	 */
 	@Slash({
 		name: "changelog",
-		description: "Displays the changelog for the specified version",
+		description: "Displays the changelog for the specified version"
 	})
 	async changelog(
 		@SlashChoice(...getAllVersionNamesButFancy())
@@ -28,9 +28,9 @@ export class Changelog {
 			name: "version",
 			description: "The version to display the changelog for. If not specified, the latest version will be used.",
 			type: ApplicationCommandOptionType.String,
-			required: false,
+			required: false
 		})
-		version: string = getLatestVersionNumberWithChangelog(),
+			version: string = getLatestVersionNumberWithChangelog(),
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();

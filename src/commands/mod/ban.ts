@@ -3,7 +3,7 @@ import {
 	CommandInteraction,
 	EmbedBuilder,
 	GuildMember,
-	PermissionsBitField,
+	PermissionsBitField
 } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { Compare } from "../../util/compare.js";
@@ -28,37 +28,37 @@ export class Ban {
 	@Slash({
 		description: "Bans a user",
 		name: "ban",
-		defaultMemberPermissions: PermissionsBitField.Flags.BanMembers,
+		defaultMemberPermissions: PermissionsBitField.Flags.BanMembers
 	})
 	async ban(
 		@SlashOption({
 			name: "target",
 			description: "The target to ban",
 			type: ApplicationCommandOptionType.User,
-			required: true,
+			required: true
 		})
-		target: UserOrMember,
+			target: UserOrMember,
 		@SlashOption({
 			name: "cleanup",
 			description: "Whether to cleanup messages from the banned user",
 			type: ApplicationCommandOptionType.Boolean,
-			required: true,
+			required: true
 		})
-		cleanup: boolean,
+			cleanup: boolean,
 		@SlashOption({
 			name: "notify",
 			description: "Send a DM to notify the target",
 			type: ApplicationCommandOptionType.Boolean,
-			required: true,
+			required: true
 		})
-		notify: boolean,
+			notify: boolean,
 		@SlashOption({
 			name: "reason",
 			description: "The reason for the ban",
 			type: ApplicationCommandOptionType.String,
-			required: false,
+			required: false
 		})
-		reason = "<no reason specified>",
+			reason = "<no reason specified>",
 		interaction: CommandInteraction
 	): Promise<void> {
 		await interaction.deferReply();
@@ -74,8 +74,8 @@ export class Ban {
 								createInfoEmbed(
 									"Banned!",
 									`You have been banned from ${interaction.guild!.name}!\nReason: ${reason}`
-								),
-							],
+								)
+							]
 						})
 						.then(() => {
 							embeds.push(createSuccessEmbed(`Notified ${target.user.toString()} of their ban.`));
@@ -92,7 +92,7 @@ export class Ban {
 
 				await target.ban({
 					deleteMessageSeconds: cleanup ? 60 * 60 * 24 * 7 : undefined,
-					reason,
+					reason
 				});
 			} else {
 				embeds.push(

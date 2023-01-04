@@ -4,10 +4,8 @@ import {
 	ButtonInteraction,
 	ButtonStyle,
 	CommandInteraction,
-	EmbedBuilder,
-	InteractionDeferReplyOptions,
+	InteractionDeferReplyOptions
 } from "discord.js";
-import { createWarningEmbed } from "./embeds.js";
 
 /**
  * Disables all buttons in a button row.

@@ -50,7 +50,7 @@ describe("getting changelog names", () => {
 		expect(getAllVersionNamesButFancy()[0]).toBe("v0.0.1-alpha");
 	});
 
-	test('appends "(latest)" to the end of latest fancy version name', () => {
+	test("appends \"(latest)\" to the end of latest fancy version name", () => {
 		const versionNames = getAllVersionNamesButFancy();
 		expect(versionNames[versionNames.length - 1]).toBe(`v${getLatestVersionNumberWithChangelog()} (latest)`);
 	});

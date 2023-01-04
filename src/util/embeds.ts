@@ -22,7 +22,7 @@ export function createErrorEmbed(description: string, cause: string, hint: strin
 		.setTitle("**Error!**")
 		.addFields([
 			{ name: "Cause", value: cause, inline: false },
-			{ name: "Hint", value: hint ?? "No hints provided", inline: false },
+			{ name: "Hint", value: hint ?? "No hints provided", inline: false }
 		]);
 }
 
