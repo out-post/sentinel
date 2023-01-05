@@ -1,10 +1,7 @@
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
-	ButtonInteraction,
 	ButtonStyle,
-	CommandInteraction,
-	InteractionDeferReplyOptions,
 } from "discord.js";
 
 /**
