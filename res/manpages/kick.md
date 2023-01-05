@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`kick target:@usr, notify:y/n, suppress?:false, reason?:"Unspecified"`
+`kick target:@usr, notify:y/n, suppress?:false, reason?:"<no reason specified>"`
 
 ## DESCRIPTION
 
@@ -18,7 +18,7 @@ Kicks a member from the guild. Specifically, removes the user from the guild.
 
 `suppress?:false`: Suppresses all output.
 
-`reason?:"Unspecified"`: The reason for the ban. If not specified, the reason will be "Unspecified".
+`reason?:"<no reason specified>"`: The reason for the ban. If not specified, the reason will be `"<no reason specified>"`.
 
 ## EXAMPLES
 

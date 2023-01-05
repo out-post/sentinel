@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"Unspecified"`
+`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"<no reason specified>"`
 
 ## DESCRIPTION
 
@@ -21,7 +21,7 @@ rejoin in any way whatsoever.
 
 `suppress?:false`: Suppresses all output.
 
-`reason?:"Unspecified"`: The reason for the ban. If not specified, the reason will be "Unspecified".
+`reason?:"<no reason specified>"`: The reason for the ban. If not specified, the reason will be the string `"<no reason specified>"`.
 
 ## EXAMPLES
 
