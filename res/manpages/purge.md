@@ -4,7 +4,7 @@
 
 ## SYNOPSIS
 
-`purge amount?:123, target?:@usr, keyword?:"", suppress?:false, reason?:"Unspecified", invert?:y/n`
+`purge amount?:123, target?:@usr, keyword?:"", suppress?:false, reason?:"<no reason specified>", invert?:y/n`
 
 ## DESCRIPTION
 
@@ -25,7 +25,7 @@ Please note that this is **NOT a regex**, as this command has been implemented t
 
 `suppress?:false`: Suppress all output.
 
-`reason?:"Unspecified"`: The reason for the purge. If not specified, the reason will be "Unspecified".
+`reason?:"<no reason specified>"`: The reason for the purge. If not specified, the reason will be `"<no reason specified>"`.
 
 `invert?:y/n`: Whether to invert the search. If this option is specified, the filter will be inverted, so all the
 messages that **do not** match the filter **will be deleted.** By default, this option is `false`.

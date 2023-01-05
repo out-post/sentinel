@@ -16,11 +16,3 @@ export interface PurgeConfiguration {
 	target?: GuildMember;
 	keyword?: string;
 }
-
-/**
- * The state that represents whether a case is an edge case or not.
- */
-export interface EdgeCaseState {
-	isEdgeCase: boolean;
-	warningMessage?: string;
-}

@@ -8,7 +8,7 @@ const banManpage = `
 
 ## SYNOPSIS
 
-\`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"Unspecified"\`
+\`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"<no reason specified>"\`
 
 ## DESCRIPTION
 
@@ -25,7 +25,7 @@ rejoin in any way whatsoever.
 
 \`suppress?:false\`: Suppresses all output.
 
-\`reason?:"Unspecified"\`: The reason for the ban. If not specified, the reason will be "Unspecified".
+\`reason?:"<no reason specified>"\`: The reason for the ban. If not specified, the reason will be \`"<no reason specified>"\`.
 
 ## EXAMPLES
 
@@ -54,7 +54,7 @@ const processedBanManpage = `
 
 **SYNOPSIS**
 
-\`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"Unspecified"\`
+\`ban target:@user, cleanup:y/n, notify:y/n, suppress?:false, reason?:"<no reason specified>"\`
 
 **DESCRIPTION**
 
@@ -70,7 +70,7 @@ Bans a member from the guild. Specifically, adds the user to the ban list. The u
 
 \`suppress?:false\`: Suppresses all output.
 
-\`reason?:"Unspecified"\`: The reason for the ban. If not specified, the reason will be "Unspecified".
+\`reason?:"<no reason specified>"\`: The reason for the ban. If not specified, the reason will be \`"<no reason specified>"\`.
 
 **EXAMPLES**
 
