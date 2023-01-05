@@ -21,7 +21,7 @@ rejoin in any way whatsoever.
 
 `suppress?:false`: Suppresses all output.
 
-`reason?:"<no reason specified>"`: The reason for the ban. If not specified, the reason will be the string `"<no reason specified>"`.
+`reason?:"<no reason specified>"`: The reason for the ban. If not specified, the reason will be `"<no reason specified>"`.
 
 ## EXAMPLES
 
