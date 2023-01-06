@@ -52,9 +52,17 @@ Guardian will not be suitable names to call this product anymore.
 
 ### 🪪 Licensing
 
-This project is licensed under a custom license made only for this bot. While it is possible to just redistribute the
+~~This project is licensed under a custom license made only for this bot. While it is possible to just redistribute the
 code of this bot elsewhere, we highly encourage you to clone this repository, make changes and improvements, and even
-self-host your own instance of Sentinel Bodyguard.
+self-host your own instance of Sentinel Bodyguard.~~
+
+> Hey there, It's Kisuzume.
+>
+> I have chosen to open-source Sentinel as a way to receive more open community feedback on the project. Even though
+> Sentinel is not even close to ascending from it's ALPHA stage, feedback is important, and without feedback, we can't
+> survive.
+>
+> Many overhauls and legacy commands are to return soon, promise!
 
 ### 💻 Contributing
 
