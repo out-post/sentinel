@@ -2,7 +2,14 @@
 name = "sentinel"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Developer Ramen <ramendev2009@gmail.com>"]
+description = "An experimental utilitarian and administration assistant for Discord server owners."
+readme = "README.md"
+repository = "https://github.com/out-post/sentinel"
+license = "MIT"
+keywords = ["discord", "bot"]
+publish = false
 
 [dependencies]
+serenity = "0.11"
+
