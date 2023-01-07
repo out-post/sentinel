@@ -1,10 +1,5 @@
 /target
 
-# temporary files kept as reference for rust rewrite, will be removed eventually
-/.github2
-/.src2
-/.test2
-
 # intellij files
 /.idea
 .env
