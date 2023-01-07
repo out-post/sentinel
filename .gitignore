@@ -1,13 +1,9 @@
-# files
-.vscode
-.env
-.env.local
-yarn.lock
+/target
 
-# folders
-build
-node_modules
+# temporary files kept as reference for rust rewrite, will be removed eventually
+/.github2
+/.src2
+/.test2
 
-.idea/
-.vscode/
-coverage/
+# intellij files
+/.idea
