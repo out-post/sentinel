@@ -12,6 +12,7 @@ publish = false
 
 [dependencies]
 dotenv = "0.15.0"
-# Will need to specify these later when done porting everything from TypeScript to Rust.
-serenity = { version = "0.11.5", default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
-tokio = { version = "1.24.1", features = ["full"] }
+env_logger = "0.10.0"
+log = "0.4.17"
+serenity = { version = "0.11.5", default-features = false, features = ["client", "gateway", "model", "rustls_backend"] }
+tokio = { version = "1.24.1", features = ["macros", "rt-multi-thread"] }
