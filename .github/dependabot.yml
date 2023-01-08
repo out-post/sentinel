@@ -1,18 +1,18 @@
 version: 2
 updates:
-    - package-ecosystem: "cargo"
-      directory: "/"
-      schedule:
-          interval: "biweekly"
-          time: "08:00"
-          day: "monday"
-          timezone: "Asia/Bangkok"
-      target-branch: "main"
-      open-pull-requests-limit: 10
-      allow:
-          - dependency-type: "direct"
-          - dependency-type: "development"
-      assignees:
-          - "developer-ramen"
-      reviewers:
-          - "developer-ramen"
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "biweekly"
+      time: "08:00"
+      day: "monday"
+      timezone: "Asia/Bangkok"
+    target-branch: "main"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "development"
+    assignees:
+      - "developer-ramen"
+    reviewers:
+      - "developer-ramen"
