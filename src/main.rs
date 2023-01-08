@@ -8,23 +8,23 @@ struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
-    async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} has reached the Out-Post!", ready.user.name);
-    }
+	async fn ready(&self, _: Context, ready: Ready) {
+		println!("{} has reached the Out-Post!", ready.user.name);
+	}
 }
 
 #[tokio::main]
 async fn main() {
-    dotenv::dotenv().expect("Failed to read .env file");
-    let token = env::var("DISCORD_BOT_TOKEN").expect("No Discord bot token found in the environment");
-    let intents = GatewayIntents::all();
-    let mut client =
-        Client::builder(&token, intents)
-            .event_handler(Handler)
-            .await
-            .expect("Something went wrong while creating the client");
+	dotenv::dotenv().expect("Failed to read .env file");
+	let token = env::var("DISCORD_BOT_TOKEN").expect("No Discord bot token found in the environment");
+	let intents = GatewayIntents::all(); // # Will need to specify these later when done porting everything from TypeScript to Rust.
+	let mut client =
+		Client::builder(&token, intents)
+			.event_handler(Handler)
+			.await
+			.expect("Something went wrong while creating the client");
 
-    if let Err(why) = client.start().await {
-        println!("Client error: {:?}", why);
-    }
+	if let Err(why) = client.start().await {
+		println!("Client error: {:?}", why);
+	}
 }
