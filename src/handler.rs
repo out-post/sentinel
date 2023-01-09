@@ -35,6 +35,7 @@ impl EventHandler for Handler {
 	async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
 		if let Interaction::ApplicationCommand(command) = interaction {
 			let command_name = &command.data.name;
+			// skipcq: RS-W1007
 			let cmd = match command_name.as_str() {
 				"ping" => Ping,
 				_ => {
