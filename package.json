@@ -21,7 +21,7 @@
 		"discord.js": "^14.6.0",
 		"discordx": "^11.5.2",
 		"lodash-es": "^4.17.21",
-		"mongoose": "^6.8.2",
+		"mongoose": "^6.8.3",
 		"nyc": "^15.1.0",
 		"pluralize": "^8.0.0",
 		"reflect-metadata": "^0.1.13",
