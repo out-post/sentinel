@@ -1,44 +1,50 @@
-use std::env;
-use log::{error, info};
-use serenity::{async_trait, Client};
-use serenity::client::{Context, EventHandler};
-use serenity::model::application::interaction::Interaction;
-use serenity::model::gateway::Ready;
+use std::time::Duration;
+use std::{env, process, thread};
+
+use log::*;
 use serenity::prelude::GatewayIntents;
+use serenity::Client;
+
+use handler::Handler;
 
 mod commands;
+mod handler;
 
-struct Handler;
-
-#[async_trait]
-impl EventHandler for Handler {
-	async fn ready(&self, _ctx: Context, ready: Ready) {
-		info!("{} has reached the Out-Post!", ready.user.name);
-	}
-
-	async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
-		if let Interaction::ApplicationCommand(command) = interaction {
-			info!("Received command: {}", command.data.name);
-
-			todo!();
-		}
-	}
-}
+static mut READY: bool = false;
+const READY_UP_TIME: Duration = Duration::from_secs(10);
 
 #[tokio::main]
 async fn main() {
+	// Preferred logging level; set in this file if needed.
+	// env::set_var("RUST_LOG", "serenity=info,sentinel=trace");
+
 	dotenv::dotenv().expect("Failed to read .env file");
 	env_logger::init();
+	info!(".env and env_logger initialized.");
 
-	let token = env::var("DISCORD_BOT_TOKEN").expect("No Discord bot token found in the environment");
-	let intents = GatewayIntents::all(); // TODO: Will need to specify these later when done porting everything from TypeScript to Rust.
-	let mut client =
-		Client::builder(&token, intents)
-			.event_handler(Handler)
-			.await
-			.expect("Something went wrong while creating the client");
+	let token =
+		env::var("DISCORD_BOT_TOKEN").expect("No Discord bot token found in the environment.");
+	let intents = GatewayIntents::non_privileged(); // TODO: Will need to specify these later when done porting everything from TypeScript to Rust.
+	let mut client = Client::builder(&token, intents)
+		.event_handler(Handler)
+		.await
+		.expect("Something went wrong while creating the client.");
 
+	// Timeout mechanism for client.
+	#[rustfmt::skip]
+	thread::spawn(|| {
+		thread::sleep(READY_UP_TIME);
+		unsafe {
+			if !READY {
+				error!("Timeout: Client was not ready for {:#?}", READY_UP_TIME);
+				process::exit(1);
+			}
+		}
+	});
+
+	trace!("Starting the client...");
 	if let Err(why) = client.start().await {
 		error!("Client error: {:?}", why);
 	}
+	info!("Client started!");
 }

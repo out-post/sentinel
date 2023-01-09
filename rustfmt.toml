@@ -1,0 +1,17 @@
+blank_lines_lower_bound = 1
+color = "always"
+combine_control_expr = false
+condense_wildcard_suffixes = true
+format_code_in_doc_comments = true
+format_strings = true
+hard_tabs = true
+imports_layout = "HorizontalVertical"
+match_block_trailing_comma = true
+imports_granularity = "Crate"
+newline_style = "Unix"
+normalize_comments = true
+normalize_doc_attributes = true
+overflow_delimited_expr = true
+reorder_impl_items = true
+wrap_comments = true
+unstable_features = true
