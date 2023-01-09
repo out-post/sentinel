@@ -1,12 +1,14 @@
-use log::{error, info, trace};
+use log::*;
 use serenity::{
 	async_trait,
 	client::{Context, EventHandler},
 	model::{application::interaction::Interaction, gateway::Ready},
 };
 
-use crate::commands::{ping::Ping, SlashCommand};
-use crate::READY;
+use crate::{
+	commands::{general::ping::Ping, SlashCommand},
+	READY,
+};
 
 pub struct Handler;
 
