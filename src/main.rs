@@ -1,9 +1,9 @@
-use std::time::Duration;
 use std::{env, process, thread};
+use std::time::Duration;
 
 use log::*;
-use serenity::prelude::GatewayIntents;
 use serenity::Client;
+use serenity::prelude::GatewayIntents;
 
 use handler::Handler;
 

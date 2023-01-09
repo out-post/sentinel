@@ -36,7 +36,8 @@ impl EventHandler for Handler {
 			let cmd = match command_name.as_str() {
 				"ping" => Ping,
 				_ => {
-					panic!("Unknown slash command: {}", command_name);
+					error!("Unknown slash command: {}", command_name);
+					return;
 				},
 			};
 			info!("Received command interaction: {}", command_name);
