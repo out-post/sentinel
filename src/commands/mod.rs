@@ -3,7 +3,7 @@ use serenity::builder::CreateApplicationCommand;
 use serenity::http::Http;
 use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
 
-pub mod ping;
+pub mod general;
 
 #[async_trait]
 pub trait SlashCommand {
