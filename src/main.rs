@@ -22,7 +22,7 @@ async fn main() {
 
 	let token =
 		env::var("DISCORD_BOT_TOKEN").expect("No Discord bot token found in the environment.");
-	let intents = GatewayIntents::non_privileged(); // TODO: Will need to specify these later when done porting everything from TypeScript to Rust.
+	let intents = GatewayIntents::non_privileged();
 	let mut client = Client::builder(&token, intents)
 		.event_handler(Handler)
 		.await
