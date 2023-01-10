@@ -30,7 +30,7 @@ impl SlashCommand for Ping {
 		command
 			.create_interaction_response(http, |response| {
 				response
-					.kind(InteractionResponseType::Pong)
+					.kind(InteractionResponseType::ChannelMessageWithSource)
 					.interaction_response_data(|message| message.content("Pong!").ephemeral(true))
 			})
 			.await
