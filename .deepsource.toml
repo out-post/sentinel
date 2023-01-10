@@ -12,7 +12,3 @@ msrv = "stable"
 [[analyzers]]
 name = "secrets"
 enabled = true
-
-[[transformers]]
-name = "rustfmt"
-enabled = true

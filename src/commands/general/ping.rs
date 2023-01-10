@@ -1,18 +1,29 @@
+use crate::commands::{
+	Module,
+	SlashCommand,
+};
 use serenity::{
 	async_trait,
 	builder::CreateApplicationCommand,
 	http::Http,
 	model::application::interaction::{
-		application_command::ApplicationCommandInteraction, InteractionResponseType,
+		application_command::ApplicationCommandInteraction,
+		InteractionResponseType,
 	},
 };
-
-use crate::commands::SlashCommand;
 
 pub struct Ping;
 
 #[async_trait]
 impl SlashCommand for Ping {
+	fn name(&self) -> &'static str {
+		"ping"
+	}
+
+	fn module(&self) -> Module {
+		Module::General
+	}
+
 	fn register<'a>(
 		&self,
 		creator: &'a mut CreateApplicationCommand,

@@ -12,10 +12,6 @@
 
 <img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/out-post/sentinel.svg/?label=active+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8"/>
 <img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/out-post/sentinel.svg/?label=resolved+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8"/>
-
-<img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/out-post/sentinel?logo=codeclimate&style=flat-square">
-<img alt="Code Climate issues" src="https://img.shields.io/codeclimate/issues/out-post/sentinel?logo=codeclimate&style=flat-square">
-<img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/out-post/sentinel?logo=codeclimate&style=flat-square">
 </p>
 
 # 📖 Sentinel (Bodyguard)

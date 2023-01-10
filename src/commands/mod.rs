@@ -1,12 +1,23 @@
-use serenity::async_trait;
-use serenity::builder::CreateApplicationCommand;
-use serenity::http::Http;
-use serenity::model::application::interaction::application_command::ApplicationCommandInteraction;
+use serenity::{
+	async_trait,
+	builder::CreateApplicationCommand,
+	http::Http,
+	model::application::interaction::application_command::ApplicationCommandInteraction,
+};
 
 pub mod general;
+pub mod util;
+
+#[derive(Eq, PartialEq)]
+pub enum Module {
+	General,
+}
 
 #[async_trait]
-pub trait SlashCommand {
+pub trait SlashCommand: Send + Sync {
+	fn name(&self) -> &'static str;
+	fn module(&self) -> Module;
+
 	fn register<'a>(
 		&self,
 		creator: &'a mut CreateApplicationCommand,

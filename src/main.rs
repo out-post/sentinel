@@ -1,21 +1,30 @@
-use std::{env, process, thread, time::Duration};
-
-use log::*;
-use serenity::{prelude::*, Client};
-
 use handler::Handler;
+use log::*;
+use serenity::{
+	prelude::*,
+	Client,
+};
+use std::{
+	env,
+	process,
+	sync::atomic::{
+		AtomicBool,
+		Ordering,
+	},
+	thread,
+	time::Duration,
+};
 
 mod commands;
 mod handler;
 
-static mut READY: bool = false;
+static mut READY: AtomicBool = AtomicBool::new(false);
 const READY_UP_TIME: Duration = Duration::from_secs(10);
 
 #[tokio::main]
 async fn main() {
 	// Preferred logging level; set in this file if needed.
 	// env::set_var("RUST_LOG", "serenity=info,sentinel=trace");
-
 	dotenv::dotenv().expect("Failed to read .env file");
 	env_logger::init();
 	info!(".env and env_logger initialized.");
@@ -33,7 +42,7 @@ async fn main() {
 	thread::spawn(|| {
 		thread::sleep(READY_UP_TIME);
 		unsafe {
-			if !READY {
+			if !READY.load(Ordering::Relaxed) {
 				error!("Timeout: Client was not ready for {:#?}", READY_UP_TIME);
 				process::exit(1);
 			}
@@ -44,5 +53,4 @@ async fn main() {
 	if let Err(why) = client.start().await {
 		error!("Client error: {:?}", why);
 	}
-	info!("Client started!");
 }

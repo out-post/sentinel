@@ -1,14 +1,45 @@
+use crate::{
+	commands::{
+		general::ping::Ping,
+		util::commands_by_module,
+		Module,
+		SlashCommand,
+	},
+	READY,
+};
 use log::*;
 use serenity::{
 	async_trait,
-	client::{Context, EventHandler},
-	model::{application::interaction::Interaction, gateway::Ready},
+	client::{
+		Context,
+		EventHandler,
+	},
+	http::Http,
+	model::{
+		application::interaction::Interaction,
+		gateway::Ready,
+		prelude::UnavailableGuild,
+	},
 };
+use std::sync::atomic::Ordering;
 
-use crate::{
-	commands::{general::ping::Ping, SlashCommand},
-	READY,
-};
+async fn register_commands(guild: &UnavailableGuild, http: &Http, command: &dyn SlashCommand) {
+	if guild.unavailable {
+		warn!("Unavailable guild {} found in cache.", guild.id)
+	}
+
+	let guild = guild.id;
+	let general_info = format!("slash command /{} for guild {guild}", command.name());
+
+	trace!("Creating {general_info}...");
+	match guild
+		.create_application_command(http, |creator| command.register(creator))
+		.await
+	{
+		Ok(_) => info!("Created {general_info}."),
+		Err(why) => error!("Cannot register {general_info}: {why}"),
+	}
+}
 
 pub struct Handler;
 
@@ -16,18 +47,13 @@ pub struct Handler;
 impl EventHandler for Handler {
 	async fn ready(&self, ctx: Context, ready: Ready) {
 		unsafe {
-			READY = true;
+			READY.store(true, Ordering::Relaxed);
 		}
-		info!("{} has reached the Out-Post!", ready.user.name);
-		for guild in ready.guilds {
-			let guild = guild.id;
-			trace!("Creating application commands for guild {}...", guild);
 
-			if let Err(why) = guild
-				.create_application_command(&ctx.http, |command| Ping.register(command))
-				.await
-			{
-				error!("Cannot register slash command in guild {}: {}", guild, why);
+		info!("{} has reached the Out-Post!", ready.user.name);
+		for command in commands_by_module(Module::General).iter() {
+			for guild in ready.guilds.as_slice() {
+				register_commands(guild, &ctx.http, &**command).await;
 			}
 		}
 	}
