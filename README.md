@@ -7,7 +7,8 @@
 </div>
 
 <p align="center">
-<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/out-post/sentinel/node.js.build.yml?logo=github&style=flat-square">
+<img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/out-post/sentinel/cargo.build.yml?branch=rust-rewrite&logo=github&style=flat-square">
+<img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/out-post/sentinel/cargo.test.yml?branch=rust-rewrite&label=tests&logo=github&style=flat-square">
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/out-post/sentinel?logo=github&style=flat-square">
 
 <img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/out-post/sentinel.svg/?label=active+issues&show_trend=true&token=5QX3JPBP9sBcihXWIGbKZVD8"/>
